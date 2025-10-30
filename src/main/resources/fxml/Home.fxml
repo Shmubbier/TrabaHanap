@@ -50,22 +50,25 @@
                                        <children>
                                           <Button mnemonicParsing="false" text="Proudly Filipino">
                                              <font>
-                                                <Font size="11.0" />
+                                                <Font name="Microsoft New Tai Lue" size="11.0" />
                                              </font>
                                           </Button>
                                           <Label text="Find Trusted Services &amp;" textAlignment="CENTER" wrapText="true">
                                              <font>
-                                                <Font size="35.0" />
+                                                <Font name="Microsoft Sans Serif" size="35.0" />
                                              </font>
+                                             <padding>
+                                                <Insets top="10.0" />
+                                             </padding>
                                           </Label>
                                           <Label text="Commissions" textAlignment="CENTER" wrapText="true">
                                              <font>
-                                                <Font size="35.0" />
+                                                <Font name="MS Reference Sans Serif" size="35.0" />
                                              </font>
                                           </Label>
                                           <Label text="Connect with skilled Filipinos for errands, tutoring, design, and more — all in one place.">
                                              <font>
-                                                <Font size="16.0" />
+                                                <Font name="Microsoft New Tai Lue" size="16.0" />
                                              </font>
                                           </Label>
                                           <StackPane>
@@ -118,7 +121,7 @@
                            <children>
                               <Label text="Browse by Category" textOverrun="CLIP" wrapText="true" HBox.hgrow="ALWAYS">
                                  <font>
-                                    <Font name="System Bold" size="21.0" />
+                                    <Font name="Dubai Medium" size="21.0" />
                                  </font>
                                  <padding>
                                     <Insets left="19.0" />
@@ -138,10 +141,13 @@
                               <Insets right="20.0" top="20.0" />
                            </padding>
                         </HBox>
-                        <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="32.0" prefWidth="230.0" text="Find the perfect service for your needs">
+                        <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="32.0" prefWidth="372.0" text="Find the perfect service for your needs">
                            <padding>
                               <Insets left="20.0" />
                            </padding>
+                           <font>
+                              <Font name="Microsoft New Tai Lue" size="15.0" />
+                           </font>
                         </Label>
                         <FlowPane hgap="17.0" prefHeight="112.0" prefWidth="934.0" prefWrapLength="100.0" vgap="10.0" VBox.vgrow="NEVER">
                            <children>
@@ -218,7 +224,7 @@
                            <children>
                               <Label text="Trending Commissions" textOverrun="CLIP" wrapText="true" HBox.hgrow="NEVER">
                                  <font>
-                                    <Font name="System Bold" size="21.0" />
+                                    <Font name="Dubai Medium" size="21.0" />
                                  </font>
                                  <padding>
                                     <Insets left="19.0" />
@@ -245,6 +251,9 @@
                            <padding>
                               <Insets left="20.0" />
                            </padding>
+                           <font>
+                              <Font name="Microsoft New Tai Lue" size="15.0" />
+                           </font>
                         </Label>
                         <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" pannable="true" prefHeight="302.0" prefWidth="1266.0" vbarPolicy="NEVER">
                            <content>
