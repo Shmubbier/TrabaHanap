@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 /**
  * LoginController: handles the login form. For now it only prints credentials.
  */
-public class LoginController extends com.devera.trabahanap.controller.BaseController {
+public class LoginController extends com.devera.trabahanap.controller.Controller {
 
     @FXML
     private TextField emailField;

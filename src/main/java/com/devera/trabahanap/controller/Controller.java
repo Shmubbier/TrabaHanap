@@ -12,7 +12,7 @@ import java.util.Objects;
  * BaseController: reusable navigation & common utilities for controllers.
  * Concrete controllers should extend this class to get navigation helpers.
  */
-public abstract class BaseController {
+public class Controller {
 
     /**
      * Replace the current scene's root with an FXML file.

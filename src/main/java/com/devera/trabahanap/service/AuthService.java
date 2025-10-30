@@ -1,9 +1,9 @@
-package com.trabahanap.service;
+package com.devera.trabahanap.service;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
-import com.trabahanap.system.FirebaseInitializer;
+import com.devera.trabahanap.system.FirebaseInitializer;
 
 import java.util.concurrent.CompletableFuture;
 
