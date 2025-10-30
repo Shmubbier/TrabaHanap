@@ -1,6 +1,5 @@
 package com.devera.trabahanap.controller;
 
-import com.trabahanap.core.BaseController;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -8,7 +7,7 @@ import javafx.scene.control.TextField;
 /**
  * LoginController: handles the login form. For now it only prints credentials.
  */
-public class LoginController extends Controller {
+public class LoginController extends com.devera.trabahanap.controller.BaseController {
 
     @FXML
     private TextField emailField;
