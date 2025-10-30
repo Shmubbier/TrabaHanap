@@ -3,30 +3,23 @@ module com.devera.trabahanap {
     requires javafx.fxml;
     requires javafx.graphics;
     requires javafx.web;
-    requires org.controlsfx.controls;
-    requires com.fasterxml.jackson.databind;
-    requires com.devera.trabahanap;
-    requires firebase.admin;
-    requires com.google.auth.oauth2;
-    requires com.google.api.apicommon;
-    requires com.google.api.client;
-    requires com.google.api.services.storage;
-    requires com.google.http.client;
-    requires com.google.http.client.gson;
 
-// allow access to these packages
-    opens com.devera.trabahanap to firebase.admin;
+    // Third-party libraries (jackson, controlsfx, firebase-admin, google-auth, etc.)
+    // are kept on the classpath (not declared as module requires here) because many of
+    // them are non-modular or have incompatible automatic module names.
+    //
+    // If you later modularize or verify automatic module names for a library, add a
+    // `requires <module-name>;` line here.
 
-    // firebase-admin and google auth are automatic modules on classpath; no explicit requires here.
-    // Add opens/exports for your app packages so FXMLLoader can access controllers.
+    // Allow FXMLLoader reflective access to our application packages:
     opens com.devera.trabahanap to javafx.fxml;
+    opens com.devera.trabahanap.controller to javafx.fxml;
+    opens com.devera.trabahanap.core to javafx.fxml;
+    opens com.devera.trabahanap.util to javafx.fxml;
+
+    // Export application API packages if other modules need them (not strictly necessary now)
     exports com.devera.trabahanap;
     exports com.devera.trabahanap.controller;
-    opens com.devera.trabahanap.controller to javafx.fxml;
-
-    // Expose new package root for com.trabahanap packages (app code uses com.trabahanap)
-    opens com.trabahanap to javafx.fxml;
-    exports com.trabahanap;
-    exports com.trabahanap.controller;
-    opens com.trabahanap.controller to javafx.fxml;
+    exports com.devera.trabahanap.core;
+    exports com.devera.trabahanap.util;
 }
