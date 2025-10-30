@@ -14,7 +14,7 @@ public final class FirebaseInitializer {
 
     private static volatile boolean initialized = false;
 
-    private FirebaseInitializer() {}
+        private FirebaseInitializer() {}
 
     public static synchronized void ensureInitialized() {
         if (initialized) return;
