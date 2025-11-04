@@ -23,34 +23,49 @@ public class Controller {
      * @throws IOException when FXMLLoader can't load the fxml
      */
     protected void navigate(Stage stage, String fxmlPath, double width, double height) throws IOException {
-        Objects.requireNonNull(fxmlPath);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Parent root = loader.load();
-
         if (stage == null) {
-            // fallback: create a new stage
-            stage = new Stage();
-        }
-        Scene scene = stage.getScene();
-        if (scene == null) {
-            scene = new Scene(root, Math.max(800, (width > 0 ? width : 800)), Math.max(600, (height > 0 ? height : 600)));
-            stage.setScene(scene);
-        } else {
-            if (width > 0 && height > 0) {
-                scene.setRoot(root);
-                stage.setWidth(width);
-                stage.setHeight(height);
-            } else {
-                scene.setRoot(root);
+            // try to find any showing window and use its stage
+            java.util.Optional<javafx.stage.Window> opt = javafx.stage.Window.getWindows().stream()
+                    .filter(javafx.stage.Window::isShowing)
+                    .findFirst();
+            if (opt.isPresent() && opt.get() instanceof Stage) {
+                stage = (Stage) opt.get();
             }
         }
-        stage.show();
+
+        if (stage == null) {
+            throw new IOException("No active Stage found to navigate to: " + fxmlPath);
+        }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        javafx.scene.Parent root = loader.load();
+
+        Scene currentScene = stage.getScene();
+        double newWidth = width > 0 ? width : (currentScene != null ? currentScene.getWidth() : -1);
+        double newHeight = height > 0 ? height : (currentScene != null ? currentScene.getHeight() : -1);
+
+        if (currentScene == null) {
+            Scene scene = new Scene(root, newWidth > 0 ? newWidth : 800, newHeight > 0 ? newHeight : 600);
+            // preserve stylesheet if available on application resources
+            if (getClass().getResource("/css/app.css") != null) {
+                scene.getStylesheets().add(getClass().getResource("/css/app.css").toExternalForm());
+            }
+            stage.setScene(scene);
+        } else {
+            // preserve scene and only replace the root so controllers and styles keep working
+            currentScene.setRoot(root);
+            if (newWidth > 0 && newHeight > 0) {
+                stage.setWidth(newWidth);
+                stage.setHeight(newHeight);
+            }
+        }
     }
 
     /**
      * Convenience overload when using current stage and default size.
      */
     protected void navigate(String fxmlPath) throws IOException {
+        // Use the other navigate method, passing null stage to let it resolve the current showing window
         navigate(null, fxmlPath, -1, -1);
     }
 
