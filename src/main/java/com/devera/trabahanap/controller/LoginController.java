@@ -1,6 +1,7 @@
 package com.devera.trabahanap.controller;
 
 import com.devera.trabahanap.system.FirebaseInitializer;
+import com.devera.trabahanap.system.SessionManager;
 import com.devera.trabahanap.system.Config;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -142,8 +143,9 @@ public class LoginController extends Controller {
                 JsonObject json = gson.fromJson(body, JsonObject.class);
                 String idToken = json.has("idToken") ? json.get("idToken").getAsString() : null;
                 String localId = json.has("localId") ? json.get("localId").getAsString() : null;
-                Session.idToken = idToken;
-                Session.localId = localId;
+                String emailResp = json.has("email") ? json.get("email").getAsString() : email; // fallback to entered email
+                // store in SessionManager instead of static Session
+                SessionManager.get().setSession(idToken, localId, emailResp, null);
                 System.out.println("[LoginController] Authentication succeeded. localId=" + localId);
                 return true;
             } catch (JsonParseException ex) {
