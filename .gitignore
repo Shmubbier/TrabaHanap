@@ -11,6 +11,9 @@ target/
 *.iws
 *.iml
 *.ipr
+src/main/resources/serviceAccountKey.json
+config.properties
+
 
 ### Eclipse ###
 .apt_generated
