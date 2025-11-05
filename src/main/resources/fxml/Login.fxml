@@ -12,139 +12,92 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #ebfdf7;" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
     <children>
-        <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
-        <VBox alignment="TOP_CENTER" StackPane.alignment="TOP_CENTER">
+        <VBox alignment="CENTER" spacing="30.0">
             <children>
-                <VBox alignment="CENTER" maxHeight="600.0" maxWidth="400.0" prefHeight="650.0" prefWidth="420.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+                <VBox alignment="CENTER" maxWidth="370.0" prefHeight="643.0" prefWidth="370.0" style="-fx-background-color: white; -fx-background-radius: 12;                              -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 12, 0, 0, 6);">
+                    <padding>
+                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                    </padding>
                     <children>
-                        <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label prefHeight="19.0" prefWidth="88.0" text="TrabaHanap">
-                            <font>
-                                <Font name="Dubai Medium" size="17.0" />
-                            </font>
-                        </Label>
-                        <Label prefHeight="17.0" prefWidth="104.0" text="Your Job Finder" textAlignment="CENTER" textFill="#000000bf">
-                            <font>
-                                <Font size="15.0" />
-                            </font>
-                        </Label>
-                        <Label text="Kamusta! Welcome Back">
-                            <font>
-                                <Font name="Dubai Regular" size="21.0" />
-                            </font>
-                        </Label>
-                        <Label text="Sign in to continue your job search" textFill="#000000bf">
-                            <font>
-                                <Font size="15.0" />
-                            </font>
-                        </Label>
-                        <Label prefHeight="18.0" prefWidth="339.0" text="Email Address">
-                            <font>
-                                <Font name="Dubai Regular" size="15.0" />
-                            </font>
+                        <ImageView fitHeight="65" fitWidth="65" preserveRatio="true" />
+                        <Label style="-fx-text-fill: #2992b8; -fx-font-family: 'Poppins SemiBold'; -fx-font-size: 20px;" text="TrabaHanap" />
+                        <Label styleClass="app-subtitle" text="Your Job Finder" />
+                        <Region prefHeight="34.0" prefWidth="320.0" />
+                        <Label styleClass="welcome-title" text="Kamusta! Welcome Back" />
+                        <Label styleClass="welcome-subtitle" text="Sign in to continue your job search" />
+                        <Region prefHeight="34.0" prefWidth="320.0" />
+
+                        <VBox alignment="CENTER_LEFT" spacing="6">
+                            <Label styleClass="field-label" text="Email Address" />
+                            <TextField promptText="👤  juandelacruz@example.com" styleClass="input-field" />
+                        </VBox>
+
+                        <VBox alignment="CENTER_LEFT" spacing="6">
+                            <Label styleClass="field-label" text="Password" />
+                            <StackPane alignment="CENTER_RIGHT">
+                                <PasswordField promptText="🔒  Enter your password" styleClass="input-field" />
+                                <TextField styleClass="input-field" visible="false" />
+                                <Button styleClass="eye-button" text="👁" />
+                            </StackPane>
+                        </VBox>
+
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <CheckBox styleClass="custom-checkbox" text="Remember me" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <TextFlow>
+                                <Text style="-fx-fill: #2992b8; -fx-underline: false; -fx-cursor: hand;" text="Forgot password?" />
+                            </TextFlow>
                             <padding>
-                                <Insets top="15.0" />
-                            </padding>
-                        </Label>
-                        <TextField prefHeight="70.0" prefWidth="330.0" promptText=" 👤  juandelacruz@example.com" />
-                        <Label prefHeight="18.0" prefWidth="330.0" text="Password">
-                            <padding>
-                                <Insets top="10.0" />
-                            </padding>
-                            <font>
-                                <Font name="Dubai Regular" size="15.0" />
-                            </font>
-                        </Label>
-                        <HBox prefHeight="78.0" prefWidth="330.0">
-                            <children>
-                                <StackPane prefHeight="60.0" prefWidth="333.0">
-                                    <children>
-                                        <PasswordField prefHeight="36.0" prefWidth="330.0" promptText=" 🔒 Enter your password" />
-                                        <TextField prefHeight="36.0" prefWidth="330.0" visible="false" />
-                                        <Button graphicTextGap="2.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="34.0" text="👁" textAlignment="CENTER" textFill="#000000c0" StackPane.alignment="CENTER_RIGHT">
-                                            <font>
-                                                <Font size="13.0" />
-                                            </font>
-                                        </Button>
-                                    </children>
-                                </StackPane>
-                            </children>
-                        </HBox>
-                        <HBox prefHeight="38.0" prefWidth="400.0">
-                            <children>
-                                <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="178.0" text="Remember me" />
-                                <Region prefHeight="18.0" prefWidth="102.0" HBox.hgrow="ALWAYS" />
-                                <Label prefHeight="18.0" prefWidth="128.0" text="Forgot password?" textAlignment="RIGHT" />
-                            </children>
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="15.0" top="15.0" />
                             </padding>
                         </HBox>
-                        <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="330.0" text="Sign In">
-                            <font>
-                                <Font size="13.0" />
-                            </font>
-                        </Button>
-                        <HBox alignment="CENTER" prefHeight="22.0" prefWidth="330.0">
-                            <children>
-                                <Line endX="-8.973747253417969" endY="2.2137164705782197E-5" opacity="0.24" startX="-100.0">
-                                    <HBox.margin>
-                                        <Insets right="10.0" />
-                                    </HBox.margin>
-                                </Line>
-                                <Label text="Or continue with" />
-                                <Line endX="-8.973747253417969" endY="2.2137164705782197E-5" opacity="0.24" startX="-100.0">
-                                    <HBox.margin>
-                                        <Insets left="10.0" />
-                                    </HBox.margin>
-                                </Line>
-                            </children>
+
+                        <Button styleClass="sign-in-button" text="Sign In" />
+
+                        <HBox alignment="CENTER" spacing="10">
+                            <Line endX="85.0" startX="0" styleClass="divider-line" />
+                            <Label prefHeight="19.0" prefWidth="102.0" styleClass="divider-text" text="Or continue with" />
+                            <Line endX="85.0" styleClass="divider-line" />
                             <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="15.0" />
+                                <Insets bottom="20.0" top="20.0" />
                             </padding>
                         </HBox>
-                        <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="141.0">
+
+                        <Button maxWidth="160.0" styleClass="google-button">
                             <graphic>
-                                <HBox alignment="CENTER" prefHeight="0.0" prefWidth="200.0" spacing="10.0">
-                                    <children>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                                        <Label text="Google" />
-                                    </children>
+                                <HBox alignment="CENTER" spacing="8">
+                                    <ImageView fitHeight="20" fitWidth="20" preserveRatio="true" />
+                                    <Label text="Google" />
                                 </HBox>
                             </graphic>
                         </Button>
-                        <TextFlow prefHeight="21.0" prefWidth="339.0" textAlignment="CENTER">
-                            <children>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account? " />
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sign up now" />
-                            </children>
+
+                        <!-- Combined footer text -->
+                        <TextFlow textAlignment="CENTER">
+                            <Text style="-fx-fill: #6b7280;" text="Don't have an account? " />
+                            <Text style="-fx-fill: #2992b8; -fx-underline: false; -fx-cursor: hand;" text="Sign up now" />
                             <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+                                <Insets top="12.0" />
                             </padding>
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
                         </TextFlow>
                     </children>
-                    <padding>
-                        <Insets bottom="35.0" left="35.0" right="35.0" top="25.0" />
-                    </padding>
                 </VBox>
-                <Label text="By signing in, you agree to our Terms of Service and Privacy Policy">
+
+                <Label styleClass="footer-text" text="By signing in, you agree to our Terms of Service and Privacy Policy">
                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </padding>
-                </Label>
+                        <Insets bottom="10.0" />
+                    </padding></Label>
             </children>
+
+            <padding>
+                <Insets top="15.0" />
+            </padding>
         </VBox>
     </children>
-    <padding>
-        <Insets top="50.0" />
-    </padding>
 </StackPane>
