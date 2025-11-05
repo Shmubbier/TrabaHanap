@@ -1,0 +1,72 @@
+/* sidebar.css */
+
+/* --- Buttons --- */
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+    -fx-alignment: CENTER_LEFT;
+    -fx-background-radius: 12px; /* rounded corners */
+}
+
+/* Hover effect */
+.sidebar-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+/* Pressed/selected effect */
+.sidebar-button:pressed,
+.sidebar-button:selected {
+    -fx-background-color: linear-gradient(to right, #0092b7, #009966);
+}
+
+.sidebar-button:pressed .sidebar-btn-label,
+.sidebar-button:selected .sidebar-btn-label {
+    -fx-text-fill: white;
+}
+
+.sidebar-button:pressed .btn-icon,
+.sidebar-button:selected .btn-icon {
+    -fx-effect: innershadow(gaussian, white, 0, 0, 0, 0);
+}
+
+/* --- Labels inside buttons --- */
+.sidebar-btn-label {
+    -fx-font-size: 14px;
+}
+
+/* --- Logo and Username --- */
+.sidebar-logo {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.sidebar-username {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.sidebar-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #555555;
+}
+
+/* --- Divider --- */
+.divider {
+    -fx-background-color: #e5e7eb;
+    -fx-min-height: 1px;
+    -fx-max-height: 1px;
+}
+
+/* --- Notifications --- */
+.notification {
+    -fx-background-color: #cefafe;
+    -fx-text-fill: #007595;
+    -fx-alignment: center;
+    -fx-font-size: 12px;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+    -fx-max-width: 20px;
+    -fx-max-height: 20px;
+    -fx-background-radius: 50%;
+}
