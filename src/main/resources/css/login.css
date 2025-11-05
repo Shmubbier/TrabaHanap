@@ -1,0 +1,137 @@
+/* --- Title and headers --- */
+.app-title {
+    -fx-font-family: "Dubai Medium";
+    -fx-font-size: 17px;
+    -fx-text-fill: #000000;
+}
+
+.app-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+}
+
+.welcome-title {
+    -fx-font-family: "Dubai";
+    -fx-font-size: 19px;
+    -fx-text-fill: #000000;
+}
+
+.welcome-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #5c5c5c;
+}
+
+/* --- Input labels --- */
+.field-label {
+    -fx-font-family: "Dubai";
+    -fx-font-size: 15px;
+    -fx-text-fill: #000000;
+    -fx-padding: 0 0 0 3;
+}
+
+/* --- Input fields --- */
+.input-field {
+    -fx-background-color: #f5f6f7;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-pref-height: 42px;
+    -fx-font-size: 12px;
+    -fx-prompt-text-fill: #7b7b7b;
+    -fx-padding: 0 0 0 10;
+}
+
+.input-field:focused {
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 10;
+}
+
+/* --- Eye button --- */
+.eye-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #555555;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-padding: 0 10 0 0;
+}
+
+/* --- Custom circular checkbox --- */
+.custom-checkbox .box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #999999;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-min-width: 16px;
+    -fx-min-height: 16px;
+    -fx-pref-width: 16px;
+    -fx-pref-height: 16px;
+}
+
+.custom-checkbox:selected .mark {
+    -fx-shape: "M3,6 L6,9 L13,2";
+    -fx-stroke: black;
+    -fx-stroke-width: 1.8;
+}
+
+.custom-checkbox:selected .box {
+    -fx-border-color: #333333;
+}
+
+.custom-checkbox:focused .box {
+    -fx-effect: none; /* remove blue glow */
+}
+
+/* --- Forgot password link + Sign up link --- */
+.no-underline-link {
+    -fx-text-fill: #0077cc;
+    -fx-underline: false;
+    -fx-cursor: hand;
+}
+
+.no-underline-link:hover {
+    -fx-text-fill: #005fa3;
+    -fx-underline: false;
+}
+
+/* --- Sign In button --- */
+.sign-in-button {
+    -fx-background-color: linear-gradient(to right, #0092b7, #009966);
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-pref-width: 330px;
+    -fx-pref-height: 42px;
+    -fx-font-weight: normal;
+    -fx-cursor: hand;
+}
+
+/* --- Divider line & text --- */
+.divider-line {
+    -fx-stroke: #e1e2e6;
+    -fx-stroke-width: 1;
+}
+
+.divider-text {
+    -fx-text-fill: #555555;
+    -fx-font-size: 13px;
+}
+
+/* --- Google button --- */
+.google-button {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-color: #e1e2e6;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-pref-width: 330px;
+    -fx-pref-height: 42px;
+}
+
+.google-button:hover {
+    -fx-background-color: #f9fafb;
+}
+
+/* --- Footer --- */
+.footer-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
