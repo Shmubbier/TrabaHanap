@@ -1,0 +1,77 @@
+/* Root card */
+.card-root {
+    -fx-background-color: white;
+    -fx-border-color: #e2e3e5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.00), 0, 0, 0, 0);
+}
+
+/* Hover: float + shadow + title color change */
+.card-root:hover {
+    -fx-translate-y: -4;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 12, 0, 0, 4);
+}
+
+.card-root:hover .job-title {
+    -fx-text-fill: #0092b8;
+}
+
+/* Content box spacing */
+.content-box {
+    -fx-background-color: white;
+}
+
+/* Fonts */
+.job-title {
+    -fx-font-family: "Dubai";
+    -fx-font-size: 18px;
+    -fx-text-fill: black;
+}
+
+/* User name */
+.poster-name {
+    -fx-text-fill: #4a5565;
+    -fx-font-size: 13px;
+}
+
+/* Rating */
+.star-icon {
+    -fx-text-fill: #f0b100;
+    -fx-font-size: 14px;
+}
+.rating-text {
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+}
+
+/* Location + time/applicants */
+.location-text,
+.subinfo-text {
+    -fx-text-fill: #6a7282;
+    -fx-font-size: 13px;
+}
+
+/* Price */
+.price-text {
+    -fx-font-family: "Dubai";
+    -fx-text-fill: #0092b8;
+    -fx-font-size: 18px;
+}
+
+/* Category tag */
+.category-tag {
+    -fx-background-color: rgba(255,255,255,0.45);
+    -fx-background-radius: 20;
+    -fx-padding: 3 7;
+    -fx-font-size: 12px;
+    -fx-text-fill: #0f1724;
+    -fx-border-color: transparent;
+}
+.category-tag:hover {
+    -fx-background-color: white;
+}
+
+/* Image placeholders already styled in FXML (fill:#cefafe) */
