@@ -19,9 +19,9 @@
     <children>
         <VBox alignment="CENTER" spacing="30.0">
             <children>
-                <VBox alignment="CENTER" maxWidth="400" prefHeight="676.0" prefWidth="400.0" style="-fx-background-color: white; -fx-background-radius: 12;                              -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 12, 0, 0, 6);">
+                <VBox alignment="CENTER" maxWidth="400" prefHeight="665.0" prefWidth="400.0" style="-fx-background-color: white; -fx-background-radius: 12;                              -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 12, 0, 0, 6);">
                     <padding>
-                        <Insets bottom="30.0" left="40.0" right="40.0" top="45.0" />
+                        <Insets bottom="30.0" left="40.0" right="40.0" top="20.0" />
                     </padding>
                     <children>
                         <ImageView fitHeight="65" fitWidth="65" preserveRatio="true" />
@@ -32,8 +32,14 @@
                         <Region prefHeight="8.0" prefWidth="320.0" />
 
                         <VBox alignment="CENTER_LEFT" spacing="3.0">
-                            <Label styleClass="field-label" text="Email Address" />
-                            <TextField promptText="👤  juandelacruz@example.com" styleClass="input-field" />
+                            <Label styleClass="field-label" text="Username" />
+                            <TextField promptText="👤  Username" styleClass="input-field" />
+                     <VBox alignment="CENTER_LEFT" spacing="3.0">
+                        <children>
+                           <Label styleClass="field-label" text="Email Address" />
+                           <TextField promptText="✉ juandelacruz@example.com" styleClass="input-field" />
+                        </children>
+                     </VBox>
                         </VBox>
 
                         <VBox alignment="CENTER_LEFT" spacing="3.0">
@@ -65,7 +71,10 @@
 
                         <HBox alignment="CENTER" spacing="10">
                             <Line endX="100" startX="0" styleClass="divider-line" />
-                            <Label styleClass="divider-text" text="Or continue with" />
+                            <Label styleClass="divider-text" text="Or continue with">
+                        <padding>
+                           <Insets bottom="-10.0" left="-10.0" right="-10.0" top="-10.0" />
+                        </padding></Label>
                             <Line endX="100" startX="0" styleClass="divider-line" />
                             <padding>
                                 <Insets bottom="20.0" top="20.0" />
