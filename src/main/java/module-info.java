@@ -1,13 +1,28 @@
 module com.devera.trabahanap {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.graphics;
-    requires javafx.web;
-    requires org.controlsfx.controls;
-    requires com.fasterxml.jackson.databind;
+    requires java.net.http;
+
+    requires com.google.api.client;
+    requires com.google.api.client.json.gson;
 
     opens com.devera.trabahanap to javafx.fxml;
     exports com.devera.trabahanap;
-    exports com.devera.trabahanap.controller;
+    exports com.devera.trabahanap.service;
+
+    // Firebase and Google
+    requires firebase.admin;
+    requires com.google.gson;
+    // Allow reading unnamed modules
+    requires static java.sql;
+    requires com.google.auth;
+    requires com.google.auth.oauth2;
+
+
+    opens com.devera.trabahanap.service;
+    opens com.devera.trabahanap.system to com.google.auth, com.google.auth.oauth2, firebase.admin;
+
     opens com.devera.trabahanap.controller to javafx.fxml;
+    exports com.devera.trabahanap.controller;
+    exports com.devera.trabahanap.system;
 }

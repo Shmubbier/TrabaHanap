@@ -20,6 +20,8 @@
         <javafx.version>21.0.1</javafx.version>
         <controlsfx.version>11.2.0</controlsfx.version>
         <jackson.version>2.16.0</jackson.version>
+        <firebase.admin.version>9.2.0</firebase.admin.version>
+        <google.auth.version>1.18.0</google.auth.version>
     </properties>
 
     <dependencies>
@@ -57,6 +59,19 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- Firebase Admin (server-side) -->
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>9.2.0</version>
+        </dependency>
+        <!-- google auth library for credential helpers -->
+        <dependency>
+            <groupId>com.google.auth</groupId>
+            <artifactId>google-auth-library-oauth2-http</artifactId>
+            <version>${google.auth.version}</version>
         </dependency>
     </dependencies>
 
