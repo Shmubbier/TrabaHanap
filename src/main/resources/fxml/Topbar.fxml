@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 
@@ -14,7 +16,14 @@
 
         <Region HBox.hgrow="ALWAYS" />
 
-        <Button id="topNotificationButton" prefHeight="28.0" prefWidth="28.0" styleClass="notif-button" text="⩍" />
+        <Button id="topNotificationButton" prefHeight="28.0" prefWidth="28.0" styleClass="notif-button">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/notification_icon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
 
     </children>
    <padding>
