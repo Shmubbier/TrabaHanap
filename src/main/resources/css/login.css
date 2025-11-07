@@ -135,3 +135,9 @@
     -fx-font-size: 12px;
     -fx-text-fill: #6b7280;
 }
+
+/* --- Email Alert --- */
+.email-label {
+    -fx-font-size: 10px;
+    -fx-text-fill: #e7000b;
+}
