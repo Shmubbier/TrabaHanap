@@ -53,7 +53,4 @@ public class AuthService {
             }
         });
     }
-
-    // Note: firebase-admin doesn't provide client-like sign-in (returns tokens for verifying).
-    // For client authentication flows, use a client SDK or custom token approach.
 }

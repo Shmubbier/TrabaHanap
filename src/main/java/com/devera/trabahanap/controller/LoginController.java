@@ -109,6 +109,21 @@ public class LoginController extends Controller {
         });
     }
 
+    @FXML
+    private void onSignupClicked() {
+        try {
+            // navigate to the register page (resource path matches other usages)
+            navigate("/fxml/Register_Page.fxml");
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+            alert.setTitle("Navigation error");
+            alert.setHeaderText("Could not open Register");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
     /**
      * Performs Firebase Auth REST signInWithPassword request.
      *

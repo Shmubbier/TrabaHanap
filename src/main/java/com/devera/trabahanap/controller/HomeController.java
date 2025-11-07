@@ -39,12 +39,30 @@ public class HomeController extends Controller {
     @FXML
     private HBox jobsHBox;
 
+    // Add BorderPane reference so we can place the sidebar and load center content
+    @FXML
+    private javafx.scene.layout.BorderPane borderPane;
+
     private final JobService jobService = new JobService();
 
     private final FirebaseUserService userService = new FirebaseUserService();
 
     @FXML
     public void initialize() {
+        try {
+            FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/fxml/Sidebar.fxml"));
+            Node sidebar = sidebarLoader.load();
+
+            SidebarController sidebarController = sidebarLoader.getController();
+            sidebarController.setHomeController(this);
+
+            borderPane.setLeft(sidebar); // IF using BorderPane, adjust to your layout
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        loadPage("Home_Content.fxml");
+
         // Populate UI from session manager immediately if available
         SessionManager sm = SessionManager.get();
         sm.getEmail().ifPresent(email -> {
@@ -178,5 +196,41 @@ public class HomeController extends Controller {
         a.setHeaderText(null);
         a.setContentText(message);
         a.showAndWait();
+    }
+
+    /**
+     * Load a content FXML into the center of the Home layout (borderPane).
+     * Accepts either a simple file name (e.g. "Home_Content.fxml") or a full resource path
+     * (e.g. "/fxml/Home_Content.fxml"). If borderPane is null, falls back to no-op.
+     */
+    public void loadPage(String fxmlName) {
+        if (borderPane == null) {
+            System.err.println("[HomeController] borderPane is null, cannot load page: " + fxmlName);
+            return;
+        }
+
+        String path = fxmlName.startsWith("/") ? fxmlName : ("/fxml/" + fxmlName);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            Node content = loader.load();
+
+            // If the loaded controller needs a reference back to HomeController, set it (optional)
+            Object controller = loader.getController();
+            if (controller != null) {
+                try {
+                    controller.getClass().getMethod("setHomeController", HomeController.class).invoke(controller, this);
+                } catch (NoSuchMethodException ignored) {
+                    // Not all content controllers will have setHomeController - ignore
+                } catch (ReflectiveOperationException roe) {
+                    System.err.println("[HomeController] Failed to setHomeController on loaded content: " + roe.getMessage());
+                }
+            }
+
+            // Place content in center of borderPane
+            borderPane.setCenter(content);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Load error", "Could not load page: " + fxmlName + " — " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 }

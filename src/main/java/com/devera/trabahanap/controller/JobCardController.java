@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
+ *
+ *
  * Controller for JobCard.fxml — handles hover effects and other card interactions.
  */
 public class JobCardController extends Controller {

@@ -32,13 +32,13 @@
                                     <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: #cefafe; -fx-background-radius: 20;" styleClass="badge-btn" text="🇵🇭 Proudly Filipino" />
                                     <Label styleClass="hero-title" text="Find Trusted Services &amp;" textAlignment="CENTER" wrapText="true" />
                                     <Label styleClass="hero-title" text="Commissions" textAlignment="CENTER" wrapText="true">
-                              <padding>
-                                 <Insets top="-30.0" />
-                              </padding></Label>
+                                        <padding>
+                                            <Insets top="-30.0" />
+                                        </padding></Label>
                                     <Label styleClass="hero-subtitle" text="Connect with skilled Filipinos for errands, tutoring, design, and more — all in one place." wrapText="true">
-                              <padding>
-                                 <Insets bottom="20.0" />
-                              </padding></Label>
+                                        <padding>
+                                            <Insets bottom="20.0" />
+                                        </padding></Label>
 
                                     <!-- Search container -->
                                     <StackPane prefHeight="56.0" prefWidth="561.0" styleClass="search-container">
@@ -48,7 +48,7 @@
                                                 <children>
                                                     <ImageView fitHeight="22.0" fitWidth="22.0" styleClass="search-icon" />
                                                     <TextField id="searchFieldMain" prefHeight="32.0" prefWidth="260.0" promptText="Find commissions, gigs, or services right now" style="-fx-background-color: f5f6f7;" styleClass="search-field" />
-                                       <Region prefHeight="35.0" prefWidth="14.0" />
+                                                    <Region prefHeight="35.0" prefWidth="14.0" />
                                                     <Rectangle fill="#9a9fa6" height="26.0" width="1.0" />
                                                     <ImageView fitHeight="22.0" fitWidth="22.0" styleClass="search-icon" />
                                                     <TextField id="searchFieldLocation" prefHeight="32.0" prefWidth="175.0" promptText="Location" style="-fx-background-color: f5f6f7;" styleClass="search-field" />
@@ -81,183 +81,183 @@
                     </StackPane>
                 </children>
             </VBox>
-         <VBox>
-            <children>
+            <VBox>
+                <children>
 
-                  <!-- Browse by Category header -->
-                  <HBox alignment="BOTTOM_LEFT" fillHeight="false" prefHeight="45.0" prefWidth="1200.0">
-                      <children>
-                          <Label prefWidth="174.0" styleClass="section-header" text="Browse by Category" />
-                          <Region HBox.hgrow="ALWAYS" />
-                          <Button id="viewAllCategoryBtn" prefHeight="47.0" prefWidth="72.0" styleClass="view-all" text="View All" />
-                      </children>
-                      <padding>
-                          <Insets left="19.0" top="20.0" />
-                      </padding>
-                  </HBox>
+                    <!-- Browse by Category header -->
+                    <HBox alignment="BOTTOM_LEFT" fillHeight="false" prefHeight="45.0" prefWidth="1200.0">
+                        <children>
+                            <Label prefWidth="174.0" styleClass="section-header" text="Browse by Category" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button id="viewAllCategoryBtn" prefHeight="47.0" prefWidth="72.0" styleClass="view-all" text="View All" />
+                        </children>
+                        <padding>
+                            <Insets left="19.0" top="20.0" />
+                        </padding>
+                    </HBox>
 
-                  <Label styleClass="section-subtitle" text="Find the perfect service for your needs">
-                  <VBox.margin>
-                     <Insets left="19.0" />
-                  </VBox.margin>
-               </Label>
+                    <Label styleClass="section-subtitle" text="Find the perfect service for your needs">
+                        <VBox.margin>
+                            <Insets left="19.0" />
+                        </VBox.margin>
+                    </Label>
 
-                  <!-- Category tiles -->
-                  <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="17.0" prefWidth="843.0" prefWrapLength="850.0" vgap="14.0">
-                      <children>
-                          <Button id="categoryErrandsBtn" styleClass="category-button">
-                              <graphic>
-                                  <VBox alignment="CENTER" spacing="8">
-                                      <StackPane>
-                                          <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-1" width="56" />
-                                          <ImageView fitHeight="28" fitWidth="28" />
-                                      </StackPane>
-                                      <Label text="Errands" />
-                                  </VBox>
-                              </graphic>
-                          </Button>
+                    <!-- Category tiles -->
+                    <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="17.0" prefWidth="843.0" prefWrapLength="850.0" vgap="14.0">
+                        <children>
+                            <Button id="categoryErrandsBtn" styleClass="category-button">
+                                <graphic>
+                                    <VBox alignment="CENTER" spacing="8">
+                                        <StackPane>
+                                            <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-1" width="56" />
+                                            <ImageView fitHeight="28" fitWidth="28" />
+                                        </StackPane>
+                                        <Label text="Errands" />
+                                    </VBox>
+                                </graphic>
+                            </Button>
 
-                          <Button id="categoryTutoringBtn" styleClass="category-button">
-                              <graphic>
-                                  <VBox alignment="CENTER" spacing="8">
-                                      <StackPane>
-                                          <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-2" width="56" />
-                                          <ImageView fitHeight="28" fitWidth="28" />
-                                      </StackPane>
-                                      <Label text="Tutoring" />
-                                  </VBox>
-                              </graphic>
-                          </Button>
+                            <Button id="categoryTutoringBtn" styleClass="category-button">
+                                <graphic>
+                                    <VBox alignment="CENTER" spacing="8">
+                                        <StackPane>
+                                            <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-2" width="56" />
+                                            <ImageView fitHeight="28" fitWidth="28" />
+                                        </StackPane>
+                                        <Label text="Tutoring" />
+                                    </VBox>
+                                </graphic>
+                            </Button>
 
-                          <Button id="categoryGraphicDesignBtn" styleClass="category-button">
-                              <graphic>
-                                  <VBox alignment="CENTER" spacing="8">
-                                      <StackPane>
-                                          <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-3" width="56" />
-                                          <ImageView fitHeight="28" fitWidth="28" />
-                                      </StackPane>
-                                      <Label text="Graphic Design" />
-                                  </VBox>
-                              </graphic>
-                          </Button>
-                     <Button id="categoryDeliveryBtn" styleClass="category-button">
-                        <graphic>
-                           <VBox alignment="CENTER" spacing="8">
-                              <children>
-                                 <StackPane>
-                                    <children>
-                                       <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-1" width="56" />
-                                       <ImageView fitHeight="28" fitWidth="28" />
-                                    </children>
-                                 </StackPane>
-                                 <Label text="Delivery" />
-                              </children>
-                           </VBox>
-                        </graphic>
-                     </Button>
-                     <Button id="categoryCleaningBtn" styleClass="category-button">
-                        <graphic>
-                           <VBox alignment="CENTER" spacing="8">
-                              <children>
-                                 <StackPane>
-                                    <children>
-                                       <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-2" width="56" />
-                                       <ImageView fitHeight="28" fitWidth="28" />
-                                    </children>
-                                 </StackPane>
-                                 <Label text="Cleaning" />
-                              </children>
-                           </VBox>
-                        </graphic>
-                     </Button>
-                     <Button id="categoryPhotographyBtn" styleClass="category-button">
-                        <graphic>
-                           <VBox alignment="CENTER" spacing="8">
-                              <children>
-                                 <StackPane>
-                                    <children>
-                                       <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-3" width="56" />
-                                       <ImageView fitHeight="28" fitWidth="28" />
-                                    </children>
-                                 </StackPane>
-                                 <Label text="Photography" />
-                              </children>
-                           </VBox>
-                        </graphic>
-                     </Button>
-                     <Button id="categoryWritingBtn" styleClass="category-button">
-                        <graphic>
-                           <VBox alignment="CENTER" spacing="8">
-                              <children>
-                                 <StackPane>
-                                    <children>
-                                       <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-1" width="56" />
-                                       <ImageView fitHeight="28" fitWidth="28" />
-                                    </children>
-                                 </StackPane>
-                                 <Label text="Writing" />
-                              </children>
-                           </VBox>
-                        </graphic>
-                     </Button>
-                      </children>
-                  <padding>
-                     <Insets bottom="17.0" top="17.0" />
-                  </padding>
-                  </FlowPane>
-            </children>
-            <padding>
-               <Insets left="30.0" right="30.0" />
-            </padding>
-         </VBox>
-         <VBox>
-            <children>
+                            <Button id="categoryGraphicDesignBtn" styleClass="category-button">
+                                <graphic>
+                                    <VBox alignment="CENTER" spacing="8">
+                                        <StackPane>
+                                            <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-3" width="56" />
+                                            <ImageView fitHeight="28" fitWidth="28" />
+                                        </StackPane>
+                                        <Label text="Graphic Design" />
+                                    </VBox>
+                                </graphic>
+                            </Button>
+                            <Button id="categoryDeliveryBtn" styleClass="category-button">
+                                <graphic>
+                                    <VBox alignment="CENTER" spacing="8">
+                                        <children>
+                                            <StackPane>
+                                                <children>
+                                                    <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-1" width="56" />
+                                                    <ImageView fitHeight="28" fitWidth="28" />
+                                                </children>
+                                            </StackPane>
+                                            <Label text="Delivery" />
+                                        </children>
+                                    </VBox>
+                                </graphic>
+                            </Button>
+                            <Button id="categoryCleaningBtn" styleClass="category-button">
+                                <graphic>
+                                    <VBox alignment="CENTER" spacing="8">
+                                        <children>
+                                            <StackPane>
+                                                <children>
+                                                    <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-2" width="56" />
+                                                    <ImageView fitHeight="28" fitWidth="28" />
+                                                </children>
+                                            </StackPane>
+                                            <Label text="Cleaning" />
+                                        </children>
+                                    </VBox>
+                                </graphic>
+                            </Button>
+                            <Button id="categoryPhotographyBtn" styleClass="category-button">
+                                <graphic>
+                                    <VBox alignment="CENTER" spacing="8">
+                                        <children>
+                                            <StackPane>
+                                                <children>
+                                                    <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-3" width="56" />
+                                                    <ImageView fitHeight="28" fitWidth="28" />
+                                                </children>
+                                            </StackPane>
+                                            <Label text="Photography" />
+                                        </children>
+                                    </VBox>
+                                </graphic>
+                            </Button>
+                            <Button id="categoryWritingBtn" styleClass="category-button">
+                                <graphic>
+                                    <VBox alignment="CENTER" spacing="8">
+                                        <children>
+                                            <StackPane>
+                                                <children>
+                                                    <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-1" width="56" />
+                                                    <ImageView fitHeight="28" fitWidth="28" />
+                                                </children>
+                                            </StackPane>
+                                            <Label text="Writing" />
+                                        </children>
+                                    </VBox>
+                                </graphic>
+                            </Button>
+                        </children>
+                        <padding>
+                            <Insets bottom="17.0" top="17.0" />
+                        </padding>
+                    </FlowPane>
+                </children>
+                <padding>
+                    <Insets left="30.0" right="30.0" />
+                </padding>
+            </VBox>
+            <VBox>
+                <children>
 
-                  <!-- Trending Commissions header -->
-                  <HBox alignment="BOTTOM_LEFT" prefHeight="45.0" prefWidth="1200.0">
-                      <children>
-                          <Label styleClass="section-header" text="Trending Commissions">
-                              <padding>
-                                  <Insets left="19.0" />
-                              </padding>
-                          </Label>
-                          <Region HBox.hgrow="ALWAYS" />
-                          <Button id="viewAllJobsBtn" styleClass="view-all" text="See All Jobs" />
-                      </children>
-                  <padding>
-                     <Insets left="19.0" />
-                  </padding>
-                  </HBox>
+                    <!-- Trending Commissions header -->
+                    <HBox alignment="BOTTOM_LEFT" prefHeight="45.0" prefWidth="1200.0">
+                        <children>
+                            <Label styleClass="section-header" text="Trending Commissions">
+                                <padding>
+                                    <Insets left="19.0" />
+                                </padding>
+                            </Label>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button id="viewAllJobsBtn" styleClass="view-all" text="See All Jobs" />
+                        </children>
+                        <padding>
+                            <Insets left="19.0" />
+                        </padding>
+                    </HBox>
 
-                  <Label styleClass="section-subtitle" text="Popular jobs posted today">
-                  <VBox.margin>
-                     <Insets bottom="17.0" left="19.0" />
-                  </VBox.margin>
-               </Label>
+                    <Label styleClass="section-subtitle" text="Popular jobs posted today">
+                        <VBox.margin>
+                            <Insets bottom="17.0" left="19.0" />
+                        </VBox.margin>
+                    </Label>
 
-                  <!-- horizontal scroller for job cards -->
-                  <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" pannable="true" prefHeight="384.0" prefWidth="959.0" vbarPolicy="NEVER">
-                      <content>
-                          <HBox prefHeight="287.0" prefWidth="1007.0" spacing="15.0">
-                              <padding>
-                                  <Insets bottom="10" left="10" right="10" top="10" />
-                              </padding>
-                              <children>
-                                  <fx:include source="JobCard.fxml" />
-                                  <fx:include source="JobCard.fxml" />
-                                  <fx:include source="JobCard.fxml" />
-                                  <fx:include source="JobCard.fxml" />
-                           <fx:include source="JobCard.fxml" />
-                           <fx:include source="JobCard.fxml" />
-                              </children>
-                          </HBox>
-                      </content>
-                  </ScrollPane>
-            </children>
-            <padding>
-               <Insets bottom="30.0" left="30.0" right="30.0" />
-            </padding>
-         </VBox>
+                    <!-- horizontal scroller for job cards -->
+                    <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" pannable="true" prefHeight="384.0" prefWidth="959.0" vbarPolicy="NEVER">
+                        <content>
+                            <HBox prefHeight="287.0" prefWidth="1007.0" spacing="15.0">
+                                <padding>
+                                    <Insets bottom="10" left="10" right="10" top="10" />
+                                </padding>
+                                <children>
+                                    <fx:include source="JobCard.fxml" />
+                                    <fx:include source="JobCard.fxml" />
+                                    <fx:include source="JobCard.fxml" />
+                                    <fx:include source="JobCard.fxml" />
+                                    <fx:include source="JobCard.fxml" />
+                                    <fx:include source="JobCard.fxml" />
+                                </children>
+                            </HBox>
+                        </content>
+                    </ScrollPane>
+                </children>
+                <padding>
+                    <Insets bottom="30.0" left="30.0" right="30.0" />
+                </padding>
+            </VBox>
 
             <!-- How it works -->
             <VBox alignment="TOP_CENTER" prefWidth="1020.0" spacing="10" style="-fx-background-color: #ecfdfc;">
@@ -267,9 +267,9 @@
                 <children>
                     <Label styleClass="section-header" text="How TrabaHanap Works" />
                     <Label styleClass="section-subtitle" text="Get started in three simple steps">
-                  <VBox.margin>
-                     <Insets top="-10.0" />
-                  </VBox.margin></Label>
+                        <VBox.margin>
+                            <Insets top="-10.0" />
+                        </VBox.margin></Label>
                     <HBox alignment="CENTER" spacing="50.0">
                         <padding>
                             <Insets bottom="20" left="40" right="40" top="20" />
@@ -288,36 +288,36 @@
                                 <Label styleClass="step-title" text="Post or Browse" />
                                 <Label prefHeight="40.0" prefWidth="235.0" styleClass="step-desc" text="Create a job posting or browse available services near you" textAlignment="CENTER" wrapText="true" />
                             </VBox>
-                     <VBox alignment="CENTER" spacing="4.0">
-                        <children>
-                            <StackPane alignment="CENTER" styleClass="step-rect">
+                            <VBox alignment="CENTER" spacing="4.0">
                                 <children>
-                                    <Rectangle arcHeight="18" arcWidth="18" height="55" styleClass="step-rect-bg" width="55" />
+                                    <StackPane alignment="CENTER" styleClass="step-rect">
+                                        <children>
+                                            <Rectangle arcHeight="18" arcWidth="18" height="55" styleClass="step-rect-bg" width="55" />
 
-                                    <!-- icon placeholder (you can later set images via controller or fx:id) -->
-                                    <ImageView fitHeight="28" fitWidth="28" preserveRatio="true" />
+                                            <!-- icon placeholder (you can later set images via controller or fx:id) -->
+                                            <ImageView fitHeight="28" fitWidth="28" preserveRatio="true" />
+                                        </children>
+                                    </StackPane>
+
+                                    <Label styleClass="step-title" text="Connect &amp; Discuss" />
+                                    <Label prefHeight="40.0" prefWidth="235.0" styleClass="step-desc" text="Chat with service providers and agree on terms" textAlignment="CENTER" wrapText="true" />
                                 </children>
-                            </StackPane>
-
-                            <Label styleClass="step-title" text="Connect &amp; Discuss" />
-                           <Label prefHeight="40.0" prefWidth="235.0" styleClass="step-desc" text="Chat with service providers and agree on terms" textAlignment="CENTER" wrapText="true" />
-                        </children>
-                     </VBox>
-                     <VBox alignment="CENTER" spacing="4.0">
-                        <children>
-                            <StackPane alignment="CENTER" styleClass="step-rect">
+                            </VBox>
+                            <VBox alignment="CENTER" spacing="4.0">
                                 <children>
-                                    <Rectangle arcHeight="18" arcWidth="18" height="55" styleClass="step-rect-bg" width="55" />
+                                    <StackPane alignment="CENTER" styleClass="step-rect">
+                                        <children>
+                                            <Rectangle arcHeight="18" arcWidth="18" height="55" styleClass="step-rect-bg" width="55" />
 
-                                    <!-- icon placeholder (you can later set images via controller or fx:id) -->
-                                    <ImageView fitHeight="28" fitWidth="28" preserveRatio="true" />
+                                            <!-- icon placeholder (you can later set images via controller or fx:id) -->
+                                            <ImageView fitHeight="28" fitWidth="28" preserveRatio="true" />
+                                        </children>
+                                    </StackPane>
+
+                                    <Label styleClass="step-title" text="Work &amp; Earn" />
+                                    <Label prefHeight="40.0" prefWidth="235.0" styleClass="step-desc" text="Complete the job and get paid securely through the platform" textAlignment="CENTER" wrapText="true" />
                                 </children>
-                            </StackPane>
-
-                            <Label styleClass="step-title" text="Work &amp; Earn" />
-                           <Label prefHeight="40.0" prefWidth="235.0" styleClass="step-desc" text="Complete the job and get paid securely through the platform" textAlignment="CENTER" wrapText="true" />
-                        </children>
-                     </VBox>
+                            </VBox>
                         </children>
                     </HBox>
                 </children>
