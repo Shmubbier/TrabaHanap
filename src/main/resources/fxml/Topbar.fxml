@@ -10,11 +10,11 @@
 
     <children>
 
-        <TextField prefHeight="28.0" prefWidth="111.0" promptText="🔎 Search jobs, services, or people..." styleClass="topbar-search" HBox.hgrow="ALWAYS" />
+        <TextField id="topSearchBarField" prefHeight="28.0" prefWidth="111.0" promptText="🔎 Search jobs, services, or people..." styleClass="topbar-search" HBox.hgrow="ALWAYS" />
 
         <Region HBox.hgrow="ALWAYS" />
 
-        <Button prefHeight="28.0" prefWidth="28.0" styleClass="notif-button" text="⩍" />
+        <Button id="topNotificationButton" prefHeight="28.0" prefWidth="28.0" styleClass="notif-button" text="⩍" />
 
     </children>
    <padding>

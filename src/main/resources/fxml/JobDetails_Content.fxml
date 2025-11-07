@@ -25,7 +25,7 @@
                                 <VBox prefWidth="1144.0" spacing="10.0" styleClass="card-padding">
 
                                     <!-- Back Button -->
-                                    <Button styleClass="back-button" text="Back to Jobs">
+                                    <Button id="detailsBackBtn" styleClass="back-button" text="Back to Jobs">
                                         <graphic>
                                             <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true" />
                                         </graphic>
@@ -45,7 +45,7 @@
                                                 <VBox alignment="CENTER_LEFT" prefWidth="729.0" spacing="10.0" styleClass="card-padding">
 
                                                     <HBox spacing="10.0">
-                                                        <Button prefHeight="26.0" prefWidth="98.0" styleClass="category-tag" text="Category">
+                                                        <Button id="detailsCategoryBtn" prefHeight="26.0" prefWidth="98.0" styleClass="category-tag" text="Category">
                                                             <HBox.margin>
                                                                 <Insets left="10.0" />
                                                             </HBox.margin></Button>
@@ -54,14 +54,14 @@
                                                         <Button prefHeight="26.0" prefWidth="26.0" styleClass="icon-circle" text="↪" />
                                                     </HBox>
 
-                                                    <Label styleClass="job-title" text="Logo Design for Coffee Shop">
+                                                    <Label id="detailsJobTitle" styleClass="job-title" text="Logo Design for Coffee Shop">
                                                         <VBox.margin>
                                                             <Insets left="10.0" />
                                                         </VBox.margin></Label>
                                                     <HBox spacing="10.0">
-                                                        <Label styleClass="subinfo-text" text="🌐 Quezon City, Metro Manila" />
-                                                        <Label styleClass="subinfo-text" text="⏲ 2 days ago" />
-                                                        <Label styleClass="subinfo-text" text="👤 5 applicants" />
+                                                        <Label id="detailsLocation" styleClass="subinfo-text" text="🌐 Quezon City, Metro Manila" />
+                                                        <Label id="detailsJobTimePosted" styleClass="subinfo-text" text="⏲ 2 days ago" />
+                                                        <Label id="detailsJobApplicants" styleClass="subinfo-text" text="👤 5 applicants" />
                                                         <VBox.margin>
                                                             <Insets left="10.0" />
                                                         </VBox.margin>
@@ -73,7 +73,7 @@
                                                                     <Rectangle arcHeight="10" arcWidth="10" height="95.0" styleClass="price-box" width="561.0" />
 
                                                                     <VBox alignment="CENTER_LEFT" prefWidth="570.0" spacing="5.0">
-                                                                        <Label styleClass="price-text" text="₱2,000 – ₱5,000" />
+                                                                        <Label id="detailsJobPriceRange" styleClass="price-text" text="₱2,000 – ₱5,000" />
                                                                         <Label styleClass="budget-sub" text="Budget range for this project">
                                                                             <padding>
                                                                                 <Insets top="-7.0" />
@@ -100,7 +100,7 @@
                                                         <padding>
                                                             <Insets left="3.0" />
                                                         </padding></Label>
-                                                    <Label prefWidth="564.0" styleClass="paragraph-text" text="Need a modern, Filipino-inspired logo for my new coffee shop in Quezon City. Looking for something that represents both traditional and contemporary Filipino culture." wrapText="true">
+                                                    <Label id="detailsJobDescription" prefWidth="564.0" styleClass="paragraph-text" text="Need a modern, Filipino-inspired logo for my new coffee shop in Quezon City. Looking for something that represents both traditional and contemporary Filipino culture." wrapText="true">
                                                         <VBox.margin>
                                                             <Insets bottom="4.0" left="5.0" right="4.0" top="4.0" />
                                                         </VBox.margin></Label>
@@ -113,15 +113,15 @@
                                                         <VBox.margin>
                                                             <Insets bottom="-7.0" left="5.0" />
                                                         </VBox.margin></Label>
-                                                    <Label styleClass="bullet-text" text="• Experience in similar projects or services">
+                                                    <Label id="detailsBullet1" styleClass="bullet-text" text="• Experience in similar projects or services">
                                                         <VBox.margin>
                                                             <Insets left="5.0" />
                                                         </VBox.margin></Label>
-                                                    <Label styleClass="bullet-text" text="• Professional communication and reliability">
+                                                    <Label id="detailsBullet2" styleClass="bullet-text" text="• Professional communication and reliability">
                                                         <VBox.margin>
                                                             <Insets left="5.0" />
                                                         </VBox.margin></Label>
-                                                    <Label styleClass="bullet-text" text="• Available to start within the specified timeframe">
+                                                    <Label id="detailsBullet3" styleClass="bullet-text" text="• Available to start within the specified timeframe">
                                                         <VBox.margin>
                                                             <Insets left="5.0" />
                                                         </VBox.margin></Label>
@@ -134,7 +134,7 @@
                                                 <Rectangle arcHeight="10" arcWidth="10" height="241.0" styleClass="card-bg" width="609.0" />
                                                 <VBox spacing="10.0" styleClass="card-padding">
                                                     <Label styleClass="section-title" text="🌐 Location" />
-                                                    <WebView prefHeight="184" prefWidth="480" />
+                                                    <WebView id="detailsLocationImage" prefHeight="184" prefWidth="480" />
                                                 </VBox>
                                             </StackPane>
                                             <HBox.margin>
@@ -159,18 +159,18 @@
                                                     <HBox spacing="10.0">
                                                         <ImageView fitHeight="60.0" fitWidth="60.0" />
                                                         <VBox spacing="5.0">
-                                                            <Label styleClass="job-title" text="Maria Santos" />
+                                                            <Label id="detailsHostName" styleClass="job-title" text="Maria Santos" />
                                                             <HBox alignment="CENTER_LEFT" spacing="5.0">
                                                                 <Label styleClass="star-icon" text="★" />
-                                                                <Label styleClass="rating-text" text="4.8" />
-                                                                <Label styleClass="subinfo-text" text="(23 jobs)" />
+                                                                <Label id="detailsHostRating" styleClass="rating-text" text="4.8" />
+                                                                <Label id="detailsHostJobs" styleClass="subinfo-text" text="(23 jobs)" />
                                                             </HBox>
                                                         </VBox>
                                                     </HBox>
 
                                                     <HBox spacing="5.0">
-                                                        <Label styleClass="pill-tag" text="🛡 Verified" />
-                                                        <Label styleClass="pill-tag" text="Top Rated" />
+                                                        <Label id="detailsTagVerified" styleClass="pill-tag" text="🛡 Verified" />
+                                                        <Label id="detailsTagTopRated" styleClass="pill-tag" text="Top Rated" />
                                                     </HBox>
 
                                                     <Line endX="290.0" startX="0" styleClass="divider-line" />
@@ -179,17 +179,17 @@
                                                         <HBox>
                                                             <Label styleClass="subinfo-text" text="Member since" />
                                                             <Region prefHeight="18.0" prefWidth="150.0" HBox.hgrow="ALWAYS" />
-                                                            <Label styleClass="subinfo-value" text="Jan 2024" />
+                                                            <Label id="detailsMemberSince" styleClass="subinfo-value" text="Jan 2024" />
                                                         </HBox>
                                                         <HBox>
                                                             <Label styleClass="subinfo-text" text="Response time" />
                                                             <Region prefHeight="18.0" prefWidth="112.0" HBox.hgrow="ALWAYS" />
-                                                            <Label styleClass="subinfo-value" text="Within 2 hours" />
+                                                            <Label id="detailsResponseTime" styleClass="subinfo-value" text="Within 2 hours" />
                                                         </HBox>
                                                         <HBox>
                                                             <Label styleClass="subinfo-text" text="Jobs posted" />
                                                             <Region prefHeight="18.0" prefWidth="190.0" HBox.hgrow="ALWAYS" />
-                                                            <Label styleClass="subinfo-value" text="35" />
+                                                            <Label id="detailsJobsPosted" styleClass="subinfo-value" text="35" />
                                                         </HBox>
                                                         <padding>
                                                             <Insets top="7.0" />
@@ -202,11 +202,11 @@
                                             <StackPane prefHeight="103.0" prefWidth="200.0">
                                                 <Rectangle arcHeight="10" arcWidth="10" height="104.0" styleClass="card-bg" width="330.0" />
                                                 <VBox prefWidth="343.0" spacing="10.0" styleClass="card-padding">
-                                                    <Button prefHeight="30.0" prefWidth="290.0" styleClass="message-button" text="Message Client">
+                                                    <Button id="detailsMessageClientBtn" prefHeight="30.0" prefWidth="290.0" styleClass="message-button" text="Message Client">
                                                         <graphic>
                                                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                                                         </graphic></Button>
-                                                    <Button prefHeight="30.0" prefWidth="290.0" styleClass="apply-button" text="Apply for Job" />
+                                                    <Button id="detailsApplyJobBtn" prefHeight="30.0" prefWidth="290.0" styleClass="apply-button" text="Apply for Job" />
                                                 </VBox>
                                             </StackPane>
 

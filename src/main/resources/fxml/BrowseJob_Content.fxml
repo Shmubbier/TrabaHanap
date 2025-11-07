@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox prefHeight="672.0" prefWidth="1030" style="-fx-background-color: #f9fafb; -fx-border-color: transparent transparent transparent #e5e7eb;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../css/browsejob.css">
+<VBox prefHeight="672.0" prefWidth="1030" style="-fx-background-color: #f9fafb; -fx-border-color: transparent transparent transparent #e5e7eb;" stylesheets="@../css/browsejob.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ScrollPane hbarPolicy="NEVER" prefHeight="966.0" prefWidth="1029.0" style="-fx-background-color:transparent;">
             <content>
@@ -46,16 +46,16 @@
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" stroke="#e5e7eb" strokeType="INSIDE" styleClass="filter-bar-shadow" width="967.0" />
                                                 <HBox alignment="CENTER" maxWidth="949.0" prefHeight="86.0" prefWidth="949.0" spacing="10.0">
                                                     <children>
-                                                        <ComboBox prefHeight="34.0" prefWidth="190.0" promptText="All Categories" styleClass="filter-combo-box" />
-                                                        <ComboBox prefHeight="34.0" prefWidth="190.0" promptText="Most Recent" styleClass="filter-combo-box" />
-                                                        <ComboBox prefHeight="34.0" prefWidth="190.0" promptText="All Location" styleClass="filter-combo-box" />
-                                                        <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="161.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" styleClass="filter-button" text="More Filters">
+                                                        <ComboBox id="categoryCombo" prefHeight="34.0" prefWidth="190.0" promptText="All Categories" styleClass="filter-combo-box" />
+                                                        <ComboBox id="recentCombo" prefHeight="34.0" prefWidth="190.0" promptText="Most Recent" styleClass="filter-combo-box" />
+                                                        <ComboBox id="locationCombo" prefHeight="34.0" prefWidth="190.0" promptText="All Location" styleClass="filter-combo-box" />
+                                                        <Button id="moreFiltersBtn" mnemonicParsing="false" prefHeight="34.0" prefWidth="161.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" styleClass="filter-button" text="More Filters">
                                                             <graphic>
                                                                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                                                             </graphic>
                                                         </Button>
                                                         <Region prefHeight="150.0" prefWidth="118.0" HBox.hgrow="ALWAYS" />
-                                                        <TextField prefHeight="35.0" prefWidth="241.0" promptText="🔎 Search for commissions..." styleClass="search-bar" />
+                                                        <TextField id="searchFieldBrowse" prefHeight="35.0" prefWidth="241.0" promptText="🔎 Search for commissions..." styleClass="search-bar" />
                                                     </children>
                                        <padding>
                                           <Insets left="7.0" right="7.0" />

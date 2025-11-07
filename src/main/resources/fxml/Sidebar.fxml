@@ -33,7 +33,7 @@
 
         <!-- Buttons section -->
         <VBox alignment="TOP_CENTER" prefHeight="500.0" spacing="5">
-            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
+            <Button id="sideHomeBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
@@ -47,7 +47,7 @@
                 </graphic>
             </Button>
 
-            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
+            <Button id="sideBrowseBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
@@ -61,7 +61,7 @@
                 </graphic>
             </Button>
 
-            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
+            <Button id="sidePostBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
@@ -75,14 +75,14 @@
                 </graphic>
             </Button>
 
-            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
+            <Button id="sideMessagesBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon" />
                             <Label styleClass="sidebar-btn-label" text="Messages" />
                             <Region prefHeight="43.0" prefWidth="50.0" HBox.hgrow="ALWAYS" />
-                            <Label styleClass="notification" text="5" />
+                            <Label id="sideMessageNotificationCount" styleClass="notification" text="5" />
                         </children>
                         <padding>
                             <Insets left="14.0" right="10.0" />
@@ -91,7 +91,7 @@
                 </graphic>
             </Button>
 
-            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
+            <Button id="sideProfileBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
@@ -105,7 +105,7 @@
                 </graphic>
             </Button>
 
-            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
+            <Button id="sideSettingsBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
@@ -131,12 +131,12 @@
                     <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
                     <VBox alignment="CENTER_LEFT" spacing="2.0">
                         <children>
-                            <Label text="Carlo Mendoza">
+                            <Label id="sideAccountName" text="Carlo Mendoza">
                                 <font>
                                     <Font name="Leelawadee UI" size="17.0" />
                                 </font>
                             </Label>
-                            <Label styleClass="sidebar-subtitle" text="Gold Member" />
+                            <Label id="sideAccountRank" styleClass="sidebar-subtitle" text="Gold Member" />
                         </children>
                     </VBox>
                 </children>
@@ -150,7 +150,7 @@
                     <HBox alignment="CENTER_LEFT" prefWidth="215.0" spacing="10.0">
                         <children>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon" />
-                            <Label styleClass="sidebar-btn-label" text="Log Out" />
+                            <Label id="sideLogOutBtn" styleClass="sidebar-btn-label" text="Log Out" />
                         </children>
                         <padding>
                             <Insets left="14.0" />
