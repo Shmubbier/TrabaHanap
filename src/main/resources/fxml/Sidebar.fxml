@@ -3,30 +3,39 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: ffffff; -fx-border-color: transparent #e5e7eb transparent transparent;" stylesheets="@../css/sidebar.css" fx:controller="com.devera.trabahanap.controller.SidebarController"
-       xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: ffffff; -fx-border-color: transparent #e5e7eb transparent transparent;" stylesheets="@../css/sidebar.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.devera.trabahanap.controller.SidebarController">
 
     <!-- Top logo section -->
     <children>
         <VBox spacing="0">
             <HBox alignment="CENTER_LEFT" prefHeight="78.0" prefWidth="250.0" styleClass="top-logo">
                 <children>
-                    <ImageView fitHeight="66.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../icons/appicon.png" />
+                  </image></ImageView>
                     <VBox alignment="CENTER_LEFT" spacing="2.0">
                         <children>
                             <Label style="-fx-text-fill: #2992b8; -fx-font-family: 'Poppins SemiBold'; -fx-font-size: 20px;" text="TrabaHanap" />
-                            <Label styleClass="sidebar-subtitle" text="Your Job Finder" />
+                            <Label styleClass="sidebar-subtitle" text="Your Job Finder">
+                        <VBox.margin>
+                           <Insets top="-4.0" />
+                        </VBox.margin></Label>
                         </children>
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
                     </VBox>
                 </children>
                 <padding>
-                    <Insets bottom="10.0" left="20.0" right="15.0" top="10.0" />
+                    <Insets bottom="20.0" left="20.0" right="15.0" top="20.0" />
                 </padding>
             </HBox>
             <Region prefHeight="1" styleClass="divider" />
@@ -34,11 +43,14 @@
 
         <!-- Buttons section -->
         <VBox alignment="TOP_CENTER" prefHeight="500.0" spacing="5">
-            <Button id="sideHomeBtn" onAction="#onHomeClick" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
+            <Button id="sideHomeBtn" mnemonicParsing="false" onAction="#onHomeClick" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon" />
+                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon">
+                        <image>
+                           <Image url="@../icons/side_home1.png" />
+                        </image></ImageView>
                             <Label styleClass="sidebar-btn-label" text="Home" />
                         </children>
                         <padding>
@@ -48,11 +60,14 @@
                 </graphic>
             </Button>
 
-            <Button id="sideBrowseBtn" onAction="#onBrowseClick" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
+            <Button id="sideBrowseBtn" mnemonicParsing="false" onAction="#onBrowseClick" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon" />
+                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon">
+                        <image>
+                           <Image url="@../icons/side_browse1.png" />
+                        </image></ImageView>
                             <Label styleClass="sidebar-btn-label" text="Browse Jobs" />
                         </children>
                         <padding>
@@ -62,11 +77,14 @@
                 </graphic>
             </Button>
 
-            <Button id="sidePostBtn" onAction="#onPostClick" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
+            <Button id="sidePostBtn" mnemonicParsing="false" onAction="#onPostClick" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon" />
+                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon">
+                        <image>
+                           <Image url="@../icons/side_post1.png" />
+                        </image></ImageView>
                             <Label styleClass="sidebar-btn-label" text="Post a Job" />
                         </children>
                         <padding>
@@ -80,7 +98,10 @@
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon" />
+                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon">
+                        <image>
+                           <Image url="@../icons/side_chat1.png" />
+                        </image></ImageView>
                             <Label styleClass="sidebar-btn-label" text="Messages" />
                             <Region prefHeight="43.0" prefWidth="50.0" HBox.hgrow="ALWAYS" />
                             <Label id="sideMessageNotificationCount" styleClass="notification" text="5" />
@@ -96,7 +117,10 @@
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon" />
+                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon">
+                        <image>
+                           <Image url="@../icons/side_profile1.png" />
+                        </image></ImageView>
                             <Label styleClass="sidebar-btn-label" text="Profile" />
                         </children>
                         <padding>
@@ -110,7 +134,10 @@
                 <graphic>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon" />
+                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon">
+                        <image>
+                           <Image url="@../icons/side_settings1.png" />
+                        </image></ImageView>
                             <Label styleClass="sidebar-btn-label" text="Settings" />
                         </children>
                         <padding>
@@ -128,7 +155,10 @@
         <VBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="250.0" spacing="5">
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="250.0" spacing="9.0">
                 <children>
-                    <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../icons/person_book_icon.png" />
+                  </image></ImageView>
                     <VBox alignment="CENTER_LEFT" spacing="2.0">
                         <children>
                             <Label fx:id="sideAccountName" text="Carlo Mendoza">
@@ -145,11 +175,14 @@
                 </padding>
             </HBox>
 
-            <Button onAction="#onLogoutClick" mnemonicParsing="false"  prefHeight="34.0" prefWidth="215.0" styleClass="sidebar-button">
+            <Button mnemonicParsing="false" onAction="#onLogoutClick" prefHeight="34.0" prefWidth="215.0" styleClass="sidebar-button">
                 <graphic>
                     <HBox alignment="CENTER_LEFT" prefWidth="215.0" spacing="10.0">
                         <children>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon" />
+                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon">
+                        <image>
+                           <Image url="@../icons/side_logout.png" />
+                        </image></ImageView>
                             <Label id="sideLogOutBtn" styleClass="sidebar-btn-label" text="Log Out" />
                         </children>
                         <padding>

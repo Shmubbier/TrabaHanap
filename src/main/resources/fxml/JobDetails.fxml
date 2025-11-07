@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,7 +14,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.web.WebView?>
-
 
 <VBox prefHeight="895.0" prefWidth="1030" style="-fx-background-color: #f9fafb;" stylesheets="@../css/jobdetails.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -28,7 +28,10 @@
                                     <!-- Back Button -->
                                     <Button id="detailsBackBtn" styleClass="back-button" text="Back to Jobs">
                                         <graphic>
-                                            <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true" />
+                                            <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                       <Image url="@../icons/backarrow_icon.png" />
+                                    </image></ImageView>
                                         </graphic>
                                         <VBox.margin>
                                             <Insets left="10.0" />
@@ -51,8 +54,22 @@
                                                                 <Insets left="10.0" />
                                                             </HBox.margin></Button>
                                                         <Region prefHeight="26.0" prefWidth="390.0" />
-                                                        <Button prefHeight="26.0" prefWidth="26.0" styleClass="icon-circle" text="♡" />
-                                                        <Button prefHeight="26.0" prefWidth="26.0" styleClass="icon-circle" text="↪" />
+                                                        <Button prefHeight="26.0" prefWidth="26.0" styleClass="icon-circle">
+                                             <graphic>
+                                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icons/share_icon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic></Button>
+                                                        <Button prefHeight="26.0" prefWidth="26.0" styleClass="icon-circle">
+                                             <graphic>
+                                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icons/heart_icon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic></Button>
                                                     </HBox>
 
                                                     <Label id="detailsJobTitle" styleClass="job-title" text="Logo Design for Coffee Shop">
@@ -158,7 +175,10 @@
                                                             <Insets bottom="5.0" />
                                                         </VBox.margin></Label>
                                                     <HBox spacing="10.0">
-                                                        <ImageView fitHeight="60.0" fitWidth="60.0" />
+                                                        <ImageView fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../icons/person_book_icon.png" />
+                                             </image></ImageView>
                                                         <VBox spacing="5.0">
                                                             <Label id="detailsHostName" styleClass="job-title" text="Maria Santos" />
                                                             <HBox alignment="CENTER_LEFT" spacing="5.0">
@@ -205,7 +225,10 @@
                                                 <VBox prefWidth="343.0" spacing="10.0" styleClass="card-padding">
                                                     <Button id="detailsMessageClientBtn" prefHeight="30.0" prefWidth="290.0" styleClass="message-button" text="Message Client">
                                                         <graphic>
-                                                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                                                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                   <Image url="@../icons/message_icon.png" />
+                                                </image></ImageView>
                                                         </graphic></Button>
                                                     <Button id="detailsApplyJobBtn" prefHeight="30.0" prefWidth="290.0" styleClass="apply-button" text="Apply for Job" />
                                                 </VBox>

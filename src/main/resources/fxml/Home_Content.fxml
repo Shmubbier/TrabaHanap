@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
@@ -23,9 +24,14 @@
                 <children>
                     <StackPane alignment="TOP_CENTER" prefHeight="356.0" prefWidth="1015.0">
                         <children>
+                     <ImageView fitHeight="405.0" fitWidth="1015.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../images/home_header_background.jpg" />
+                        </image>
+                     </ImageView>
 
                             <!-- banner placeholder -->
-                            <Rectangle arcHeight="0" arcWidth="0" fill="#d8f3f6" height="405.0" stroke="transparent" width="1015.0" />
+                            <Rectangle arcHeight="0" arcWidth="0" fill="#d8f3f6" height="405.0" opacity="0.84" stroke="transparent" width="1015.0" />
 
                             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="1014.0">
                                 <children>
@@ -46,11 +52,17 @@
                                             <Rectangle arcHeight="50" arcWidth="50" height="51.0" style="visibility: 1;" styleClass="search-bg" width="624.0" />
                                             <HBox alignment="CENTER" prefWidth="621.0" spacing="1.0">
                                                 <children>
-                                                    <ImageView fitHeight="22.0" fitWidth="22.0" styleClass="search-icon" />
+                                                    <ImageView fitHeight="22.0" fitWidth="22.0" styleClass="search-icon">
+                                          <image>
+                                             <Image url="@../icons/search_icon.png" />
+                                          </image></ImageView>
                                                     <TextField id="searchFieldMain" prefHeight="32.0" prefWidth="260.0" promptText="Find commissions, gigs, or services right now" style="-fx-background-color: f5f6f7;" styleClass="search-field" />
                                                     <Region prefHeight="35.0" prefWidth="14.0" />
                                                     <Rectangle fill="#9a9fa6" height="26.0" width="1.0" />
-                                                    <ImageView fitHeight="22.0" fitWidth="22.0" styleClass="search-icon" />
+                                                    <ImageView fitHeight="22.0" fitWidth="22.0" styleClass="search-icon">
+                                          <image>
+                                             <Image url="@../icons/location_icon.png" />
+                                          </image></ImageView>
                                                     <TextField id="searchFieldLocation" prefHeight="32.0" prefWidth="175.0" promptText="Location" style="-fx-background-color: f5f6f7;" styleClass="search-field" />
                                                     <Region prefWidth="10" />
                                                     <Button id="searchBtn" prefHeight="23.0" prefWidth="90.0" styleClass="search-button" text="Search" />
@@ -110,7 +122,10 @@
                                     <VBox alignment="CENTER" spacing="8">
                                         <StackPane>
                                             <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-1" width="56" />
-                                            <ImageView fitHeight="28" fitWidth="28" />
+                                            <ImageView fitHeight="28" fitWidth="28">
+                                    <image>
+                                       <Image url="@../icons/category_errands.png" />
+                                    </image></ImageView>
                                         </StackPane>
                                         <Label text="Errands" />
                                     </VBox>
@@ -122,7 +137,10 @@
                                     <VBox alignment="CENTER" spacing="8">
                                         <StackPane>
                                             <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-2" width="56" />
-                                            <ImageView fitHeight="28" fitWidth="28" />
+                                            <ImageView fitHeight="28" fitWidth="28">
+                                    <image>
+                                       <Image url="@../icons/category_tutoring.png" />
+                                    </image></ImageView>
                                         </StackPane>
                                         <Label text="Tutoring" />
                                     </VBox>
@@ -134,7 +152,10 @@
                                     <VBox alignment="CENTER" spacing="8">
                                         <StackPane>
                                             <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-3" width="56" />
-                                            <ImageView fitHeight="28" fitWidth="28" />
+                                            <ImageView fitHeight="28" fitWidth="28">
+                                    <image>
+                                       <Image url="@../icons/category_graphicdesign.png" />
+                                    </image></ImageView>
                                         </StackPane>
                                         <Label text="Graphic Design" />
                                     </VBox>
@@ -147,7 +168,10 @@
                                             <StackPane>
                                                 <children>
                                                     <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-1" width="56" />
-                                                    <ImageView fitHeight="28" fitWidth="28" />
+                                                    <ImageView fitHeight="28" fitWidth="28">
+                                          <image>
+                                             <Image url="@../icons/category_delivery.png" />
+                                          </image></ImageView>
                                                 </children>
                                             </StackPane>
                                             <Label text="Delivery" />
@@ -162,7 +186,10 @@
                                             <StackPane>
                                                 <children>
                                                     <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-2" width="56" />
-                                                    <ImageView fitHeight="28" fitWidth="28" />
+                                                    <ImageView fitHeight="28" fitWidth="28">
+                                          <image>
+                                             <Image url="@../icons/category_cleaning.png" />
+                                          </image></ImageView>
                                                 </children>
                                             </StackPane>
                                             <Label text="Cleaning" />
@@ -177,7 +204,10 @@
                                             <StackPane>
                                                 <children>
                                                     <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-3" width="56" />
-                                                    <ImageView fitHeight="28" fitWidth="28" />
+                                                    <ImageView fitHeight="28" fitWidth="28">
+                                          <image>
+                                             <Image url="@../icons/category_photography.png" />
+                                          </image></ImageView>
                                                 </children>
                                             </StackPane>
                                             <Label text="Photography" />
@@ -192,7 +222,10 @@
                                             <StackPane>
                                                 <children>
                                                     <Rectangle arcHeight="10" arcWidth="10" height="56" styleClass="cat-square-1" width="56" />
-                                                    <ImageView fitHeight="28" fitWidth="28" />
+                                                    <ImageView fitHeight="28" fitWidth="28">
+                                          <image>
+                                             <Image url="@../icons/categroy_writing.png" />
+                                          </image></ImageView>
                                                 </children>
                                             </StackPane>
                                             <Label text="Writing" />
@@ -281,7 +314,10 @@
                                         <Rectangle arcHeight="18" arcWidth="18" height="55" styleClass="step-rect-bg" width="55" />
 
                                         <!-- icon placeholder (you can later set images via controller or fx:id) -->
-                                        <ImageView fitHeight="28" fitWidth="28" preserveRatio="true" />
+                                        <ImageView fitHeight="28" fitWidth="28" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/browse_icon.png" />
+                                 </image></ImageView>
                                     </children>
                                 </StackPane>
 
@@ -295,7 +331,10 @@
                                             <Rectangle arcHeight="18" arcWidth="18" height="55" styleClass="step-rect-bg" width="55" />
 
                                             <!-- icon placeholder (you can later set images via controller or fx:id) -->
-                                            <ImageView fitHeight="28" fitWidth="28" preserveRatio="true" />
+                                            <ImageView fitHeight="28" fitWidth="28" preserveRatio="true">
+                                    <image>
+                                       <Image url="@../icons/connect_icon.png" />
+                                    </image></ImageView>
                                         </children>
                                     </StackPane>
 
@@ -310,7 +349,10 @@
                                             <Rectangle arcHeight="18" arcWidth="18" height="55" styleClass="step-rect-bg" width="55" />
 
                                             <!-- icon placeholder (you can later set images via controller or fx:id) -->
-                                            <ImageView fitHeight="28" fitWidth="28" preserveRatio="true" />
+                                            <ImageView fitHeight="28" fitWidth="28" preserveRatio="true">
+                                    <image>
+                                       <Image url="@../icons/stock_icon.png" />
+                                    </image></ImageView>
                                         </children>
                                     </StackPane>
 

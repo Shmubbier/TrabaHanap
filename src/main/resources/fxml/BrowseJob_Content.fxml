@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -51,7 +52,10 @@
                                                         <ComboBox id="locationCombo" prefHeight="34.0" prefWidth="190.0" promptText="All Location" styleClass="filter-combo-box" />
                                                         <Button id="moreFiltersBtn" mnemonicParsing="false" prefHeight="34.0" prefWidth="161.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" styleClass="filter-button" text="More Filters">
                                                             <graphic>
-                                                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                                                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icons/filters_icon.png" />
+                                                   </image></ImageView>
                                                             </graphic>
                                                         </Button>
                                                         <Region prefHeight="150.0" prefWidth="118.0" HBox.hgrow="ALWAYS" />
