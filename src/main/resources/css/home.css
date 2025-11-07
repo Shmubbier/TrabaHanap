@@ -1,0 +1,212 @@
+/* Page root */
+.page-root {
+    -fx-background-color: #fefffe;
+}
+
+/* Hero / titles */
+.hero-title {
+    -fx-font-family: "Dubai", System;
+    -fx-font-size: 45px;
+    -fx-text-fill: #0f1724;    /* dark */
+    -fx-font-weight: 600;
+    -fx-alignment: center;
+}
+
+.hero-subtitle {
+    -fx-font-family: "Microsoft New Tai Lue", System;
+    -fx-font-size: 16px;
+    -fx-text-fill: #4a5565;    /* requested subtitle color */
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+}
+
+.badge-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #00737f;
+    -fx-font-size: 12px;
+    -fx-padding: 3 6;
+}
+
+/* Search container */
+.search-container {
+    -fx-max-width: 760px;
+    -fx-pref-width: 561px;
+}
+
+.search-bg {
+    -fx-fill: linear-gradient(#ffffff, #ffffff);
+    -fx-stroke: transparent;
+    -fx-arc-width: 48;
+    -fx-arc-height: 48;
+    -fx-effect: dropshadow(gaussian, rgba(20,20,20,0.06), 8, 0, 0, 3);
+}
+
+/* TextField inside search */
+.search-field {
+    -fx-background-color: transparent; /* outer box handles bg */
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-font-size: 13px;
+    -fx-text-fill: #717182;    /* requested text color */
+    -fx-prompt-text-fill: #9aa0a6;
+}
+
+/* small search icons (ImageView placeholders) */
+.search-icon {
+    -fx-opacity: 0.9;
+}
+
+/* Search button (dark gradient + white text) */
+.search-button {
+    -fx-background-color: linear-gradient(to right, #0092b7, #009966);
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 25;
+    -fx-padding: 8 10;
+    -fx-cursor: hand;
+}
+
+/* Popular tags */
+.popular-row { -fx-padding: 0 0 10 0; }
+
+.popular-label {
+    -fx-text-fill: #525d6c; /* requested color */
+    -fx-font-size: 13px;
+    -fx-padding: 1 8 1 8;
+}
+
+/* tag buttons: transparent with thin stroke, change to pale cyan on hover */
+.tag-button {
+    -fx-background-color: transparent;
+    -fx-border-radius: 20;
+    -fx-background-radius: 8;
+    -fx-border-color: #bac5c2;
+    -fx-border-width: 1;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-padding: 1 12;
+    -fx-cursor: hand;
+}
+.tag-button:hover {
+    -fx-background-color: #cdf9fd;
+    -fx-border-color: #0092b8;
+}
+
+/* Section headers use same font as Job Details in JobPage (assumed Dubai Medium) */
+.section-header {
+    -fx-font-family: "Dubai", System;
+    -fx-font-size: 21px;
+    -fx-text-fill: #0f1724;
+    -fx-padding: 0 0 0 0;
+}
+
+/* Section subtitle appearance */
+.section-subtitle {
+    -fx-font-family: "Microsoft New Tai Lue", System;
+    -fx-font-size: 15px;
+    -fx-text-fill: #4a5565;
+    -fx-padding: 0 0 0 0;
+}
+
+/* Category buttons */
+.category-button {
+    -fx-background-color: white;
+    -fx-border-color: #e6e7e8;
+    -fx-border-width: 1;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 12;
+    -fx-cursor: hand;
+    -fx-effect: none;
+    -fx-pref-width: 120;
+    -fx-pref-height: 130;
+}
+.category-button:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 3);
+    -fx-translate-y: -4;
+}
+
+/* colored square behind icon inside category button */
+.cat-square-1 { -fx-fill: #cefafe; -fx-stroke: transparent; }
+.cat-square-2 { -fx-fill: #d0fae5; -fx-stroke: transparent; }
+.cat-square-3 { -fx-fill: #dbeafe; -fx-stroke: transparent; }
+
+/* View All / See All Jobs: transparent until hover (light rounded grey box) */
+.view-all {
+    -fx-background-color: transparent;
+    -fx-text-fill: #0092b8;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-padding: 6 12;
+}
+.view-all:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 8;
+}
+
+/* JobCard scroller container tweaks */
+.scroll-pane .content { -fx-background-color: transparent; }
+
+/* Steps icons and text */
+.step-icon {
+    -fx-background-color: #f3f6f7;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-pref-width: 70; -fx-pref-height: 70;
+}
+
+/* HOW-IT-WORKS — new gradient rectangle icons */
+.step-rect {
+    -fx-pref-width: 70;
+    -fx-pref-height: 70;
+    -fx-alignment: center;
+    -fx-cursor: hand;
+}
+
+.step-rect-bg {
+    -fx-fill: linear-gradient(from 0% 0% to 100% 100%, #0092b7, #009966); /* same as search button */
+    -fx-arc-width: 18;
+    -fx-arc-height: 18;
+}
+
+/* Hover effect (matches button hover float) */
+.step-rect:hover {
+    -fx-translate-y: -4;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 12, 0, 0, 4);
+}
+
+.step-title { -fx-font-size: 17px; -fx-font-weight: 600; -fx-font-family: "Dubai" }
+.step-desc { -fx-font-size: 14px; -fx-text-fill: #4a5565; }
+
+/* small general tweaks */
+Label, Button {
+    -fx-font-family: System;
+}
+
+/* --------- HORIZONTAL SCROLLER CLEAN LOOK --------- */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Hide the ugly default scrollbar but keep scroll functionality */
+.scroll-pane .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+}
+
+
+.scroll-pane > .viewport {
+    -fx-padding: 0;          /* remove weird auto-padding */
+    -fx-max-width: 100%;     /* prevent stretch */
+    -fx-min-width: 100%;
+}
+
+.scroll-pane .viewport {
+    -fx-padding: 0;
+}

@@ -3,62 +3,105 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="286.0" prefWidth="233.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.devera.trabahanap.controller.JobCardController">
+<AnchorPane prefHeight="325.0" prefWidth="233.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../css/jobcard.css">
+
     <children>
-        <StackPane alignment="TOP_RIGHT" prefHeight="128.0" prefWidth="234.0" AnchorPane.bottomAnchor="158.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <ImageView pickOnBounds="true" />
-                <Label text="Category" />
-            </children>
-            <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-        </StackPane>
-        <VBox layoutX="67.0" layoutY="130.4" prefHeight="124.0" prefWidth="234.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="130.0">
-            <children>
-                <Label text="Job Title">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
-                <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="224.0">
-                    <children>
-                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="John Doe" />
-                        <Region prefHeight="20.0" prefWidth="95.0" HBox.hgrow="ALWAYS" />
-                        <Label text="★4.8" />
-                    </children>
-                    <padding>
-                        <Insets left="1.0" right="10.0" />
-                    </padding>
-                </HBox>
-                <Label text="Quezon City, Metro Manila" />
-                <HBox prefHeight="21.0" prefWidth="224.0">
-                    <children>
-                        <Label text="2 days ago" />
-                        <Region prefHeight="20.0" prefWidth="95.0" />
-                        <Label text="5 applicants" />
-                    </children>
-                </HBox>
-                <Label text="₱2000–₱5000" />
-            </children>
-            <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-        </VBox>
-        <Button fx:id="cardButton" mnemonicParsing="false" prefHeight="286.0" prefWidth="233.0"
-                AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-                style="-fx-background-color: transparent; -fx-border-color: #999; -fx-border-width: 1;"
-                onMouseEntered="#onCardHover"
-                onMouseExited="#onCardExit"/>
+
+        <!-- Entire clickable card -->
+        <Button fx:id="cardButton" styleClass="card-root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <graphic>
+
+                <VBox spacing="0">
+
+                    <!-- IMAGE AREA -->
+                    <StackPane alignment="TOP_RIGHT" prefHeight="130">
+                        <children>
+
+                            <!-- main image placeholder -->
+                            <Rectangle fill="#cefafe" height="130" width="233" />
+
+                            <!-- category tag (no margin attributes!) -->
+                            <VBox alignment="TOP_RIGHT" prefWidth="233">
+                                <children>
+                                    <Button styleClass="category-tag" text="Category" />
+                                </children>
+                                <padding>
+                                    <Insets bottom="0" left="0" right="8" top="8" />
+                                </padding>
+                            </VBox>
+
+                        </children>
+                    </StackPane>
+
+                    <!-- CONTENT AREA -->
+                    <VBox spacing="6" styleClass="content-box">
+                        <padding>
+                            <Insets bottom="10" left="10" right="10" top="10" />
+                        </padding>
+
+                        <!-- JOB TITLE -->
+                        <Label styleClass="job-title" text="Job Title" />
+
+                        <!-- POSTER LINE -->
+                        <HBox alignment="CENTER_LEFT" spacing="6">
+
+                            <!-- profile picture placeholder -->
+                            <StackPane>
+                                <Rectangle arcHeight="50" arcWidth="50" fill="#cefafe" height="23" width="23" />
+                            </StackPane>
+
+                            <Label styleClass="poster-name" text="John Doe" />
+
+                            <Region HBox.hgrow="ALWAYS" />
+
+                            <HBox spacing="2">
+                                <Label styleClass="star-icon" text="★" />
+                                <Label styleClass="rating-text" text="4.8" />
+                            </HBox>
+
+                        </HBox>
+
+                        <!-- LOCATION -->
+                        <Label styleClass="location-text" text="🌐 Quezon City, Metro Manila" />
+
+                        <!-- TIME + APPLICANTS with TOP+BOTTOM border -->
+                        <VBox spacing="0">
+                            <children>
+
+                                <Rectangle fill="#f3f4f6" height="1" />
+
+                                <HBox alignment="CENTER_LEFT" spacing="6" styleClass="timing-row">
+                                    <children>
+                                        <Label styleClass="subinfo-text" text="⏲ 2 days ago" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label styleClass="subinfo-text" text="👤 5 applicants" />
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="6" left="2" right="2" top="6" />
+                                    </padding>
+                                </HBox>
+
+                                <Rectangle fill="#f3f4f6" height="1" />
+
+                            </children>
+                        </VBox>
+
+                        <!-- PRICE -->
+                        <Label styleClass="price-text" text="₱2,000 – ₱5,000" />
+
+                    </VBox>
+
+                </VBox>
+            </graphic>
+        </Button>
     </children>
+
 </AnchorPane>

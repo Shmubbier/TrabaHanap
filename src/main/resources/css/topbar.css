@@ -1,0 +1,35 @@
+/* Whole top bar background */
+.topbar-container {
+    -fx-background-color: #ffffff;
+}
+
+/* Search bar */
+.topbar-search {
+    -fx-background-color: #f9fafb;
+    -fx-background-radius: 6;
+    -fx-border-radius: 20;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+    -fx-padding: 0 8 0 8;
+    -fx-text-fill: #4a5565;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.topbar-search:focused {
+    -fx-border-color: #cfcfcf;
+}
+
+/* Notification button */
+.notif-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-text-fill: #0f1724;
+    -fx-cursor: hand;
+}
+
+.button.notif-button:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 8;
+}

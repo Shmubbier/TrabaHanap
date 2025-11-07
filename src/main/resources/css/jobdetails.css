@@ -1,0 +1,163 @@
+/* White card background */
+.card-bg {
+    -fx-fill: white;
+    -fx-stroke: #e7e9ed;
+    -fx-arc-width: 20;
+    -fx-arc-height: 20;
+}
+
+/* Padding wrapper */
+.card-padding {
+    -fx-padding: 20;
+}
+
+/* Back button */
+.back-button {
+    -fx-font-size: 14px;
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-padding: 10 10 10 10;
+}
+.back-button:hover {
+    -fx-background-color: #e9ebef;
+    -fx-background-radius: 15;
+    -fx-padding: 10 10 10 10;
+}
+
+/* Category tag */
+.category-tag {
+    -fx-background-color: #cefafe;
+    -fx-text-fill: #007595;
+    -fx-background-radius: 15;
+    -fx-padding: 4 15;
+}
+.category-tag:hover {
+    -fx-background-color: #a2f4fd;
+}
+
+/* Icon circle buttons */
+.icon-circle {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-padding: 4;
+    -fx-background-radius: 20;
+}
+.icon-circle:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+/* Job title and subtitles */
+.job-title {
+    -fx-font-size: 19px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #000;
+}
+.subinfo-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a5565;
+}
+
+.subinfo-value {
+    -fx-font-size: 12px;
+}
+
+/* Price box and text */
+.price-box {
+    -fx-fill: #e9fbf8;
+    -fx-stroke: transparent;
+    -fx-arc-width: 8;
+    -fx-arc-height: 8;
+}
+.price-text {
+    -fx-font-size: 27px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #0092b8;
+}
+.budget-sub {
+    -fx-text-fill: #4a5565;
+}
+
+/* Divider lines */
+.divider-line {
+    -fx-stroke: #e5e5e5;
+    -fx-stroke-width: 1;
+}
+
+/* Section titles */
+.section-title {
+    -fx-font-size: 16px;
+    -fx-text-fill: #000;
+}
+
+/* Paragraphs */
+.paragraph-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #000;
+}
+
+/* Bullet points */
+.bullet-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #364153;
+}
+
+/* About client card extras */
+.star-icon {
+    -fx-text-fill: #fbbf24;
+    -fx-font-size: 14px;
+}
+.rating-text {
+    -fx-text-fill: #000;
+    -fx-font-size: 13px;
+}
+
+/* Pill-style tags */
+.pill-tag {
+    -fx-background-color: #eceef2;
+    -fx-text-fill: black;
+    -fx-padding: 2 8;
+    -fx-background-radius: 12;
+    -fx-font-size: 12px;
+}
+
+/* Buttons */
+.message-button {
+    -fx-background-color: linear-gradient(to bottom right, #0092b7, #009966);
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+
+}
+.message-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #00c6a7, #009595), rgba(0,0,0,0.2);
+    -fx-background-radius: 15;
+}
+
+.apply-button {
+    -fx-background-color: #ffffff;
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 15;
+
+}
+.apply-button:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+
+/* Disclaimer / Stay Safe */
+.disclaimer-bg {
+    -fx-fill: #ebfdfe;
+    -fx-stroke: #a2f4fd;
+    -fx-arc-width: 20;
+    -fx-arc-height: 20;
+}
+.disclaimer-text {
+    -fx-text-fill: #364153;
+    -fx-font-weight: bold;
+}
+.disclaimer-bullet, .disclaimer-bullet-text {
+    -fx-text-fill: #717182;
+}
