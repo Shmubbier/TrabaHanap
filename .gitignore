@@ -11,8 +11,10 @@ target/
 *.iws
 *.iml
 *.ipr
+src/main/resources/client_secret.json
 src/main/resources/serviceAccountKey.json
 config.properties
+
 
 
 ### Eclipse ###
