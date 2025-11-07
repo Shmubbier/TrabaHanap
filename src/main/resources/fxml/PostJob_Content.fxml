@@ -50,7 +50,7 @@
                                                                 <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Job Title" />
                                                                 <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: black;" text="*" />
                                                             </HBox>
-                                                            <TextField promptText="e.g., Logo Design for Coffee Shop" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
+                                                            <TextField promptText="e.g., Logo Design for Coffee Shop" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" styleClass="postJobTitleField" />
                                                             <Label style="-fx-font-size: 11px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #777777;" text="Create a clear, descriptive title for your job" />
                                                         </VBox>
 
@@ -60,7 +60,7 @@
                                                                 <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Category" />
                                                                 <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: black;" text="*" />
                                                             </HBox>
-                                                            <ComboBox prefWidth="509" promptText="Select a category" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
+                                                            <ComboBox prefWidth="509" promptText="Select a category" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" styleClass="postCategoryCombo" />
                                                         </VBox>
 
                                                         <!-- Description -->
@@ -69,7 +69,7 @@
                                                                 <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Description" />
                                                                 <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: black;" text="*" />
                                                             </HBox>
-                                                            <TextArea prefHeight="100" promptText="Describe what you need in detail. Include requirements, expectations, and any specific instructions..." style="-fx-control-inner-background: #f3f3f5; -fx-background-color: #f3f3f5; -fx-text-fill: #717182;" wrapText="true" />
+                                                            <TextArea id="postJobDescriptionField" prefHeight="100" promptText="Describe what you need in detail. Include requirements, expectations, and any specific instructions..." style="-fx-control-inner-background: #f3f3f5; -fx-background-color: #f3f3f5; -fx-text-fill: #717182;" wrapText="true" />
                                                             <Label style="-fx-font-size: 11px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #777777;" text="Minimum 50 characters. Be specific about your needs." />
                                                         </VBox>
 
@@ -79,41 +79,59 @@
                                                                 <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Location" />
                                                                 <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: black;" text="*" />
                                                             </HBox>
-                                                            <TextField promptText="e.g., Quezon City, Metro Manila" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
+                                                            <TextField id="postJobLocationField" promptText="e.g., Quezon City, Metro Manila" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
                                                             <Label style="-fx-font-size: 11px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #777777;" text="Where should the service be performed?" />
                                                         </VBox>
 
                                                         <!-- Budget Range -->
                                                         <HBox spacing="20">
-                                                            <StackPane alignment="CENTER_LEFT" prefHeight="28" prefWidth="225">
-                                                                <Spinner prefHeight="28" prefWidth="225" />
-                                                                <Label style="-fx-font-size: 12px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #717182;" text="₱1000">
-                                                                    <StackPane.margin>
-                                                                        <Insets left="8" />
-                                                                    </StackPane.margin>
-                                                                </Label>
-                                                            </StackPane>
-                                                            <StackPane alignment="CENTER_LEFT" prefHeight="28" prefWidth="225">
-                                                                <Spinner prefHeight="28" prefWidth="225" />
-                                                                <Label style="-fx-font-size: 12px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #717182;" text="₱5000">
-                                                                    <StackPane.margin>
-                                                                        <Insets left="8" />
-                                                                    </StackPane.margin>
-                                                                </Label>
-                                                            </StackPane>
+                                             <VBox>
+                                                <children>
+                                                   <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Budget Range (Min)">
+                                                      <VBox.margin>
+                                                         <Insets bottom="3.0" />
+                                                      </VBox.margin>
+                                                   </Label>
+                                                                  <StackPane alignment="CENTER_LEFT" prefHeight="28" prefWidth="225">
+                                                                      <Spinner id="postJobPriceMin" prefHeight="28" prefWidth="225" />
+                                                                      <Label style="-fx-font-size: 12px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #717182;" text="₱1000">
+                                                                          <StackPane.margin>
+                                                                              <Insets left="8" />
+                                                                          </StackPane.margin>
+                                                                      </Label>
+                                                                  </StackPane>
+                                                </children>
+                                             </VBox>
+                                             <VBox>
+                                                <children>
+                                                   <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Budget Range (Max)">
+                                                      <VBox.margin>
+                                                         <Insets bottom="3.0" />
+                                                      </VBox.margin>
+                                                   </Label>
+                                                                  <StackPane alignment="CENTER_LEFT" prefHeight="28" prefWidth="225">
+                                                                      <Spinner id="postJobPriceMax" prefHeight="28" prefWidth="225" />
+                                                                      <Label style="-fx-font-size: 12px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #717182;" text="₱5000">
+                                                                          <StackPane.margin>
+                                                                              <Insets left="8" />
+                                                                          </StackPane.margin>
+                                                                      </Label>
+                                                                  </StackPane>
+                                                </children>
+                                             </VBox>
                                                         </HBox>
 
                                                         <!-- Expected Duration -->
                                                         <VBox spacing="3">
                                                             <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Expected Duration" />
-                                                            <ComboBox prefWidth="509" promptText="How long will this take?" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
+                                                            <ComboBox id="postJobDurationCombo" prefWidth="509" promptText="How long will this take?" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
                                                         </VBox>
 
                                                         <!-- Add Images -->
                                                         <VBox spacing="3">
                                                             <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Add Images (Optional)" />
                                                             <StackPane prefHeight="150" prefWidth="200" style="-fx-border-color: #bfbfbf; -fx-border-style: dashed; -fx-border-width: 1.2; -fx-border-radius: 15; -fx-border-insets: 5; -fx-border-dash-array: 18 10;">
-                                                                <VBox alignment="CENTER" spacing="5">
+                                                                <VBox id="postJobImageUploadArea" alignment="CENTER" spacing="5">
                                                                     <ImageView fitHeight="60" fitWidth="60" preserveRatio="true" />
                                                                     <Label style="-fx-font-size: 12px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #666666;" text="Click to upload or drag and drop" />
                                                                     <Label style="-fx-font-size: 11px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #999999;" text=".PNG or .JPG up to 10MB" />
@@ -124,7 +142,7 @@
                                                         <!-- Skills Required -->
                                                         <VBox spacing="3">
                                                             <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Skills Required" />
-                                                            <TextField promptText="e.g., Graphic Design, Adobe Illustrator" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
+                                                            <TextField id="postSkillsRequiredField" promptText="e.g., Graphic Design, Adobe Illustrator" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
                                                             <Label style="-fx-font-size: 11px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #777777;" text="Add skills separated by commas" />
                                                         </VBox>
                                                     </children>
@@ -144,11 +162,11 @@
                                                         <Label style="-fx-font-size: 18px; -fx-font-family: 'Dubai Medium'; -fx-text-fill: #333333;" text="Additional Requirements" />
                                                         <VBox spacing="3">
                                                             <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Experience Level Needed" />
-                                                            <ComboBox prefWidth="519" promptText="Select experience level" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
+                                                            <ComboBox id="postExperienceLevelCombo" prefWidth="519" promptText="Select experience level" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
                                                         </VBox>
                                                         <VBox spacing="3">
                                                             <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Special Instructions" />
-                                                            <TextArea prefHeight="80" promptText="Any other details or requirements..." style="-fx-control-inner-background: #f3f3f5; -fx-background-color: #f3f3f5; -fx-text-fill: #717182;" wrapText="true" />
+                                                            <TextArea id="postSpecialInstructionsField" prefHeight="80" promptText="Any other details or requirements..." style="-fx-control-inner-background: #f3f3f5; -fx-background-color: #f3f3f5; -fx-text-fill: #717182;" wrapText="true" />
                                                         </VBox>
                                                     </children>
                                                 </VBox>
@@ -157,8 +175,8 @@
 
                                         <!-- Buttons -->
                                         <HBox alignment="CENTER" spacing="15">
-                                            <Button prefHeight="27.0" prefWidth="252.0" style="-fx-background-color: #e7ecf2; -fx-text-fill: #333333; -fx-font-size: 13px; -fx-background-radius: 50;" text="Save as Draft" />
-                                            <Button prefHeight="27.0" prefWidth="252.0" style="-fx-background-radius: 50; -fx-background-color: linear-gradient(to right, #0092b7, #009966); -fx-text-fill: white; -fx-font-size: 13px;" text="Post Job" />
+                                            <Button id="postDraftBtn" prefHeight="27.0" prefWidth="252.0" style="-fx-background-color: #e7ecf2; -fx-text-fill: #333333; -fx-font-size: 13px; -fx-background-radius: 50;" text="Save as Draft" />
+                                            <Button id="postJobBtn" prefHeight="27.0" prefWidth="252.0" style="-fx-background-radius: 50; -fx-background-color: linear-gradient(to right, #0092b7, #009966); -fx-text-fill: white; -fx-font-size: 13px;" text="Post Job" />
                                         </HBox>
 
                                         <Label style="-fx-font-size: 11px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #888888;" text="By posting, you agree to TrabaHanap's Terms of Service and Privacy Policy" />

@@ -33,11 +33,11 @@
 
                         <VBox alignment="CENTER_LEFT" spacing="3.0">
                             <Label styleClass="field-label" text="Username" />
-                            <TextField promptText="👤  Username" styleClass="input-field" />
+                            <TextField id="registerUsernameField" promptText="👤  Username" styleClass="input-field" />
                      <VBox alignment="CENTER_LEFT" spacing="3.0">
                         <children>
                            <Label styleClass="field-label" text="Email Address" />
-                           <TextField promptText="✉ juandelacruz@example.com" styleClass="input-field" />
+                           <TextField id="registerEmailAddressField" promptText="✉ juandelacruz@example.com" styleClass="input-field" />
                         </children>
                      </VBox>
                         </VBox>
@@ -45,9 +45,9 @@
                         <VBox alignment="CENTER_LEFT" spacing="3.0">
                             <Label styleClass="field-label" text="Password" />
                             <StackPane alignment="CENTER_RIGHT">
-                                <PasswordField promptText="🔒  Enter your password" styleClass="input-field" />
-                                <TextField styleClass="input-field" visible="false" />
-                                <Button styleClass="eye-button" text="👁" />
+                                <PasswordField id="registerPasswordFIeld" promptText="🔒  Enter your password" styleClass="input-field" />
+                                <TextField id="registerPlaintextField1" styleClass="input-field" visible="false" />
+                                <Button id="registerEyePasswordView1" styleClass="eye-button" text="👁" />
                             </StackPane>
                         </VBox>
 
@@ -55,16 +55,16 @@
                         <VBox alignment="CENTER_LEFT" spacing="3.0">
                             <Label styleClass="field-label" text="Confirm Password" />
                             <StackPane alignment="CENTER_RIGHT">
-                                <PasswordField promptText="🔒  Re-enter your password" styleClass="input-field" />
-                                <TextField styleClass="input-field" visible="false" />
-                                <Button styleClass="eye-button" text="👁" />
+                                <PasswordField id="registerConfirmPasswordField" promptText="🔒  Re-enter your password" styleClass="input-field" />
+                                <TextField id="registerPlaintextField2" styleClass="input-field" visible="false" />
+                                <Button id="registerEyePasswordView2" styleClass="eye-button" text="👁" />
                         <padding>
                            <Insets bottom="17.0" />
                         </padding>
                             </StackPane>
                         </VBox>
 
-                        <Button styleClass="sign-in-button" text="Sign Up">
+                        <Button id="registerSignUpBtn" styleClass="sign-in-button" text="Sign Up">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin></Button>
@@ -81,7 +81,7 @@
                             </padding>
                         </HBox>
 
-                        <Button maxWidth="160.0" styleClass="google-button">
+                        <Button id="registerGoogleSignIn" maxWidth="160.0" styleClass="google-button">
                             <graphic>
                                 <HBox alignment="CENTER" spacing="8">
                                     <ImageView fitHeight="20" fitWidth="20" preserveRatio="true" />
@@ -93,7 +93,7 @@
                         <!-- Combined footer text -->
                         <TextFlow textAlignment="CENTER">
                             <Text style="-fx-fill: #6b7280;" text="Already have an account? " />
-                            <Text style="-fx-fill: #2992b8; -fx-underline: false; -fx-cursor: hand;" text="Sign in" />
+                            <Text id="registerSignInLink" style="-fx-fill: #2992b8; -fx-underline: false; -fx-cursor: hand;" text="Sign in" />
                      <padding>
                         <Insets top="12.0" />
                      </padding>

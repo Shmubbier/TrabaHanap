@@ -47,13 +47,13 @@
                                             <HBox alignment="CENTER" prefWidth="621.0" spacing="1.0">
                                                 <children>
                                                     <ImageView fitHeight="22.0" fitWidth="22.0" styleClass="search-icon" />
-                                                    <TextField prefHeight="32.0" prefWidth="260.0" promptText="Find commissions, gigs, or services right now" style="-fx-background-color: f5f6f7;" styleClass="search-field" />
+                                                    <TextField id="searchFieldMain" prefHeight="32.0" prefWidth="260.0" promptText="Find commissions, gigs, or services right now" style="-fx-background-color: f5f6f7;" styleClass="search-field" />
                                        <Region prefHeight="35.0" prefWidth="14.0" />
                                                     <Rectangle fill="#9a9fa6" height="26.0" width="1.0" />
                                                     <ImageView fitHeight="22.0" fitWidth="22.0" styleClass="search-icon" />
-                                                    <TextField prefHeight="32.0" prefWidth="175.0" promptText="Location" style="-fx-background-color: f5f6f7;" styleClass="search-field" />
+                                                    <TextField id="searchFieldLocation" prefHeight="32.0" prefWidth="175.0" promptText="Location" style="-fx-background-color: f5f6f7;" styleClass="search-field" />
                                                     <Region prefWidth="10" />
-                                                    <Button prefHeight="23.0" prefWidth="90.0" styleClass="search-button" text="Search" />
+                                                    <Button id="searchBtn" prefHeight="23.0" prefWidth="90.0" styleClass="search-button" text="Search" />
                                                 </children>
                                                 <padding>
                                                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
@@ -66,10 +66,10 @@
                                     <HBox alignment="BOTTOM_CENTER" prefHeight="50.0" prefWidth="1018.0" spacing="8.0" styleClass="popular-row">
                                         <children>
                                             <Label prefWidth="63.0" styleClass="popular-label" text="Popular:" />
-                                            <Button prefWidth="114.0" styleClass="tag-button" text="Graphic Design" />
-                                            <Button styleClass="tag-button" text="Tutoring" />
-                                            <Button styleClass="tag-button" text="Delivery" />
-                                            <Button styleClass="tag-button" text="Cleaning" />
+                                            <Button id="poptagGraphicDesign" prefWidth="114.0" styleClass="tag-button" text="Graphic Design" />
+                                            <Button id="poptagTutoring" styleClass="tag-button" text="Tutoring" />
+                                            <Button id="poptagDelivery" styleClass="tag-button" text="Delivery" />
+                                            <Button id="poptagCleaning" styleClass="tag-button" text="Cleaning" />
                                         </children>
                                     </HBox>
                                 </children>
@@ -89,7 +89,7 @@
                       <children>
                           <Label prefWidth="174.0" styleClass="section-header" text="Browse by Category" />
                           <Region HBox.hgrow="ALWAYS" />
-                          <Button prefHeight="47.0" prefWidth="72.0" styleClass="view-all" text="View All" />
+                          <Button id="viewAllCategoryBtn" prefHeight="47.0" prefWidth="72.0" styleClass="view-all" text="View All" />
                       </children>
                       <padding>
                           <Insets left="19.0" top="20.0" />
@@ -105,7 +105,7 @@
                   <!-- Category tiles -->
                   <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="17.0" prefWidth="843.0" prefWrapLength="850.0" vgap="14.0">
                       <children>
-                          <Button styleClass="category-button">
+                          <Button id="categoryErrandsBtn" styleClass="category-button">
                               <graphic>
                                   <VBox alignment="CENTER" spacing="8">
                                       <StackPane>
@@ -117,7 +117,7 @@
                               </graphic>
                           </Button>
 
-                          <Button styleClass="category-button">
+                          <Button id="categoryTutoringBtn" styleClass="category-button">
                               <graphic>
                                   <VBox alignment="CENTER" spacing="8">
                                       <StackPane>
@@ -129,7 +129,7 @@
                               </graphic>
                           </Button>
 
-                          <Button styleClass="category-button">
+                          <Button id="categoryGraphicDesignBtn" styleClass="category-button">
                               <graphic>
                                   <VBox alignment="CENTER" spacing="8">
                                       <StackPane>
@@ -140,7 +140,7 @@
                                   </VBox>
                               </graphic>
                           </Button>
-                     <Button styleClass="category-button">
+                     <Button id="categoryDeliveryBtn" styleClass="category-button">
                         <graphic>
                            <VBox alignment="CENTER" spacing="8">
                               <children>
@@ -155,7 +155,7 @@
                            </VBox>
                         </graphic>
                      </Button>
-                     <Button styleClass="category-button">
+                     <Button id="categoryCleaningBtn" styleClass="category-button">
                         <graphic>
                            <VBox alignment="CENTER" spacing="8">
                               <children>
@@ -170,7 +170,7 @@
                            </VBox>
                         </graphic>
                      </Button>
-                     <Button styleClass="category-button">
+                     <Button id="categoryPhotographyBtn" styleClass="category-button">
                         <graphic>
                            <VBox alignment="CENTER" spacing="8">
                               <children>
@@ -185,7 +185,7 @@
                            </VBox>
                         </graphic>
                      </Button>
-                     <Button styleClass="category-button">
+                     <Button id="categoryWritingBtn" styleClass="category-button">
                         <graphic>
                            <VBox alignment="CENTER" spacing="8">
                               <children>
@@ -222,7 +222,7 @@
                               </padding>
                           </Label>
                           <Region HBox.hgrow="ALWAYS" />
-                          <Button styleClass="view-all" text="See All Jobs" />
+                          <Button id="viewAllJobsBtn" styleClass="view-all" text="See All Jobs" />
                       </children>
                   <padding>
                      <Insets left="19.0" />
