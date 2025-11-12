@@ -131,12 +131,12 @@
                     <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
                     <VBox alignment="CENTER_LEFT" spacing="2.0">
                         <children>
-                            <Label id="sideAccountName" text="Carlo Mendoza">
+                            <Label fx:id="sideAccountName" text="Carlo Mendoza">
                                 <font>
                                     <Font name="Leelawadee UI" size="17.0" />
                                 </font>
                             </Label>
-                            <Label id="sideAccountRank" styleClass="sidebar-subtitle" text="Gold Member" />
+                            <Label fx:id="sideAccountRank" styleClass="sidebar-subtitle" text="Gold Member" />
                         </children>
                     </VBox>
                 </children>
