@@ -15,6 +15,7 @@ public final class SessionManager {
     private String localId;
     private String email;
     private Instant expiresAt; // optional, set when token expiry info is available
+    private String displayName; // added to hold Firebase displayName locally
 
     private SessionManager() {}
 
@@ -34,6 +35,7 @@ public final class SessionManager {
         this.localId = null;
         this.email = null;
         this.expiresAt = null;
+        this.displayName = null; // clear displayName on logout
     }
 
     public synchronized Optional<String> getIdToken() {
@@ -54,6 +56,15 @@ public final class SessionManager {
 
     public synchronized boolean isAuthenticated() {
         return idToken != null && localId != null;
+    }
+
+    // New: displayName accessors
+    public synchronized Optional<String> getDisplayName() {
+        return Optional.ofNullable(displayName);
+    }
+
+    public synchronized void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     // TODO: add method to check expiry and refresh using refreshToken through Firebase token endpoints.

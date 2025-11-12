@@ -88,6 +88,7 @@ public class LoginController extends Controller {
                 if (Boolean.TRUE.equals(success)) {
                     // on success navigate to Home
                     try {
+                        // Sidebar will read SessionManager.get().getDisplayName() / getEmail()
                         navigate("/fxml/Home.fxml");
                     } catch (java.io.IOException e) {
                         e.printStackTrace();
@@ -159,9 +160,23 @@ public class LoginController extends Controller {
                 String idToken = json.has("idToken") ? json.get("idToken").getAsString() : null;
                 String localId = json.has("localId") ? json.get("localId").getAsString() : null;
                 String emailResp = json.has("email") ? json.get("email").getAsString() : email; // fallback to entered email
-                // store in SessionManager instead of static Session
+
+                // New: try to extract displayName if present and save it to SessionManager
+                String displayName = null;
+                if (json.has("displayName")) {
+                    displayName = json.get("displayName").getAsString();
+                }
+
+                // store in SessionManager
                 SessionManager.get().setSession(idToken, localId, emailResp, null);
-                System.out.println("[LoginController] Authentication succeeded. localId=" + localId);
+                if (displayName != null && !displayName.isBlank()) {
+                    SessionManager.get().setDisplayName(displayName);
+                } else {
+                    // if displayName isn't present, try to set email as fallback display name
+                    SessionManager.get().setDisplayName(emailResp);
+                }
+
+                System.out.println("[LoginController] Authentication succeeded. localId=" + localId + " displayName=" + SessionManager.get().getDisplayName().orElse("<none>"));
                 return true;
             } catch (JsonParseException ex) {
                 System.err.println("[LoginController] Failed to parse success response: " + ex.getMessage());
