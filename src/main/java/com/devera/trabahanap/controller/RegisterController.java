@@ -23,17 +23,22 @@ import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Pattern;
 
-/**
- * Controller for Register_Page.fxml
- */
+
+ // Controller for Register_Page.fxml
 public class RegisterController extends Controller {
 
-    @FXML private TextField registerUsernameField;
-    @FXML private TextField registerEmailAddressField;
-    @FXML private PasswordField registerPasswordField;
-    @FXML private PasswordField registerConfirmPasswordField;
-    @FXML private Button registerSignUpBtn;
-    @FXML private Button registerGoogleSignIn;
+    @FXML
+    private TextField registerUsernameField;
+    @FXML
+    private TextField registerEmailAddressField;
+    @FXML
+    private PasswordField registerPasswordField;
+    @FXML
+    private PasswordField registerConfirmPasswordField;
+    @FXML
+    private Button registerSignUpBtn;
+    @FXML
+    private Button registerGoogleSignIn;
 
     private static final Gson gson = new Gson();
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.]+@[A-Za-z0-9.-]+$");
@@ -157,96 +162,85 @@ public class RegisterController extends Controller {
         SessionManager.get().setSession(idToken, localId, email, Instant.now().plusSeconds(3600));
         SessionManager.get().setDisplayName(displayName);
 
-        // Check uniqueness and write to Realtime Database. If username already taken, delete created account and fail.
+        // Firestore-only: write user profile to Firestore users/{uid}.
+        // If this write fails, propagate as IOException so caller can handle cleanup (delete account) if desired.
         try {
-            boolean dbOk = checkUsernameUniqueAndWriteToDatabase(idToken, localId, displayName, email);
-            if (!dbOk) {
-                // Attempt to remove the created auth user since username is taken
-                deleteAccount(apiKey, idToken);
-                return false;
-            }
-        } catch (Exception ex) {
-            // If DB check/write fails, try to delete the created account to avoid partial state
-            try { deleteAccount(apiKey, idToken); } catch (Exception ignored) {}
-            throw ex;
+            com.devera.trabahanap.service.FirestoreService fs = new com.devera.trabahanap.service.FirestoreService();
+            fs.writeUserProfile(idToken, localId, displayName, email)
+              .exceptionally(th -> {
+                  // wrap to surface as checked exception below
+                  throw new RuntimeException("Failed to write user profile to Firestore: " + th.getMessage(), th);
+              }).join();
+        } catch (RuntimeException rte) {
+            Throwable cause = rte.getCause() != null ? rte.getCause() : rte;
+            if (cause instanceof IOException) throw (IOException) cause;
+            if (cause instanceof InterruptedException) throw (InterruptedException) cause;
+            throw new IOException("Failed to write user profile to Firestore: " + rte.getMessage(), rte);
         }
 
         updateDisplayNameAsync(apiKey, idToken, displayName);
+
+        // --------------------------
+        // New: write user profile to Firestore users/{uid}
+        // --------------------------
+        try {
+            // FirestoreService invoked asynchronously but we will wait short time to ensure write attempted.
+            com.devera.trabahanap.service.FirestoreService fs = new com.devera.trabahanap.service.FirestoreService();
+            fs.writeUserProfile(idToken, localId, displayName, email)
+                    .exceptionally(th -> {
+                        // Log the error but do not fail the whole signup flow if Firestore write fails.
+                        System.err.println("[RegisterController] Firestore user write failed: " + th.getMessage());
+                        return null;
+                    });
+        } catch (Exception e) {
+            // non-fatal; continue
+            System.err.println("[RegisterController] Failed to initialize FirestoreService: " + e.getMessage());
+        }
 
         return true;
     }
 
     /**
-     * Returns true if username is unique and user record was written successfully.
-     * If username already exists returns false.
+     * Firestore-only: write user profile into Firestore users/{uid}.
+     * <p>
+     * Kept for compatibility with callers — always returns true on success.
      */
     private boolean checkUsernameUniqueAndWriteToDatabase(String idToken, String uid, String displayName, String email) throws IOException, InterruptedException {
-        String dbUrl = Config.get("firebase.databaseUrl");
-        if (dbUrl == null || dbUrl.isBlank()) {
-            throw new IllegalStateException("firebase.databaseUrl is not set in config");
-        }
-
-        // Normalize DB base url (ensure no trailing slash)
-        if (dbUrl.endsWith("/")) dbUrl = dbUrl.substring(0, dbUrl.length() - 1);
-
-        // Check if username exists: use orderBy="displayName"&equalTo="displayName"
-        if (isUsernameTaken(dbUrl, idToken, displayName)) {
-            return false;
-        }
-
-        // Write user record under /users/{uid}.json
-        return writeUserRecord(dbUrl, idToken, uid, displayName, email);
-    }
-
-    private boolean isUsernameTaken(String dbUrl, String idToken, String displayName) throws IOException, InterruptedException {
-        // orderBy and equalTo must be JSON-encoded strings; URLEncoder will percent-encode quotes too.
-        String orderBy = URLEncoder.encode("\"displayName\"", StandardCharsets.UTF_8);
-        String equalTo = URLEncoder.encode(gson.toJson(displayName), StandardCharsets.UTF_8); // adds quotes
-        String query = String.format("%s/users.json?orderBy=%s&equalTo=%s&auth=%s", dbUrl, orderBy, equalTo, URLEncoder.encode(idToken, StandardCharsets.UTF_8));
-
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(query))
-                .GET()
-                .build();
-
-        HttpResponse<String> resp = HttpClient.newHttpClient().send(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-        if (resp.statusCode() >= 400) {
-            // treat as error to bubble up
-            throw new IOException("Realtime DB query failed: " + resp.body());
-        }
-
-        // If response is an empty object {} -> no match. If it contains entries -> username taken.
-        String body = resp.body();
-        JsonObject parsed;
+        // Realtime DB removed — write user record directly to Firestore.
         try {
-            parsed = gson.fromJson(body, JsonObject.class);
-        } catch (JsonParseException e) {
-            throw new IOException("Failed to parse Realtime DB response: " + body, e);
+            com.devera.trabahanap.service.FirestoreService fs = new com.devera.trabahanap.service.FirestoreService();
+            fs.writeUserProfile(idToken, uid, displayName, email)
+                    .exceptionally(th -> {
+                        // convert to checked exception for caller
+                        throw new RuntimeException("Failed to write user profile to Firestore: " + th.getMessage(), th);
+                    }).join();
+            return true;
+        } catch (RuntimeException rte) {
+            Throwable cause = rte.getCause() != null ? rte.getCause() : rte;
+            if (cause instanceof IOException) throw (IOException) cause;
+            if (cause instanceof InterruptedException) throw (InterruptedException) cause;
+            throw new IOException("Failed to write user profile to Firestore: " + rte.getMessage(), rte);
         }
-
-        // If parsed is null or has no keys -> not taken
-        return parsed != null && parsed.entrySet().size() > 0;
     }
 
-    private boolean writeUserRecord(String dbUrl, String idToken, String uid, String displayName, String email) throws IOException, InterruptedException {
-        String target = String.format("%s/users/%s.json?auth=%s", dbUrl, URLEncoder.encode(uid, StandardCharsets.UTF_8), URLEncoder.encode(idToken, StandardCharsets.UTF_8));
+    private void showErrorAlert(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
-        JsonObject record = new JsonObject();
-        record.addProperty("displayName", displayName);
-        record.addProperty("email", email);
-        record.addProperty("createdAt", Instant.now().toString());
+    private void showWarningAlert(String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(target))
-                .header("Content-Type", "application/json; charset=UTF-8")
-                .PUT(HttpRequest.BodyPublishers.ofString(gson.toJson(record)))
-                .build();
-
-        HttpResponse<String> resp = HttpClient.newHttpClient().send(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-        if (resp.statusCode() >= 400) {
-            throw new IOException("Failed to write user record: " + resp.body());
-        }
-        return true;
+    private String safeGet(TextField field) {
+        return field.getText() == null ? "" : field.getText();
     }
 
     /**
@@ -269,6 +263,10 @@ public class RegisterController extends Controller {
         HttpClient.newHttpClient().send(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Updates the Firebase Authentication user's displayName asynchronously.
+     * Non-critical: failures are ignored.
+     */
     private void updateDisplayNameAsync(String apiKey, String idToken, String displayName) {
         CompletableFuture.runAsync(() -> {
             try {
@@ -285,23 +283,10 @@ public class RegisterController extends Controller {
                         .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(payload)))
                         .build();
 
-                HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+                HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         });
-    }
-
-    private void showErrorAlert(String title, String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title); alert.setHeaderText(header); alert.setContentText(content); alert.showAndWait();
-    }
-
-    private void showWarningAlert(String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning"); alert.setHeaderText(header); alert.setContentText(content); alert.showAndWait();
-    }
-
-    private String safeGet(TextField field) {
-        return field.getText() == null ? "" : field.getText();
     }
 }

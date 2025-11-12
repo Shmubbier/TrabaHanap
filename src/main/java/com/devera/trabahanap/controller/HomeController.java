@@ -50,12 +50,17 @@ public class HomeController extends Controller {
     @FXML
     public void initialize() {
         try {
+            // Ensure we load Sidebar.fxml ourselves and always install the same SidebarController instance
+            // into the Home layout. If the FXML already contained a left node (e.g. via fx:include),
+            // we replace it to guarantee there is exactly one SidebarController instance and that
+            // HomeController has a reference to it.
             FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/fxml/Sidebar.fxml"));
             Node sidebar = sidebarLoader.load();
 
             SidebarController sidebarController = sidebarLoader.getController();
             sidebarController.setHomeController(this);
 
+            // Replace any existing left node to avoid duplicate controllers (fx:include case).
             borderPane.setLeft(sidebar); // IF using BorderPane, adjust to your layout
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,10 +89,45 @@ public class HomeController extends Controller {
                         // parse displayName/email/uid
                         String displayName = json.has("displayName") ? json.get("displayName").getAsString() : null;
                         String email = json.has("email") ? json.get("email").getAsString() : null;
+                        // extract Firebase user id (localId) so we can query Firestore users/{uid}
+                        String uid = json.has("localId") ? json.get("localId").getAsString() : null;
                         if (displayName != null && !displayName.isBlank()) {
                             userNameLabel.setText(displayName);
                         } else if (email != null) {
                             userNameLabel.setText(email);
+                        }
+
+                        // Additionally attempt to fetch Firestore user doc to obtain canonical displayName (if set there)
+                        if (uid != null && !uid.isBlank()) {
+                            // Use FirestoreService to fetch users/{uid}
+                            try {
+                                com.devera.trabahanap.service.FirestoreService fs = new com.devera.trabahanap.service.FirestoreService();
+                                fs.getUserProfileDocument(idToken, uid).whenComplete((maybeFields, err) -> {
+                                    Platform.runLater(() -> {
+                                        if (err != null) {
+                                            // ignore Firestore lookup errors for profile (non-fatal)
+                                            System.err.println("[HomeController] Firestore user fetch error: " + err.getMessage());
+                                            return;
+                                        }
+                                        maybeFields.ifPresent(fields -> {
+                                            // prefer displayName from Firestore if present
+                                            if (fields.has("displayName")) {
+                                                String dn = fields.get("displayName").getAsJsonObject().get("stringValue").getAsString();
+                                                if (dn != null && !dn.isBlank()) {
+                                                    userNameLabel.setText(dn);
+                                                    SessionManager.get().setDisplayName(dn);
+                                                }
+                                            } else if (fields.has("email") && (SessionManager.get().getDisplayName().isEmpty())) {
+                                                String em = fields.get("email").getAsJsonObject().get("stringValue").getAsString();
+                                                userNameLabel.setText(em);
+                                                SessionManager.get().setDisplayName(em);
+                                            }
+                                        });
+                                    });
+                                });
+                            } catch (Exception e) {
+                                System.err.println("[HomeController] Could not initialize FirestoreService: " + e.getMessage());
+                            }
                         }
                         // Could set userStatusLabel or other UI elements here
                     });

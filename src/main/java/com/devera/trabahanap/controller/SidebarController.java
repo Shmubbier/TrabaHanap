@@ -51,6 +51,12 @@ public class SidebarController extends Controller {
                     name -> sideAccountName.setText(name),
                     () -> SessionManager.get().getEmail().ifPresent(email -> sideAccountName.setText(email))
             );
+
+            // Register a listener so the sidebar updates automatically when displayName changes later.
+            SessionManager.get().addDisplayNameListener(name -> {
+                javafx.application.Platform.runLater(() -> sideAccountName.setText(name));
+            });
+
         } catch (Exception e) {
             // fallback: keep current FXML default text if anything fails
             System.err.println("[SidebarController] Failed to populate account name: " + e.getMessage());

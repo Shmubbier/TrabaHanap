@@ -28,12 +28,6 @@ public class LoginController extends Controller {
     @FXML
     private PasswordField passwordField;
 
-    // Simple in-memory holder for current session token (move to dedicated session manager as needed)
-    public static class Session {
-        public static String idToken;
-        public static String localId;
-    }
-
     private static final Gson gson = new Gson();
 
     @FXML
@@ -41,31 +35,26 @@ public class LoginController extends Controller {
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        System.out.println("[LoginController] Login clicked. Email: " + email + " Password: " + (password == null ? "<null>" : "<redacted>"));
+        System.out.println("[LoginController] Login clicked. Email: " + email);
 
         // Initialize Firebase Admin (optional for other server operations)
         try {
             FirebaseInitializer.ensureInitialized();
         } catch (RuntimeException e) {
-            // Log initialization problems but continue — REST sign-in only needs the web API key
             e.printStackTrace();
         }
 
         if (email == null || email.isBlank() || password == null || password.isBlank()) {
             System.err.println("[LoginController] Email or password blank.");
-            // TODO: show a user-facing error dialog
             return;
         }
 
-        // Read the Firebase Web API Key from configuration
         String apiKey = Config.get("firebase.webApiKey");
         if (apiKey == null || apiKey.isBlank()) {
-            System.err.println("[LoginController] Firebase webApiKey missing in configuration (firebase.webApiKey).");
-            // TODO: show a user-facing error dialog
+            System.err.println("[LoginController] Firebase webApiKey missing in configuration.");
             return;
         }
 
-        // Run network call asynchronously to avoid blocking JavaFX thread
         final String finalApiKey = apiKey;
         java.util.concurrent.CompletableFuture.supplyAsync(() -> {
             try {
@@ -86,11 +75,23 @@ public class LoginController extends Controller {
                 }
 
                 if (Boolean.TRUE.equals(success)) {
-                    // on success navigate to Home
                     try {
-                        // Sidebar will read SessionManager.get().getDisplayName() / getEmail()
+                        // Fallback display name if Firestore not yet loaded
+                        SessionManager.get().getDisplayName().ifPresentOrElse(
+                                name -> SessionManager.get().setDisplayName(name),
+                                () -> SessionManager.get().setDisplayName(email)
+                        );
+
+                        SessionManager.get().setSession(
+                                SessionManager.get().getIdToken().orElse(null),
+                                SessionManager.get().getLocalId().orElse(null),
+                                SessionManager.get().getEmail().orElse(email),
+                                SessionManager.get().getExpiresAt().orElse(null)
+                        );
+
                         navigate("/fxml/Home.fxml");
-                    } catch (java.io.IOException e) {
+
+                    } catch (IOException e) {
                         e.printStackTrace();
                         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
                         alert.setTitle("Navigation error");
@@ -99,7 +100,6 @@ public class LoginController extends Controller {
                         alert.showAndWait();
                     }
                 } else {
-                    // authentication failed - show friendly message
                     javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
                     alert.setTitle("Authentication failed");
                     alert.setHeaderText("Invalid credentials");
@@ -113,9 +113,8 @@ public class LoginController extends Controller {
     @FXML
     private void onSignupClicked() {
         try {
-            // navigate to the register page (resource path matches other usages)
             navigate("/fxml/Register_Page.fxml");
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
             alert.setTitle("Navigation error");
@@ -128,12 +127,7 @@ public class LoginController extends Controller {
     /**
      * Performs Firebase Auth REST signInWithPassword request.
      *
-     * On success stores idToken and localId in Session and returns true.
-     *
-     * @param apiKey  Firebase Web API Key (from project Settings -> Web API Key)
-     * @param email   user email
-     * @param password user password
-     * @return true when authentication succeeded
+     * On success stores idToken and localId in SessionManager and returns true.
      */
     private boolean signInWithEmailAndPassword(String apiKey, String email, String password) throws IOException, InterruptedException {
         String url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + apiKey;
@@ -154,36 +148,47 @@ public class LoginController extends Controller {
 
         int status = response.statusCode();
         String body = response.body();
+
         if (status == 200) {
             try {
                 JsonObject json = gson.fromJson(body, JsonObject.class);
                 String idToken = json.has("idToken") ? json.get("idToken").getAsString() : null;
                 String localId = json.has("localId") ? json.get("localId").getAsString() : null;
-                String emailResp = json.has("email") ? json.get("email").getAsString() : email; // fallback to entered email
+                String emailResp = json.has("email") ? json.get("email").getAsString() : email;
 
-                // New: try to extract displayName if present and save it to SessionManager
-                String displayName = null;
-                if (json.has("displayName")) {
-                    displayName = json.get("displayName").getAsString();
-                }
+                String displayName = json.has("displayName") ? json.get("displayName").getAsString() : emailResp;
 
-                // store in SessionManager
+                // Store session data
                 SessionManager.get().setSession(idToken, localId, emailResp, null);
-                if (displayName != null && !displayName.isBlank()) {
-                    SessionManager.get().setDisplayName(displayName);
-                } else {
-                    // if displayName isn't present, try to set email as fallback display name
-                    SessionManager.get().setDisplayName(emailResp);
+                SessionManager.get().setDisplayName(displayName);
+                SessionManager.get().setUserSession(localId, emailResp, displayName);
+
+                // Try to load canonical user profile from Firestore asynchronously
+                try {
+                    com.devera.trabahanap.service.FirestoreService fs = new com.devera.trabahanap.service.FirestoreService();
+                    fs.getUserProfileDocument(idToken, localId).whenComplete((maybeFields, err) -> {
+                        if (err == null && maybeFields.isPresent()) {
+                            JsonObject fields = maybeFields.get();
+                            if (fields.has("displayName")) {
+                                String dn = fields.get("displayName").getAsJsonObject().get("stringValue").getAsString();
+                                SessionManager.get().setDisplayName(dn);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    System.err.println("[LoginController] FirestoreService unavailable: " + e.getMessage());
                 }
 
-                System.out.println("[LoginController] Authentication succeeded. localId=" + localId + " displayName=" + SessionManager.get().getDisplayName().orElse("<none>"));
+                System.out.println("[LoginController] Authentication succeeded. localId=" + localId +
+                        " displayName=" + SessionManager.get().getDisplayName().orElse("<none>"));
                 return true;
+
             } catch (JsonParseException ex) {
                 System.err.println("[LoginController] Failed to parse success response: " + ex.getMessage());
                 return false;
             }
+
         } else {
-            // Try to parse error details
             try {
                 JsonObject err = gson.fromJson(body, JsonObject.class);
                 if (err != null && err.has("error")) {

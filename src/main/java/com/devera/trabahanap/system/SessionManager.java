@@ -2,6 +2,7 @@ package com.devera.trabahanap.system;
 
 import java.time.Instant;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * Simple session manager: stores current authenticated user's idToken, localId and email.
@@ -16,6 +17,9 @@ public final class SessionManager {
     private String email;
     private Instant expiresAt; // optional, set when token expiry info is available
     private String displayName; // added to hold Firebase displayName locally
+
+    // New: listener for displayName updates
+    private Consumer<String> displayNameListener;
 
     private SessionManager() {}
 
@@ -36,6 +40,15 @@ public final class SessionManager {
         this.email = null;
         this.expiresAt = null;
         this.displayName = null; // clear displayName on logout
+        this.displayNameListener = null; // clear listener too
+    }
+
+    // New helper to set user-identifying fields (used by LoginController)
+    public synchronized void setUserSession(String firebaseUserId, String userEmail, String userDisplayName) {
+        this.localId = firebaseUserId;
+        this.email = userEmail;
+        this.displayName = userDisplayName;
+        notifyDisplayNameListener(userDisplayName);
     }
 
     public synchronized Optional<String> getIdToken() {
@@ -58,14 +71,30 @@ public final class SessionManager {
         return idToken != null && localId != null;
     }
 
-    // New: displayName accessors
+    // Display name accessors
     public synchronized Optional<String> getDisplayName() {
         return Optional.ofNullable(displayName);
     }
 
-    public synchronized void setDisplayName(String displayName) {
-        this.displayName = displayName;
+    public synchronized void setDisplayName(String name) {
+        this.displayName = name;
+        notifyDisplayNameListener(name);
     }
 
-    // TODO: add method to check expiry and refresh using refreshToken through Firebase token endpoints.
+    // ---- NEW CODE BELOW ----
+    // Register listener for when displayName changes
+    public synchronized void addDisplayNameListener(Consumer<String> listener) {
+        this.displayNameListener = listener;
+        // Immediately notify if displayName is already available
+        if (this.displayName != null) {
+            listener.accept(this.displayName);
+        }
+    }
+
+    // Notify listener if one is set
+    private synchronized void notifyDisplayNameListener(String name) {
+        if (displayNameListener != null && name != null) {
+            displayNameListener.accept(name);
+        }
+    }
 }
