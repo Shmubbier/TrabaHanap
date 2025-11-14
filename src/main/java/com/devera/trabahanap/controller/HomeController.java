@@ -108,6 +108,11 @@ public class HomeController extends Controller {
         fetchAndRenderJobs();
     }
 
+    public BorderPane getBorderPane() {
+        return borderPane;
+    }
+
+
     /**
      * Fetch jobs and add JobCard nodes into jobsHBox (used on Home page).
      */
@@ -147,31 +152,18 @@ public class HomeController extends Controller {
      * Public navigation helper that other controllers can call.
      * Opens JobDetails and passes the Job to the details controller.
      */
-    public void openJobDetails(Job job) {
-        if (job == null) return;
-        Platform.runLater(() -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/JobDetails.fxml"));
-                Parent root = loader.load();
-                Object controller = loader.getController();
-                if (controller != null) {
-                    try {
-                        controller.getClass().getMethod("setJob", Job.class).invoke(controller, job);
-                        // inject parent if available
-                        try {
-                            controller.getClass().getMethod("setHomeController", HomeController.class).invoke(controller, this);
-                        } catch (NoSuchMethodException ignored){}
-                    } catch (ReflectiveOperationException ignored) {}
-                }
-                Stage stage = (Stage) userNameLabel.getScene().getWindow();
-                Scene scene = stage.getScene();
-                if (scene == null) stage.setScene(new Scene(root));
-                else scene.setRoot(root);
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert("Navigation error", "Could not open job details: " + e.getMessage(), Alert.AlertType.ERROR);
-            }
-        });
+    private void openJobDetails(Job job) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/JobDetails.fxml"));
+            Parent detailsRoot = loader.load();
+            JobDetailsController controller = loader.getController();
+            controller.setHomeController(this);
+            controller.setJob(job); // populate data
+
+            borderPane.setCenter(detailsRoot); // show in main layout
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML

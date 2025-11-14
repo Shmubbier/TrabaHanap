@@ -5,28 +5,26 @@ import com.devera.trabahanap.service.JobService;
 import com.devera.trabahanap.system.SessionManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class PostJobController extends Controller {
 
-    @FXML private TextField titleField;
-    @FXML private TextField companyField;
-    @FXML private TextField locationField;
-    @FXML private TextArea descriptionArea;
-    @FXML private TextField budgetMinField;
-    @FXML private TextField budgetMaxField;
-    @FXML private ComboBox<String> categoryComboBox;
-    @FXML private TextField skillsField;
-    @FXML private ComboBox<String> experienceLevelComboBox;
-    @FXML private Button postButton;
-    @FXML private Button cancelButton;
+    @FXML private TextField titleField; // maps to postJobTitleField
+    @FXML private ComboBox<String> categoryComboBox; // maps to postCategoryCombo
+    @FXML private TextArea descriptionArea; // maps to postJobDescriptionField
+    @FXML private TextField locationField; // maps to postJobLocationField
+    @FXML private Spinner<Double> budgetMinSpinner; // maps to postJobPriceMin
+    @FXML private Spinner<Double> budgetMaxSpinner; // maps to postJobPriceMax
+    @FXML private ComboBox<String> durationComboBox; // maps to postJobDurationCombo
+    @FXML private TextField skillsField; // maps to postSkillsRequiredField
+    @FXML private ComboBox<String> experienceLevelComboBox; // maps to postExperienceLevelCombo
+    @FXML private TextArea specialInstructionsArea; // maps to postSpecialInstructionsField
+    @FXML private Button postButton; // maps to postJobBtn
+    @FXML private Button cancelButton; // maps to postDraftBtn
 
     private final JobService jobService = new JobService();
 
@@ -54,14 +52,14 @@ public class PostJobController extends Controller {
     @FXML
     private void onPostClicked() {
         String title = safeText(titleField);
-        String company = safeText(companyField);
         String location = safeText(locationField);
         String description = safeText(descriptionArea);
-        String budgetMinStr = safeText(budgetMinField);
-        String budgetMaxStr = safeText(budgetMaxField);
-        String categoryDisplay = categoryComboBox.getValue();
         String skillsInput = safeText(skillsField);
         String experienceLevel = experienceLevelComboBox.getValue();
+        String categoryDisplay = categoryComboBox.getValue();
+
+        Double budgetMin = budgetMinSpinner.getValue();
+        Double budgetMax = budgetMaxSpinner.getValue();
 
         if (title.isBlank()) {
             showError("Job title is required.");
@@ -76,24 +74,10 @@ public class PostJobController extends Controller {
             return;
         }
 
-        Double budgetMin = null, budgetMax = null;
-        try {
-            if (!budgetMinStr.isBlank()) budgetMin = Double.parseDouble(budgetMinStr);
-            if (!budgetMaxStr.isBlank()) budgetMax = Double.parseDouble(budgetMaxStr);
-        } catch (NumberFormatException e) {
-            showError("Budget must be a valid number.");
-            return;
-        }
-
         String userId = SessionManager.get().getLocalId().orElse(null);
         if (userId == null) {
             showError("You must be logged in to post a job.");
             return;
-        }
-
-        // Default company to display name if empty
-        if (company.isBlank()) {
-            company = SessionManager.get().getDisplayName().orElse("");
         }
 
         List<String> skillsList = new ArrayList<>();
@@ -104,12 +88,11 @@ public class PostJobController extends Controller {
                     .collect(Collectors.toList());
         }
 
-        // The key used for both 'category' and 'imageKey' (CategoryImageMapper)
         String categoryKey = toCategoryKey(categoryDisplay);
 
         Job job = Job.createForPosting(
                 title,
-                company,
+                SessionManager.get().getDisplayName().orElse(""),
                 location,
                 description,
                 formatBudgetRange(budgetMin, budgetMax),
@@ -122,14 +105,10 @@ public class PostJobController extends Controller {
                 experienceLevel
         );
 
-        // Log to verify fields are present before sending
-        System.out.println("[PostJob] category=" + categoryKey + " categoryDisplay=" + categoryDisplay);
-
         postButton.setDisable(true);
         jobService.addJob(job).whenComplete((docId, throwable) -> {
             Platform.runLater(() -> {
                 postButton.setDisable(false);
-
                 if (throwable != null) {
                     throwable.printStackTrace();
                     showError("Failed to post job: " + throwable.getMessage());
@@ -160,7 +139,7 @@ public class PostJobController extends Controller {
         }
     }
 
-    private String safeText(javafx.scene.control.TextInputControl c) {
+    private String safeText(TextInputControl c) {
         return c != null && c.getText() != null ? c.getText().trim() : "";
     }
 

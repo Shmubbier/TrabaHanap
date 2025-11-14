@@ -1,118 +1,73 @@
 package com.devera.trabahanap.controller;
 
 import com.devera.trabahanap.core.Job;
-import com.devera.trabahanap.util.CategoryImageMapper;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.Locale;
+public class JobDetailsController {
 
-/**
- * Controller for JobDetails.fxml
- *
- * Responsibilities:
- *  - Expose public void setJob(Job) so callers can pass the selected Job.
- *  - Bind job data to the UI controls on the JavaFX Application Thread.
- *  - Provide a back navigation handler to return to the previous view.
- */
-public class JobDetailsController extends Controller {
+    // Left Column
+    @FXML private Label jobTitleLabel;
+    @FXML private Label jobLocationLabel;
+    @FXML private Label jobTimestampLabel;
+    @FXML private Label jobSalaryLabel;
+    @FXML private Button categoryLabel;
+    @FXML private Label jobDescriptionLabel;
+    @FXML private Label jobExperienceLabel;
+    @FXML private ImageView jobImageView;
 
-    @FXML private Label titleLabel;
-    @FXML private Label companyLabel;
-    @FXML private Label locationLabel;
-    @FXML private Label postedDateLabel;
-    @FXML private TextArea descriptionArea;
-    @FXML private Label salaryLabel;
+    // Right Column
+    @FXML private ImageView hostImageView;
+    @FXML private Label hostNameLabel;
+
     @FXML private Button backButton;
-    @FXML private Button detailsCategoryBtn;
-    @FXML private ImageView detailsJobImageView;
+    @FXML private Button applyButton;
 
-    // Keep a reference to the current job
-    private Job job;
+    private HomeController homeController;
 
-    // Date formatter for posted date
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-            .withLocale(Locale.getDefault());
-
-    @FXML
-    public void initialize() {
-        // Make description read-only and wrap text
-        if (descriptionArea != null) {
-            descriptionArea.setWrapText(true);
-            descriptionArea.setEditable(false);
-        }
+    public void setHomeController(HomeController hc) {
+        this.homeController = hc;
     }
 
     /**
-     * Populate the UI with the passed Job object.
-     * Safe to call off-FX thread: updates UI using Platform.runLater.
+     * Populate the JobDetails UI with a Job object.
      */
     public void setJob(Job job) {
-        this.job = job;
         if (job == null) return;
 
-        Platform.runLater(() -> {
-            titleLabel.setText(nonNullOrPlaceholder(job.getTitle(), "(No title)"));
-            companyLabel.setText(nonNullOrPlaceholder(job.getCompanyName(), ""));
-            locationLabel.setText(nonNullOrPlaceholder(job.getLocation(), ""));
-            salaryLabel.setText(nonNullOrPlaceholder(job.getSalaryRange(), computeSalary(job)));
-            descriptionArea.setText(nonNullOrPlaceholder(job.getDescription(), ""));
-            postedDateLabel.setText(formatTimestamp(job.getTimestamp()));
+        // Left column
+        jobTitleLabel.setText(job.getTitle() != null ? job.getTitle() : "(No Title)");
+        jobLocationLabel.setText(job.getLocation() != null ? job.getLocation() : "");
+        jobTimestampLabel.setText(String.valueOf(job.getTimestamp())); // convert long to String
+        jobSalaryLabel.setText(job.getSalaryRange() != null ? job.getSalaryRange() : "");
+        jobDescriptionLabel.setText(job.getDescription() != null ? job.getDescription() : "");
+        jobExperienceLabel.setText(job.getExperienceLevel() != null ? job.getExperienceLevel() : "");
+        categoryLabel.setText(job.getCategoryDisplay() != null ? job.getCategoryDisplay() : "Other");
 
-            if (detailsCategoryBtn != null)
-                detailsCategoryBtn.setText(job.getCategoryDisplay() != null ? job.getCategoryDisplay() : "Other");
+        // Job image (if you have a mapping from imageKey)
+        if (job.getImageKey() != null && !job.getImageKey().isBlank()) {
+            // Example: load from local resource
+            Image img = new Image("/images/" + job.getImageKey() + ".png", true);
+            jobImageView.setImage(img);
+        }
 
-            // Load local category/job image
-            if (detailsJobImageView != null) {
-                String key = job.getImageKey() != null ? job.getImageKey() : "OTHER";
-                detailsJobImageView.setImage(CategoryImageMapper.getImage(key));
+        // Right column: placeholders (since Job has no client info)
+        hostNameLabel.setText("Client Name"); // replace if you add a client field
+        hostImageView.setImage(new Image("/icons/default-user.png")); // default avatar
+
+        // Back button action
+        backButton.setOnAction(e -> {
+            if (homeController != null) {
+                homeController.loadPage("BrowseJobContent.fxml");
             }
         });
-    }
 
-    private String nonNullOrPlaceholder(String value, String fallback) {
-        return (value != null && !value.isBlank()) ? value : fallback;
-    }
-
-    private String formatTimestamp(long epochMillis) {
-        if (epochMillis <= 0) return "";
-        try {
-            LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochMilli(epochMillis), ZoneId.systemDefault());
-            return dateFormatter.format(ldt);
-        } catch (Exception ex) {
-            return "";
-        }
-    }
-
-    private String computeSalary(Job job) {
-        Double min = job.getBudgetMin();
-        Double max = job.getBudgetMax();
-        if (min == null && max == null) return "N/A";
-        if (min != null && max != null) return "₱" + min.intValue() + " – ₱" + max.intValue();
-        if (min != null) return "₱" + min.intValue();
-        return "₱" + max.intValue();
-    }
-
-    @FXML
-    private void onBackClicked() {
-        // Navigate back to Home or close window if navigation fails
-        try {
-            navigate("/fxml/Home.fxml");
-        } catch (Exception e) {
-            try {
-                Stage s = (Stage) (backButton != null ? backButton.getScene().getWindow() : null);
-                if (s != null) s.close();
-            } catch (Exception ignored) {}
-        }
+        // Apply button action (optional)
+        applyButton.setOnAction(e -> {
+            System.out.println("Applying for job: " + job.getTitle());
+        });
     }
 }
