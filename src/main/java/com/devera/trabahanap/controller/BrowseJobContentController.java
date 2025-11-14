@@ -6,93 +6,91 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
 
 /**
- * Controller for BrowseJobContent.fxml
+ * Controller for BrowseJob_Content.fxml
+ * Dynamically loads JobCard.fxml for each job and appends to jobsVBox.
  */
 public class BrowseJobContentController extends Controller {
 
-    @FXML private VBox jobsVBox;
-    @FXML private ComboBox<String> categoryCombo;
-    @FXML private ComboBox<String> recentCombo;
-    @FXML private ComboBox<String> locationCombo;
-    @FXML private Button moreFiltersBtn;
-    @FXML private TextField searchFieldBrowse;
+    @FXML
+    private VBox jobsVBox;
 
-    private JobService jobService = new JobService();
-    private HomeController homeController; // injected from HomeController
+    @FXML
+    private ScrollPane scrollPane;
 
-    public void setHomeController(HomeController hc) {
-        this.homeController = hc;
-    }
+    private final JobService jobService = new JobService();
 
     @FXML
     public void initialize() {
+        if (jobsVBox != null) {
+            jobsVBox.getChildren().clear();
+        }
         loadJobs();
     }
 
     private void loadJobs() {
-        // Clear previous cards
-        if (jobsVBox != null) Platform.runLater(jobsVBox.getChildren()::clear);
-
-        jobService.getAllJobs().whenComplete((jobs, thr) -> {
+        jobService.getAllJobs().whenComplete((jobs, err) -> {
             Platform.runLater(() -> {
-                if (thr != null) {
-                    System.err.println("Error fetching jobs: " + thr.getMessage());
+                if (err != null) {
+                    err.printStackTrace();
                     return;
                 }
-                if (jobs == null || jobs.isEmpty() || jobsVBox == null) return;
-
-                for (Job job : jobs) {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/JobCard.fxml"));
-                        Node card = loader.load();
-                        Object controller = loader.getController();
-
-                        if (controller instanceof JobCardController jobCardController) {
-                            jobCardController.setJob(job);
-
-                            // Click handler to load JobDetails in borderPane center
-                            jobCardController.setOnCardClick(() -> openJobDetails(job));
-                        }
-
-                        jobsVBox.getChildren().add(card);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                renderJobs(jobs);
             });
         });
     }
 
-    private void openJobDetails(Job job) {
-        if (homeController == null || job == null) return;
+    private void renderJobs(List<Job> jobs) {
+        if (jobs == null || jobs.isEmpty() || jobsVBox == null) return;
 
+        for (Job job : jobs) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/JobCard.fxml"));
+                Node card = loader.load();
+
+                Object controller = loader.getController();
+                try {
+                    controller.getClass().getMethod("setJob", Job.class).invoke(controller, job);
+                } catch (ReflectiveOperationException ignored) {}
+
+                card.setOnMouseClicked(ev -> openDetails(job));
+
+                jobsVBox.getChildren().add(card);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void openDetails(Job job) {
         Platform.runLater(() -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/JobDetails.fxml"));
-                Node root = loader.load();
+                Parent root = loader.load();
+
                 Object controller = loader.getController();
+                try {
+                    controller.getClass().getMethod("setJob", Job.class).invoke(controller, job);
+                } catch (ReflectiveOperationException ignored) {}
 
-                if (controller instanceof JobDetailsController jobDetailsController) {
-                    jobDetailsController.setJob(job);
-
-                    // Inject homeController if needed
-                    jobDetailsController.setHomeController(homeController);
+                Stage stage = (Stage) (jobsVBox != null ? jobsVBox.getScene().getWindow() : null);
+                if (stage != null) {
+                    Scene scene = stage.getScene();
+                    if (scene == null) {
+                        stage.setScene(new Scene(root));
+                    } else {
+                        scene.setRoot(root);
+                    }
                 }
-
-                // Set JobDetails FXML into center of homeController's borderPane
-                BorderPane bp = homeController.getBorderPane();
-                if (bp != null) bp.setCenter(root);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

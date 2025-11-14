@@ -1,0 +1,31 @@
+/* --- Post Job Button (Gradient) --- */
+#postButton {
+    -fx-background-color: linear-gradient(to bottom right, #0092b7, #009966);
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-family: "Microsoft New Tai Lue";
+    -fx-background-radius: 15;
+    -fx-cursor: hand;
+    -fx-padding: 8 8;
+}
+
+#postButton:hover {
+    -fx-background-color: linear-gradient(to bottom right, #00c6a7, #009595);
+}
+
+/* --- Cancel Button (White Box) --- */
+#cancelButton {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-font-family: "Microsoft New Tai Lue";
+    -fx-cursor: hand;
+    -fx-padding: 8 8;
+}
+
+#cancelButton:hover {
+    -fx-background-color: #f3f4f6;
+}
