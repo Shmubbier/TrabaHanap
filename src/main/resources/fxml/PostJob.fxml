@@ -5,18 +5,18 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox prefHeight="1362.0" prefWidth="1030" style="-fx-background-color: #f9fafb; -fx-border-color: transparent transparent transparent #e5e7eb;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.devera.trabahanap.controller.PostJobController">
+<VBox prefHeight="1362.0" prefWidth="1030"
+      style="-fx-background-color: #f9fafb; -fx-border-color: transparent transparent transparent #e5e7eb;"
+      xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.devera.trabahanap.controller.PostJobController">
     <children>
         <ScrollPane hbarPolicy="NEVER" prefHeight="1366.0" prefWidth="1030" style="-fx-background-color:transparent;">
             <content>
@@ -34,7 +34,6 @@
                                             <Label style="-fx-font-size: 14px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #666666;" text="Fill in the details below to find the perfect service provider" />
                                         </VBox>
 
-                                        <!-- Job Details Rectangle -->
                                         <StackPane>
                                             <children>
                                                 <Rectangle arcHeight="12" arcWidth="12" fill="white" height="814.0" stroke="#dcdcdc" strokeWidth="0.8" width="522.0" />
@@ -43,88 +42,70 @@
                                                         <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
                                                     </padding>
                                                     <children>
-                                                        <Label style="-fx-font-size: 18px; -fx-font-family: 'Dubai Medium'; -fx-text-fill: #333333;" text="Job Details" />
+                                                        <Label style="-fx-font-size: 18px;" text="Job Details" />
 
                                                         <!-- Job Title -->
                                                         <VBox spacing="3">
                                                             <HBox spacing="3">
-                                                                <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Job Title" />
-                                                                <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: black;" text="*" />
+                                                                <Label style="-fx-font-size: 13px;" text="Job Title" />
+                                                                <Label style="-fx-font-size: 13px; -fx-text-fill: black;" text="*" />
                                                             </HBox>
-                                                            <TextField fx:id="titleField" promptText="e.g., Logo Design for Coffee Shop" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
-                                                            <Label style="-fx-font-size: 11px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #777777;" text="Create a clear, descriptive title for your job" />
+                                                            <TextField fx:id="titleField" promptText="e.g., Logo Design for Coffee Shop" />
                                                         </VBox>
 
                                                         <!-- Category -->
                                                         <VBox spacing="3">
                                                             <HBox spacing="3">
-                                                                <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Category" />
-                                                                <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: black;" text="*" />
+                                                                <Label style="-fx-font-size: 13px;" text="Category" />
+                                                                <Label style="-fx-font-size: 13px; -fx-text-fill: black;" text="*" />
                                                             </HBox>
-                                                            <ComboBox fx:id="categoryComboBox" prefWidth="509" promptText="Select a category" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
+                                                            <ComboBox fx:id="categoryComboBox" prefWidth="509" promptText="Select a category" />
                                                         </VBox>
 
                                                         <!-- Description -->
                                                         <VBox spacing="3">
                                                             <HBox spacing="3">
-                                                                <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Description" />
-                                                                <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: black;" text="*" />
+                                                                <Label style="-fx-font-size: 13px;" text="Description" />
+                                                                <Label style="-fx-font-size: 13px; -fx-text-fill: black;" text="*" />
                                                             </HBox>
-                                                            <TextArea fx:id="descriptionArea" prefHeight="100" promptText="Describe what you need in detail. Include requirements, expectations, and any specific instructions..." style="-fx-control-inner-background: #f3f3f5; -fx-background-color: #f3f3f5; -fx-text-fill: #717182;" wrapText="true" />
-                                                            <Label style="-fx-font-size: 11px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #777777;" text="Minimum 50 characters. Be specific about your needs." />
+                                                            <TextArea fx:id="descriptionArea" prefHeight="110" promptText="Describe what you need..." wrapText="true" />
                                                         </VBox>
 
                                                         <!-- Location -->
                                                         <VBox spacing="3">
                                                             <HBox spacing="3">
-                                                                <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Location" />
-                                                                <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: black;" text="*" />
+                                                                <Label style="-fx-font-size: 13px;" text="Location" />
+                                                                <Label style="-fx-font-size: 13px; -fx-text-fill: black;" text="*" />
                                                             </HBox>
-                                                            <TextField fx:id="locationField" promptText="e.g., Quezon City, Metro Manila" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
-                                                            <Label style="-fx-font-size: 11px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #777777;" text="Where should the service be performed?" />
+                                                            <TextField fx:id="locationField" promptText="e.g., Quezon City, Metro Manila" />
                                                         </VBox>
 
                                                         <!-- Budget Range -->
                                                         <HBox spacing="20">
-                                                            <VBox>
-                                                                <children>
-                                                                    <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Budget Range (Min)">
-                                                                        <VBox.margin>
-                                                                            <Insets bottom="3.0" />
-                                                                        </VBox.margin>
-                                                                    </Label>
-                                                                    <TextField fx:id="budgetMinField" promptText="₱1000" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
-                                                                </children>
+                                                            <VBox spacing="3">
+                                                                <Label style="-fx-font-size: 13px;" text="Budget Range (Min)" />
+                                                                <TextField fx:id="budgetMinField" promptText="₱1000" />
                                                             </VBox>
-                                                            <VBox>
-                                                                <children>
-                                                                    <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Budget Range (Max)">
-                                                                        <VBox.margin>
-                                                                            <Insets bottom="3.0" />
-                                                                        </VBox.margin>
-                                                                    </Label>
-                                                                    <TextField fx:id="budgetMaxField" promptText="₱5000" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
-                                                                </children>
+                                                            <VBox spacing="3">
+                                                                <Label style="-fx-font-size: 13px;" text="Budget Range (Max)" />
+                                                                <TextField fx:id="budgetMaxField" promptText="₱5000" />
                                                             </VBox>
                                                         </HBox>
 
                                                         <!-- Experience Level -->
                                                         <VBox spacing="3">
-                                                            <HBox spacing="3">
-                                                                <Label style="-fx-font-size: 13px;" text="Experience Level" />
-                                                            </HBox>
-                                                            <ComboBox fx:id="experienceLevelComboBox" prefWidth="509" promptText="Select experience level" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
+                                                            <Label style="-fx-font-size: 13px;" text="Experience Level" />
+                                                            <ComboBox fx:id="experienceLevelComboBox" prefWidth="509" promptText="Select experience level" />
                                                         </VBox>
 
-                                                        <!-- Skills Required -->
+                                                        <!-- Skills -->
                                                         <VBox spacing="3">
-                                                            <Label style="-fx-font-size: 13px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #444444;" text="Skills Required" />
-                                                            <TextField fx:id="skillsField" promptText="e.g., Graphic Design, Adobe Illustrator" style="-fx-background-color: #f3f3f5; -fx-text-fill: #717182;" />
-                                                            <Label style="-fx-font-size: 11px; -fx-font-family: 'Microsoft New Tai Lue'; -fx-text-fill: #777777;" text="Add skills separated by commas" />
+                                                            <Label style="-fx-font-size: 13px;" text="Skills (comma-separated)" />
+                                                            <TextField fx:id="skillsField" promptText="e.g., Photoshop, Branding" />
                                                         </VBox>
 
-                                                        <!-- Buttons -->
-                                                        <HBox alignment="CENTER_LEFT" spacing="15">
+                                                        <!-- Actions -->
+                                                        <HBox spacing="12" alignment="CENTER_LEFT">
                                                             <Button fx:id="cancelButton" text="Cancel" onAction="#onCancelClicked" />
                                                             <Button fx:id="postButton" text="Post Job" onAction="#onPostClicked" />
                                                         </HBox>

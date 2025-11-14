@@ -192,13 +192,16 @@ public class Job implements Serializable {
             j.setTimestamp(((Number) o).longValue());
         } else if (o instanceof String) {
             try {
-                j.setTimestamp(Long.parseLong((String) o));
-            } catch (NumberFormatException ignored) {
+                // Parse Firestore timestamp RFC3339 string
+                java.time.Instant inst = java.time.Instant.parse((String) o);
+                j.setTimestamp(inst.toEpochMilli());
+            } catch (Exception ignored) {
                 j.setTimestamp(0L);
             }
         } else {
             j.setTimestamp(0L);
         }
+
 
         o = map.get("budgetMin");
         if (o instanceof Number) j.setBudgetMin(((Number) o).doubleValue());

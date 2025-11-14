@@ -250,16 +250,12 @@
                     <HBox alignment="BOTTOM_LEFT" prefHeight="45.0" prefWidth="1200.0">
                         <children>
                             <Label styleClass="section-header" text="Trending Commissions">
-                                <padding>
-                                    <Insets left="19.0" />
-                                </padding>
+                                <padding><Insets left="19.0" /></padding>
                             </Label>
                             <Region HBox.hgrow="ALWAYS" />
-                            <Button id="viewAllJobsBtn" styleClass="view-all" text="See All Jobs" />
+                            <Button fx:id="viewAllJobsBtn" styleClass="view-all" text="See All Jobs" />
                         </children>
-                        <padding>
-                            <Insets left="19.0" />
-                        </padding>
+                        <padding><Insets left="19.0" /></padding>
                     </HBox>
 
                     <Label styleClass="section-subtitle" text="Popular jobs posted today">
@@ -268,21 +264,11 @@
                         </VBox.margin>
                     </Label>
 
-                    <!-- horizontal scroller for job cards -->
                     <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" pannable="true" prefHeight="384.0" prefWidth="959.0" vbarPolicy="NEVER">
                         <content>
-                            <HBox prefHeight="287.0" prefWidth="1007.0" spacing="15.0">
-                                <padding>
-                                    <Insets bottom="10" left="10" right="10" top="10" />
-                                </padding>
-                                <children>
-                                    <fx:include source="JobCard.fxml" />
-                                    <fx:include source="JobCard.fxml" />
-                                    <fx:include source="JobCard.fxml" />
-                                    <fx:include source="JobCard.fxml" />
-                                    <fx:include source="JobCard.fxml" />
-                                    <fx:include source="JobCard.fxml" />
-                                </children>
+                            <!-- HBox with fx:id to be populated dynamically -->
+                            <HBox fx:id="jobsHBox" prefHeight="287.0" prefWidth="1007.0" spacing="15.0" style="-fx-padding: 10;">
+                                <!-- Do not include static JobCard includes here -->
                             </HBox>
                         </content>
                     </ScrollPane>

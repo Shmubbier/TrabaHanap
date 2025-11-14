@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -14,96 +15,60 @@
             fx:controller="com.devera.trabahanap.controller.JobCardController">
 
     <children>
-
-        <!-- Entire clickable card -->
         <Button fx:id="cardButton" onAction="#onCardClicked" styleClass="card-root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
                 onMouseEntered="#onCardHover" onMouseExited="#onCardExit">
 
             <graphic>
-
                 <VBox spacing="0">
-
-                    <!-- IMAGE AREA -->
                     <StackPane alignment="TOP_RIGHT" prefHeight="130">
                         <children>
-
-                            <!-- main image placeholder -->
                             <Rectangle fill="#cefafe" height="130" width="233" />
-
-                            <!-- category tag (no margin attributes!) -->
                             <VBox alignment="TOP_RIGHT" prefWidth="233">
                                 <children>
-                                    <Button styleClass="category-tag" text="Category" />
+                                    <Button fx:id="categoryTagButton" styleClass="category-tag" text="Category" />
                                 </children>
-                                <padding>
-                                    <Insets bottom="0" left="0" right="8" top="8" />
-                                </padding>
+                                <padding><Insets bottom="0" left="0" right="8" top="8" /></padding>
                             </VBox>
-
                         </children>
                     </StackPane>
 
-                    <!-- CONTENT AREA -->
                     <VBox spacing="6" styleClass="content-box">
-                        <padding>
-                            <Insets bottom="10" left="10" right="10" top="10" />
-                        </padding>
+                        <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
 
-                        <!-- JOB TITLE -->
                         <Label fx:id="titleLabel" styleClass="job-title" text="Job Title" />
-
-                        <!-- POSTER LINE -->
                         <HBox alignment="CENTER_LEFT" spacing="6">
-
-                            <!-- profile picture placeholder -->
                             <StackPane>
                                 <Rectangle arcHeight="50" arcWidth="50" fill="#cefafe" height="23" width="23" />
                             </StackPane>
-
                             <Label fx:id="companyLabel" styleClass="poster-name" text="John Doe" />
-
                             <Region HBox.hgrow="ALWAYS" />
-
                             <HBox spacing="2">
                                 <Label styleClass="star-icon" text="★" />
                                 <Label styleClass="rating-text" text="4.8" />
                             </HBox>
-
                         </HBox>
 
-                        <!-- LOCATION -->
                         <Label fx:id="locationLabel" styleClass="location-text" text="🌐 Quezon City, Metro Manila" />
 
-                        <!-- TIME + APPLICANTS with TOP+BOTTOM border -->
                         <VBox spacing="0">
                             <children>
-
                                 <Rectangle fill="#f3f4f6" height="1" />
-
                                 <HBox alignment="CENTER_LEFT" spacing="6" styleClass="timing-row">
                                     <children>
                                         <Label fx:id="shortDescLabel" styleClass="subinfo-text" text="⏲ 2 days ago" />
                                         <Region HBox.hgrow="ALWAYS" />
                                         <Label styleClass="subinfo-text" text="👤 5 applicants" />
                                     </children>
-                                    <padding>
-                                        <Insets bottom="6" left="2" right="2" top="6" />
-                                    </padding>
+                                    <padding><Insets bottom="6" left="2" right="2" top="6" /></padding>
                                 </HBox>
-
                                 <Rectangle fill="#f3f4f6" height="1" />
-
                             </children>
                         </VBox>
 
-                        <!-- PRICE -->
                         <Label fx:id="salaryLabel" styleClass="price-text" text="₱2,000 – ₱5,000" />
-
                     </VBox>
-
                 </VBox>
             </graphic>
         </Button>
     </children>
-
 </AnchorPane>
