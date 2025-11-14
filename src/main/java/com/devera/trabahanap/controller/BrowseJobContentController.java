@@ -6,98 +6,37 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * Controller for BrowseJob_Content.fxml.
- * Responsible for loading all job cards, applying filters, and handling clicks to HomeController.
+ * Controller for BrowseJob_Content.fxml
+ * Dynamically loads JobCard.fxml for each job and appends to jobsVBox.
  */
-public class BrowseJobContentController {
+public class BrowseJobContentController extends Controller {
 
-    public static BrowseJobContentController lastLoadedInstance;
+    @FXML
+    private VBox jobsVBox;
 
-    @FXML private VBox jobsVBox;
-    @FXML private ComboBox<String> categoryCombo;
-    @FXML private ComboBox<String> recentCombo;
-    @FXML private ComboBox<String> locationCombo;
-    @FXML private TextField searchFieldBrowse;
+    @FXML
+    private ScrollPane scrollPane;
 
     private final JobService jobService = new JobService();
-    private HomeController homeController;
-    private List<Job> allJobs = new ArrayList<>();
 
-    //--------------------------------------------------------------------------
-    // Inject HomeController
-    //--------------------------------------------------------------------------
-    public void setHomeController(HomeController hc) {
-        this.homeController = hc;
-        lastLoadedInstance = this;
-    }
-
-    //--------------------------------------------------------------------------
-    // Initialization
-    //--------------------------------------------------------------------------
     @FXML
     public void initialize() {
-        lastLoadedInstance = this; // keep reference for external refresh
-        setupFilters();
+        if (jobsVBox != null) {
+            jobsVBox.getChildren().clear();
+        }
         loadJobs();
     }
 
-    //--------------------------------------------------------------------------
-    // Setup combo boxes and search field listeners
-    //--------------------------------------------------------------------------
-    private void setupFilters() {
-        if (categoryCombo != null) {
-            categoryCombo.getItems().addAll(
-                    "All Categories",
-                    "Graphics and Design",
-                    "Music and Audio",
-                    "Programming and Tech",
-                    "Digital Marketing",
-                    "Video and Animation",
-                    "Writing and Translation",
-                    "Business",
-                    "Lifestyle",
-                    "AI Services"
-            );
-            categoryCombo.getSelectionModel().select(0);
-            categoryCombo.setOnAction(e -> applyFilters());
-        }
-
-        if (recentCombo != null) {
-            recentCombo.getItems().addAll("Most Recent", "Oldest First");
-            recentCombo.getSelectionModel().select(0);
-            recentCombo.setOnAction(e -> applyFilters());
-        }
-
-        if (locationCombo != null) {
-            locationCombo.getItems().addAll(
-                    "All Location",
-                    "Luzon",
-                    "Visayas",
-                    "Mindanao",
-                    "Metro Manila"
-            );
-            locationCombo.getSelectionModel().select(0);
-            locationCombo.setOnAction(e -> applyFilters());
-        }
-
-        if (searchFieldBrowse != null) {
-            searchFieldBrowse.textProperty().addListener((obs, oldV, newV) -> applyFilters());
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Load jobs from Firestore
-    //--------------------------------------------------------------------------
     private void loadJobs() {
         jobService.getAllJobs().whenComplete((jobs, err) -> {
             Platform.runLater(() -> {
@@ -105,46 +44,13 @@ public class BrowseJobContentController {
                     err.printStackTrace();
                     return;
                 }
-
-                allJobs = jobs != null ? jobs : new ArrayList<>();
-                applyFilters(); // initial render
+                renderJobs(jobs);
             });
         });
     }
 
-    //--------------------------------------------------------------------------
-    // Apply filters: category, location, search text, and sort
-    //--------------------------------------------------------------------------
-    public void applyFilters() {
-        if (allJobs == null) return;
-
-        String search = searchFieldBrowse != null ? searchFieldBrowse.getText().trim().toLowerCase() : "";
-        String category = categoryCombo != null ? categoryCombo.getValue() : "All Categories";
-        String location = locationCombo != null ? locationCombo.getValue() : "All Location";
-        String sortOption = recentCombo != null ? recentCombo.getValue() : "Most Recent";
-
-        List<Job> filtered = allJobs.stream()
-                .filter(j -> search.isEmpty() || j.getTitle().toLowerCase().contains(search))
-                .filter(j -> "All Categories".equals(category) || category.equalsIgnoreCase(j.getCategory()))
-                .filter(j -> "All Location".equals(location) || (j.getLocation() != null && j.getLocation().contains(location)))
-                .collect(Collectors.toList());
-
-        if ("Most Recent".equals(sortOption)) {
-            filtered.sort((a, b) -> Long.compare(b.getTimestamp(), a.getTimestamp()));
-        } else {
-            filtered.sort((a, b) -> Long.compare(a.getTimestamp(), b.getTimestamp()));
-        }
-
-        renderJobCards(filtered);
-    }
-
-    //--------------------------------------------------------------------------
-    // Render job cards into jobsVBox
-    //--------------------------------------------------------------------------
-    private void renderJobCards(List<Job> jobs) {
-        if (jobsVBox == null) return;
-
-        jobsVBox.getChildren().clear();
+    private void renderJobs(List<Job> jobs) {
+        if (jobs == null || jobs.isEmpty() || jobsVBox == null) return;
 
         for (Job job : jobs) {
             try {
@@ -152,25 +58,42 @@ public class BrowseJobContentController {
                 Node card = loader.load();
 
                 Object controller = loader.getController();
-                if (controller instanceof JobCardController jcc) {
-                    jcc.setJob(job);
-                    jcc.setOnCardClick(() -> {
-                        if (homeController != null) homeController.openJobDetails(job);
-                    });
-                }
+                try {
+                    controller.getClass().getMethod("setJob", Job.class).invoke(controller, job);
+                } catch (ReflectiveOperationException ignored) {}
+
+                card.setOnMouseClicked(ev -> openDetails(job));
 
                 jobsVBox.getChildren().add(card);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    //--------------------------------------------------------------------------
-    // Public refresh method for external calls (like after posting a job)
-    //--------------------------------------------------------------------------
-    public void refreshJobs() {
-        loadJobs();
+    private void openDetails(Job job) {
+        Platform.runLater(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/JobDetails.fxml"));
+                Parent root = loader.load();
+
+                Object controller = loader.getController();
+                try {
+                    controller.getClass().getMethod("setJob", Job.class).invoke(controller, job);
+                } catch (ReflectiveOperationException ignored) {}
+
+                Stage stage = (Stage) (jobsVBox != null ? jobsVBox.getScene().getWindow() : null);
+                if (stage != null) {
+                    Scene scene = stage.getScene();
+                    if (scene == null) {
+                        stage.setScene(new Scene(root));
+                    } else {
+                        scene.setRoot(root);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

@@ -5,33 +5,55 @@ import com.devera.trabahanap.service.JobService;
 import com.devera.trabahanap.system.SessionManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class PostJobController extends Controller {
 
-    @FXML private TextField titleField;
-    @FXML private TextField companyField;
-    @FXML private TextField locationField;
-    @FXML private TextArea descriptionArea;
-    @FXML private TextField budgetMinField;
-    @FXML private TextField budgetMaxField;
-    @FXML private ComboBox<String> categoryComboBox;
-    @FXML private TextField skillsField;
-    @FXML private ComboBox<String> experienceLevelComboBox;
-    @FXML private Button postButton;
-    @FXML private Button cancelButton;
+    @FXML
+    private TextField titleField;
+
+    @FXML
+    private TextField companyField;
+
+    @FXML
+    private TextField locationField;
+
+    @FXML
+    private TextArea descriptionArea;
+
+    @FXML
+    private TextField budgetMinField;
+
+    @FXML
+    private TextField budgetMaxField;
+
+    @FXML
+    private ComboBox<String> categoryComboBox;
+
+    @FXML
+    private TextField skillsField;
+
+    @FXML
+    private ComboBox<String> experienceLevelComboBox;
+
+    @FXML
+    private Button postButton;
+
+    @FXML
+    private Button cancelButton;
 
     private final JobService jobService = new JobService();
 
     @FXML
     public void initialize() {
+        // Categories and experience levels
         categoryComboBox.getItems().setAll(
                 "Graphic Design",
                 "Writing & Content",
@@ -71,10 +93,6 @@ public class PostJobController extends Controller {
             showError("Job description is required.");
             return;
         }
-        if (categoryDisplay == null || categoryDisplay.isBlank()) {
-            showError("Please select a category.");
-            return;
-        }
 
         Double budgetMin = null, budgetMax = null;
         try {
@@ -91,7 +109,7 @@ public class PostJobController extends Controller {
             return;
         }
 
-        // Default company to display name if empty
+        // If company is empty, fall back to user's display name
         if (company.isBlank()) {
             company = SessionManager.get().getDisplayName().orElse("");
         }
@@ -104,9 +122,7 @@ public class PostJobController extends Controller {
                     .collect(Collectors.toList());
         }
 
-        // The key used for both 'category' and 'imageKey' (CategoryImageMapper)
         String categoryKey = toCategoryKey(categoryDisplay);
-
         Job job = Job.createForPosting(
                 title,
                 company,
@@ -121,9 +137,6 @@ public class PostJobController extends Controller {
                 skillsList,
                 experienceLevel
         );
-
-        // Log to verify fields are present before sending
-        System.out.println("[PostJob] category=" + categoryKey + " categoryDisplay=" + categoryDisplay);
 
         postButton.setDisable(true);
         jobService.addJob(job).whenComplete((docId, throwable) -> {
