@@ -1,10 +1,12 @@
 package com.devera.trabahanap.controller;
 
 import com.devera.trabahanap.core.Job;
+import com.devera.trabahanap.util.CategoryImageMapper;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 /**
  * Controller for JobCard.fxml
@@ -18,6 +20,7 @@ public class JobCardController extends Controller {
     @FXML private Label salaryLabel;
     @FXML private Label shortDescLabel;
     @FXML private Button categoryTagButton;
+    @FXML private ImageView jobImageView; // newly added
 
     private Job job;
 
@@ -42,9 +45,7 @@ public class JobCardController extends Controller {
 
     @FXML
     private void onCardClicked() {
-        if (onClick != null) {
-            onClick.run();   // clean, controlled navigation
-        }
+        if (onClick != null) onClick.run();
     }
 
     public void setJob(Job job) {
@@ -62,6 +63,12 @@ public class JobCardController extends Controller {
 
             if (categoryTagButton != null) {
                 categoryTagButton.setText(job.getCategoryDisplay() != null ? job.getCategoryDisplay() : "Other");
+            }
+
+            // Load local image based on imageKey / category key
+            if (jobImageView != null) {
+                String key = job.getImageKey() != null ? job.getImageKey() : "OTHER";
+                jobImageView.setImage(CategoryImageMapper.getImage(key));
             }
         });
     }

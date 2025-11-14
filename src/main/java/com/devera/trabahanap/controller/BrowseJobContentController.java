@@ -13,10 +13,11 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller for BrowseJob_Content.fxml.
- * Responsible for loading all job cards, filtering, and forwarding clicks to HomeController.
+ * Responsible for loading all job cards, applying filters, and handling clicks to HomeController.
  */
 public class BrowseJobContentController {
 
@@ -29,7 +30,7 @@ public class BrowseJobContentController {
     @FXML private TextField searchFieldBrowse;
 
     private final JobService jobService = new JobService();
-    private HomeController homeController; // injected externally
+    private HomeController homeController;
     private List<Job> allJobs = new ArrayList<>();
 
     //--------------------------------------------------------------------------
@@ -37,7 +38,7 @@ public class BrowseJobContentController {
     //--------------------------------------------------------------------------
     public void setHomeController(HomeController hc) {
         this.homeController = hc;
-        lastLoadedInstance = this; // keep track of last loaded instance
+        lastLoadedInstance = this;
     }
 
     //--------------------------------------------------------------------------
@@ -45,13 +46,13 @@ public class BrowseJobContentController {
     //--------------------------------------------------------------------------
     @FXML
     public void initialize() {
-        lastLoadedInstance = this; // important for external applyFilters calls
+        lastLoadedInstance = this; // keep reference for external refresh
         setupFilters();
         loadJobs();
     }
 
     //--------------------------------------------------------------------------
-    // Setup combo box values and event handling
+    // Setup combo boxes and search field listeners
     //--------------------------------------------------------------------------
     private void setupFilters() {
         if (categoryCombo != null) {
@@ -68,62 +69,65 @@ public class BrowseJobContentController {
                     "AI Services"
             );
             categoryCombo.getSelectionModel().select(0);
-            categoryCombo.setOnAction(e -> applyFilters(null, null, null));
+            categoryCombo.setOnAction(e -> applyFilters());
         }
 
         if (recentCombo != null) {
             recentCombo.getItems().addAll("Most Recent", "Oldest First");
             recentCombo.getSelectionModel().select(0);
-            recentCombo.setOnAction(e -> applyFilters(null, null, null));
+            recentCombo.setOnAction(e -> applyFilters());
         }
 
         if (locationCombo != null) {
-            locationCombo.getItems().addAll("All Location", "Luzon", "Visayas", "Mindanao", "Metro Manila");
+            locationCombo.getItems().addAll(
+                    "All Location",
+                    "Luzon",
+                    "Visayas",
+                    "Mindanao",
+                    "Metro Manila"
+            );
             locationCombo.getSelectionModel().select(0);
-            locationCombo.setOnAction(e -> applyFilters(null, null, null));
+            locationCombo.setOnAction(e -> applyFilters());
         }
 
         if (searchFieldBrowse != null) {
-            searchFieldBrowse.textProperty().addListener((obs, oldV, newV) -> applyFilters(null, null, null));
+            searchFieldBrowse.textProperty().addListener((obs, oldV, newV) -> applyFilters());
         }
     }
 
     //--------------------------------------------------------------------------
-    // Load jobs from Firestore using JobService
+    // Load jobs from Firestore
     //--------------------------------------------------------------------------
     private void loadJobs() {
-        jobService.getAllJobs().whenComplete((list, err) -> {
+        jobService.getAllJobs().whenComplete((jobs, err) -> {
             Platform.runLater(() -> {
                 if (err != null) {
                     err.printStackTrace();
                     return;
                 }
-                allJobs = list != null ? list : new ArrayList<>();
-                applyFilters(null, null, null);
+
+                allJobs = jobs != null ? jobs : new ArrayList<>();
+                applyFilters(); // initial render
             });
         });
     }
 
     //--------------------------------------------------------------------------
-    // Apply filters (search + category + location + recent)
+    // Apply filters: category, location, search text, and sort
     //--------------------------------------------------------------------------
-    public void applyFilters(String categoryParam, String locationParam, String recentParam) {
+    public void applyFilters() {
         if (allJobs == null) return;
 
         String search = searchFieldBrowse != null ? searchFieldBrowse.getText().trim().toLowerCase() : "";
-
-        String category = categoryParam != null ? categoryParam :
-                (categoryCombo != null ? categoryCombo.getValue() : "All Categories");
-        String location = locationParam != null ? locationParam :
-                (locationCombo != null ? locationCombo.getValue() : "All Location");
-        String sortOption = recentParam != null ? recentParam :
-                (recentCombo != null ? recentCombo.getValue() : "Most Recent");
+        String category = categoryCombo != null ? categoryCombo.getValue() : "All Categories";
+        String location = locationCombo != null ? locationCombo.getValue() : "All Location";
+        String sortOption = recentCombo != null ? recentCombo.getValue() : "Most Recent";
 
         List<Job> filtered = allJobs.stream()
                 .filter(j -> search.isEmpty() || j.getTitle().toLowerCase().contains(search))
                 .filter(j -> "All Categories".equals(category) || category.equalsIgnoreCase(j.getCategory()))
                 .filter(j -> "All Location".equals(location) || (j.getLocation() != null && j.getLocation().contains(location)))
-                .toList();
+                .collect(Collectors.toList());
 
         if ("Most Recent".equals(sortOption)) {
             filtered.sort((a, b) -> Long.compare(b.getTimestamp(), a.getTimestamp()));
@@ -147,11 +151,13 @@ public class BrowseJobContentController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/JobCard.fxml"));
                 Node card = loader.load();
 
-                JobCardController controller = loader.getController();
-                controller.setJob(job);
-                controller.setOnCardClick(() -> {
-                    if (homeController != null) homeController.openJobDetails(job);
-                });
+                Object controller = loader.getController();
+                if (controller instanceof JobCardController jcc) {
+                    jcc.setJob(job);
+                    jcc.setOnCardClick(() -> {
+                        if (homeController != null) homeController.openJobDetails(job);
+                    });
+                }
 
                 jobsVBox.getChildren().add(card);
 
@@ -159,5 +165,12 @@ public class BrowseJobContentController {
                 e.printStackTrace();
             }
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Public refresh method for external calls (like after posting a job)
+    //--------------------------------------------------------------------------
+    public void refreshJobs() {
+        loadJobs();
     }
 }

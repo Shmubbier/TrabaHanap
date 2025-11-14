@@ -37,18 +37,11 @@ public class RegisterController extends Controller {
     private PasswordField registerConfirmPasswordField;
     @FXML
     private Button registerSignUpBtn;
-    @FXML
-    private Button registerGoogleSignIn;
 
     private static final Gson gson = new Gson();
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.]+@[A-Za-z0-9.-]+$");
     private static final int MIN_PASSWORD_LENGTH = 6;
 
-    @FXML
-    private void initialize() {
-        registerSignUpBtn.setOnAction(event -> onSignUpClicked());
-        registerGoogleSignIn.setDisable(true);
-    }
 
     @FXML
     private void onSignInClicked() {

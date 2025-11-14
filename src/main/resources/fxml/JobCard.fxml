@@ -20,7 +20,7 @@
                 <VBox spacing="0">
                     <StackPane alignment="TOP_RIGHT" prefHeight="130">
                         <children>
-                     <ImageView fitHeight="130.0" fitWidth="233.0" pickOnBounds="true" preserveRatio="true" />
+                     <ImageView fx:id="jobImageView" fitHeight="130.0" fitWidth="233.0" pickOnBounds="true" preserveRatio="true" />
                             <VBox alignment="TOP_RIGHT" prefWidth="233">
                                 <children>
                                     <Button fx:id="categoryTagButton" styleClass="category-tag" text="Category" />
