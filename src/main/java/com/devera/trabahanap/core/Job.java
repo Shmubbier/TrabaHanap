@@ -2,9 +2,7 @@ package com.devera.trabahanap.core;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Job model used across the application and stored in Firestore.
@@ -14,6 +12,13 @@ import java.util.Objects;
  *  - title, companyName, location, description, salaryRange
  *  - postedByUserId: id of the session user who posted the job
  *  - timestamp: epoch millis when the job was posted
+ *
+ * Extended fields:
+ *  - budgetMin, budgetMax (Double)
+ *  - categoryDisplay (user-facing), category (key)
+ *  - imageKey (used for local image mapping)
+ *  - skills (List<String>)
+ *  - experienceLevel (Entry, Intermediate, Expert)
  */
 public class Job implements Serializable {
 
@@ -26,9 +31,16 @@ public class Job implements Serializable {
     private String postedByUserId;
     private long timestamp;
 
-    public Job() {
-        // Default constructor required for some deserializers / frameworks
-    }
+    // Extended fields
+    private Double budgetMin;
+    private Double budgetMax;
+    private String categoryDisplay;
+    private String category;
+    private String imageKey;
+    private List<String> skills;
+    private String experienceLevel;
+
+    public Job() {}
 
     public Job(String jobId,
                String title,
@@ -66,71 +78,71 @@ public class Job implements Serializable {
         );
     }
 
+    // New factory with extended fields
+    public static Job createForPosting(String title,
+                                       String companyName,
+                                       String location,
+                                       String description,
+                                       String salaryRange,
+                                       String postedByUserId,
+                                       Double budgetMin,
+                                       Double budgetMax,
+                                       String categoryDisplay,
+                                       String categoryKey,
+                                       List<String> skills,
+                                       String experienceLevel) {
+        Job j = new Job(
+                null,
+                title,
+                companyName,
+                location,
+                description,
+                salaryRange,
+                postedByUserId,
+                Instant.now().toEpochMilli()
+        );
+        j.setBudgetMin(budgetMin);
+        j.setBudgetMax(budgetMax);
+        j.setCategoryDisplay(categoryDisplay);
+        j.setCategory(categoryKey);
+        j.setImageKey(categoryKey);
+        j.setSkills(skills != null ? new ArrayList<>(skills) : Collections.emptyList());
+        j.setExperienceLevel(experienceLevel);
+        return j;
+    }
+
     // Getters / Setters
+    public String getJobId() { return jobId; }
+    public void setJobId(String jobId) { this.jobId = jobId; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    public String getCompanyName() { return companyName; }
+    public void setCompanyName(String companyName) { this.companyName = companyName; }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    public String getSalaryRange() { return salaryRange; }
+    public void setSalaryRange(String salaryRange) { this.salaryRange = salaryRange; }
+    public String getPostedByUserId() { return postedByUserId; }
+    public void setPostedByUserId(String postedByUserId) { this.postedByUserId = postedByUserId; }
+    public long getTimestamp() { return timestamp; }
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 
-    public String getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(String jobId) {
-        this.jobId = jobId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getSalaryRange() {
-        return salaryRange;
-    }
-
-    public void setSalaryRange(String salaryRange) {
-        this.salaryRange = salaryRange;
-    }
-
-    public String getPostedByUserId() {
-        return postedByUserId;
-    }
-
-    public void setPostedByUserId(String postedByUserId) {
-        this.postedByUserId = postedByUserId;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
+    public Double getBudgetMin() { return budgetMin; }
+    public void setBudgetMin(Double budgetMin) { this.budgetMin = budgetMin; }
+    public Double getBudgetMax() { return budgetMax; }
+    public void setBudgetMax(Double budgetMax) { this.budgetMax = budgetMax; }
+    public String getCategoryDisplay() { return categoryDisplay; }
+    public void setCategoryDisplay(String categoryDisplay) { this.categoryDisplay = categoryDisplay; }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+    public String getImageKey() { return imageKey; }
+    public void setImageKey(String imageKey) { this.imageKey = imageKey; }
+    public List<String> getSkills() { return skills; }
+    public void setSkills(List<String> skills) { this.skills = skills; }
+    public String getExperienceLevel() { return experienceLevel; }
+    public void setExperienceLevel(String experienceLevel) { this.experienceLevel = experienceLevel; }
 
     /**
      * Convert to a Map suitable for Firestore (REST/JSON).
@@ -144,6 +156,13 @@ public class Job implements Serializable {
         m.put("salaryRange", salaryRange);
         m.put("postedByUserId", postedByUserId);
         m.put("timestamp", timestamp);
+        if (budgetMin != null) m.put("budgetMin", budgetMin);
+        if (budgetMax != null) m.put("budgetMax", budgetMax);
+        if (categoryDisplay != null) m.put("categoryDisplay", categoryDisplay);
+        if (category != null) m.put("category", category);
+        if (imageKey != null) m.put("imageKey", imageKey);
+        if (skills != null) m.put("skills", new ArrayList<>(skills));
+        if (experienceLevel != null) m.put("experienceLevel", experienceLevel);
         return m;
     }
 
@@ -180,6 +199,30 @@ public class Job implements Serializable {
         } else {
             j.setTimestamp(0L);
         }
+
+        o = map.get("budgetMin");
+        if (o instanceof Number) j.setBudgetMin(((Number) o).doubleValue());
+        o = map.get("budgetMax");
+        if (o instanceof Number) j.setBudgetMax(((Number) o).doubleValue());
+        o = map.get("categoryDisplay");
+        if (o != null) j.setCategoryDisplay(o.toString());
+        o = map.get("category");
+        if (o != null) j.setCategory(o.toString());
+        o = map.get("imageKey");
+        if (o != null) j.setImageKey(o.toString());
+        o = map.get("experienceLevel");
+        if (o != null) j.setExperienceLevel(o.toString());
+        o = map.get("skills");
+        if (o instanceof List) {
+            @SuppressWarnings("unchecked")
+            List<Object> raw = (List<Object>) o;
+            List<String> out = new ArrayList<>();
+            for (Object item : raw) {
+                if (item != null) out.add(item.toString());
+            }
+            j.setSkills(out);
+        }
+
         return j;
     }
 
@@ -194,20 +237,26 @@ public class Job implements Serializable {
                 ", salaryRange='" + salaryRange + '\'' +
                 ", postedByUserId='" + postedByUserId + '\'' +
                 ", timestamp=" + timestamp +
+                ", budgetMin=" + budgetMin +
+                ", budgetMax=" + budgetMax +
+                ", categoryDisplay='" + categoryDisplay + '\'' +
+                ", category='" + category + '\'' +
+                ", imageKey='" + imageKey + '\'' +
+                ", skills=" + skills +
+                ", experienceLevel='" + experienceLevel + '\'' +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Job)) return false;
         Job job = (Job) o;
-        return timestamp == job.timestamp && Objects.equals(jobId, job.jobId);
+        return Objects.equals(jobId, job.jobId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(jobId, timestamp);
+        return Objects.hash(jobId);
     }
 }
