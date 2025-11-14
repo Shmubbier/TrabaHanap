@@ -94,58 +94,7 @@
                 </graphic>
             </Button>
 
-            <Button id="sideMessagesBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
-                <graphic>
-                    <HBox alignment="CENTER_LEFT" spacing="10.0">
-                        <children>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon">
-                        <image>
-                           <Image url="@../icons/side_chat1.png" />
-                        </image></ImageView>
-                            <Label styleClass="sidebar-btn-label" text="Messages" />
-                            <Region prefHeight="43.0" prefWidth="50.0" HBox.hgrow="ALWAYS" />
-                            <Label id="sideMessageNotificationCount" styleClass="notification" text="5" />
-                        </children>
-                        <padding>
-                            <Insets left="14.0" right="10.0" />
-                        </padding>
-                    </HBox>
-                </graphic>
-            </Button>
-
-            <Button id="sideProfileBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
-                <graphic>
-                    <HBox alignment="CENTER_LEFT" spacing="10.0">
-                        <children>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon">
-                        <image>
-                           <Image url="@../icons/side_profile1.png" />
-                        </image></ImageView>
-                            <Label styleClass="sidebar-btn-label" text="Profile" />
-                        </children>
-                        <padding>
-                            <Insets left="14.0" />
-                        </padding>
-                    </HBox>
-                </graphic>
-            </Button>
-
-            <Button id="sideSettingsBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button">
-                <graphic>
-                    <HBox alignment="CENTER_LEFT" spacing="10.0">
-                        <children>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-icon">
-                        <image>
-                           <Image url="@../icons/side_settings1.png" />
-                        </image></ImageView>
-                            <Label styleClass="sidebar-btn-label" text="Settings" />
-                        </children>
-                        <padding>
-                            <Insets left="14.0" />
-                        </padding>
-                    </HBox>
-                </graphic>
-            </Button>
+            <Button id="sideSettingsBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button" />
         </VBox>
 
 

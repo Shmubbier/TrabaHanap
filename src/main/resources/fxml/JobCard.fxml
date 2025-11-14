@@ -3,26 +3,24 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="325.0" prefWidth="233.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../css/jobcard.css"
-            fx:controller="com.devera.trabahanap.controller.JobCardController">
+<AnchorPane prefHeight="325.0" prefWidth="233.0" stylesheets="@../css/jobcard.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.devera.trabahanap.controller.JobCardController">
 
     <children>
-        <Button fx:id="cardButton" onAction="#onCardClicked" styleClass="card-root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-                onMouseEntered="#onCardHover" onMouseExited="#onCardExit">
+        <Button fx:id="cardButton" onAction="#onCardClicked" onMouseEntered="#onCardHover" onMouseExited="#onCardExit" styleClass="card-root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
             <graphic>
                 <VBox spacing="0">
                     <StackPane alignment="TOP_RIGHT" prefHeight="130">
                         <children>
-                            <Rectangle fill="#cefafe" height="130" width="233" />
+                     <ImageView fitHeight="130.0" fitWidth="233.0" pickOnBounds="true" preserveRatio="true" />
                             <VBox alignment="TOP_RIGHT" prefWidth="233">
                                 <children>
                                     <Button fx:id="categoryTagButton" styleClass="category-tag" text="Category" />
@@ -38,14 +36,14 @@
                         <Label fx:id="titleLabel" styleClass="job-title" text="Job Title" />
                         <HBox alignment="CENTER_LEFT" spacing="6">
                             <StackPane>
-                                <Rectangle arcHeight="50" arcWidth="50" fill="#cefafe" height="23" width="23" />
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/person_book_icon.png" />
+                           </image>
+                        </ImageView>
                             </StackPane>
                             <Label fx:id="companyLabel" styleClass="poster-name" text="John Doe" />
-                            <Region HBox.hgrow="ALWAYS" />
-                            <HBox spacing="2">
-                                <Label styleClass="star-icon" text="★" />
-                                <Label styleClass="rating-text" text="4.8" />
-                            </HBox>
+                            <HBox spacing="2" />
                         </HBox>
 
                         <Label fx:id="locationLabel" styleClass="location-text" text="🌐 Quezon City, Metro Manila" />
@@ -56,8 +54,6 @@
                                 <HBox alignment="CENTER_LEFT" spacing="6" styleClass="timing-row">
                                     <children>
                                         <Label fx:id="shortDescLabel" styleClass="subinfo-text" text="⏲ 2 days ago" />
-                                        <Region HBox.hgrow="ALWAYS" />
-                                        <Label styleClass="subinfo-text" text="👤 5 applicants" />
                                     </children>
                                     <padding><Insets bottom="6" left="2" right="2" top="6" /></padding>
                                 </HBox>
