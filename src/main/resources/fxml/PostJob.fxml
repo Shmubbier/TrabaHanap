@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox prefHeight="1013.0" prefWidth="1030" style="-fx-background-color: #f9fafb; -fx-border-color: transparent transparent transparent #e5e7eb;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.devera.trabahanap.controller.PostJobController">
+<VBox prefHeight="1013.0" prefWidth="1030" style="-fx-background-color: #f9fafb; -fx-border-color: transparent transparent transparent #e5e7eb;" stylesheets="@../css/postjob.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.devera.trabahanap.controller.PostJobController">
     <children>
         <ScrollPane hbarPolicy="NEVER" prefHeight="1366.0" prefWidth="1029.0" style="-fx-background-color:transparent;">
             <content>
