@@ -13,10 +13,10 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Controller for BrowseJob_Content.fxml.
+ * Responsible for loading all job cards, filtering, and forwarding clicks to HomeController.
  */
 public class BrowseJobContentController {
 
@@ -29,24 +29,30 @@ public class BrowseJobContentController {
     @FXML private TextField searchFieldBrowse;
 
     private final JobService jobService = new JobService();
-
     private HomeController homeController; // injected externally
-
     private List<Job> allJobs = new ArrayList<>();
 
+    //--------------------------------------------------------------------------
     // Inject HomeController
+    //--------------------------------------------------------------------------
     public void setHomeController(HomeController hc) {
         this.homeController = hc;
-        lastLoadedInstance = this; // track last loaded instance
+        lastLoadedInstance = this; // keep track of last loaded instance
     }
 
+    //--------------------------------------------------------------------------
+    // Initialization
+    //--------------------------------------------------------------------------
     @FXML
     public void initialize() {
-        lastLoadedInstance = this;
+        lastLoadedInstance = this; // important for external applyFilters calls
         setupFilters();
         loadJobs();
     }
 
+    //--------------------------------------------------------------------------
+    // Setup combo box values and event handling
+    //--------------------------------------------------------------------------
     private void setupFilters() {
         if (categoryCombo != null) {
             categoryCombo.getItems().addAll(
@@ -62,35 +68,29 @@ public class BrowseJobContentController {
                     "AI Services"
             );
             categoryCombo.getSelectionModel().select(0);
-            categoryCombo.setOnAction(e -> applyFilters());
+            categoryCombo.setOnAction(e -> applyFilters(null, null, null));
         }
 
         if (recentCombo != null) {
-            recentCombo.getItems().addAll(
-                    "Most Recent",
-                    "Oldest First"
-            );
+            recentCombo.getItems().addAll("Most Recent", "Oldest First");
             recentCombo.getSelectionModel().select(0);
-            recentCombo.setOnAction(e -> applyFilters());
+            recentCombo.setOnAction(e -> applyFilters(null, null, null));
         }
 
         if (locationCombo != null) {
-            locationCombo.getItems().addAll(
-                    "All Location",
-                    "Luzon",
-                    "Visayas",
-                    "Mindanao",
-                    "Metro Manila"
-            );
+            locationCombo.getItems().addAll("All Location", "Luzon", "Visayas", "Mindanao", "Metro Manila");
             locationCombo.getSelectionModel().select(0);
-            locationCombo.setOnAction(e -> applyFilters());
+            locationCombo.setOnAction(e -> applyFilters(null, null, null));
         }
 
         if (searchFieldBrowse != null) {
-            searchFieldBrowse.textProperty().addListener((obs, oldV, newV) -> applyFilters());
+            searchFieldBrowse.textProperty().addListener((obs, oldV, newV) -> applyFilters(null, null, null));
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Load jobs from Firestore using JobService
+    //--------------------------------------------------------------------------
     private void loadJobs() {
         jobService.getAllJobs().whenComplete((list, err) -> {
             Platform.runLater(() -> {
@@ -99,20 +99,14 @@ public class BrowseJobContentController {
                     return;
                 }
                 allJobs = list != null ? list : new ArrayList<>();
-                applyFilters(); // <-- no-arg call works now
+                applyFilters(null, null, null);
             });
         });
     }
 
-    // -----------------------------
-    // APPLY FILTERS
-    // -----------------------------
-    // No-argument overload for convenience
-    public void applyFilters() {
-        applyFilters(null, null, null);
-    }
-
-    // Main method with optional parameters
+    //--------------------------------------------------------------------------
+    // Apply filters (search + category + location + recent)
+    //--------------------------------------------------------------------------
     public void applyFilters(String categoryParam, String locationParam, String recentParam) {
         if (allJobs == null) return;
 
@@ -140,11 +134,13 @@ public class BrowseJobContentController {
         renderJobCards(filtered);
     }
 
+    //--------------------------------------------------------------------------
+    // Render job cards into jobsVBox
+    //--------------------------------------------------------------------------
     private void renderJobCards(List<Job> jobs) {
         if (jobsVBox == null) return;
 
         jobsVBox.getChildren().clear();
-        System.out.println("[DEBUG] Rendering " + jobs.size() + " jobs into VBox");
 
         for (Job job : jobs) {
             try {
