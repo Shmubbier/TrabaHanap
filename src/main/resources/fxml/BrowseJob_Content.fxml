@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox prefHeight="672.0" prefWidth="1030" fx:controller="com.devera.trabahanap.controller.BrowseJobContentController" style="-fx-background-color: #f9fafb; -fx-border-color: transparent transparent transparent #e5e7eb;" stylesheets="@../css/browsejob.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="com.devera.trabahanap.controller.BrowseJobController" prefHeight="672.0" prefWidth="1030" style="-fx-background-color: #f9fafb; -fx-border-color: transparent transparent transparent #e5e7eb;" stylesheets="@../css/browsejob.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ScrollPane hbarPolicy="NEVER" prefHeight="966.0" prefWidth="1029.0" style="-fx-background-color:transparent;">
             <content>
@@ -69,10 +69,14 @@
                                         </StackPane>
 
                                         <!-- Job Cards -->
-                                        <VBox fx:id="jobsVBox" prefHeight="339.0" prefWidth="972.0" spacing="10.0">
-                                            <!-- remove static fx:includes -->
-                                        </VBox>
-
+                                        <HBox prefHeight="339.0" prefWidth="972.0" spacing="10.0">
+                                            <children>
+                                                <fx:include source="JobCard.fxml" />
+                                                <fx:include source="JobCard.fxml" />
+                                                <fx:include source="JobCard.fxml" />
+                                                <fx:include source="JobCard.fxml" />
+                                            </children>
+                                        </HBox>
                                     </children>
                                 </VBox>
                             </children>
