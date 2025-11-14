@@ -7,8 +7,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -19,36 +17,62 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Pattern;
 
-
- // Controller for Register_Page.fxml
+/**
+ * Controller for Register_Page.fxml
+ * Handles user registration via Firebase Auth REST API.
+ */
 public class RegisterController extends Controller {
 
     @FXML
     private TextField registerUsernameField;
+
     @FXML
     private TextField registerEmailAddressField;
+
+    // corrected field name to match FXML fx:id
     @FXML
     private PasswordField registerPasswordField;
+
     @FXML
     private PasswordField registerConfirmPasswordField;
+
     @FXML
     private Button registerSignUpBtn;
 
+    // Google sign-in button placeholder (disabled)
+    @FXML
+    private Button registerGoogleSignIn;
+
     private static final Gson gson = new Gson();
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.]+@[A-Za-z0-9.-]+$");
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     private static final int MIN_PASSWORD_LENGTH = 6;
 
+    @FXML
+    private void initialize() {
+        // Bind sign-up button action
+        if (registerSignUpBtn != null) {
+            registerSignUpBtn.setOnAction(event -> onSignUpClicked());
+        }
+
+        // Disable Google button placeholder until implemented
+        if (registerGoogleSignIn != null) {
+            registerGoogleSignIn.setDisable(true);
+        }
+    }
 
     @FXML
     private void onSignInClicked() {
         try {
+            // Use the Controller.navigate helper to go back to the login page
             navigate("/fxml/Login_Page.fxml");
-        } catch (Exception e) {
-            showErrorAlert("Navigation error", "Unable to open login page", e.getMessage());
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            showErrorAlert("Navigation error", "Could not open Login", e.getMessage());
         }
     }
 
@@ -58,16 +82,25 @@ public class RegisterController extends Controller {
         String password = safeGet(registerPasswordField);
         String confirmPassword = safeGet(registerConfirmPasswordField);
 
-        if (!validateInputs(username, email, password, confirmPassword)) return;
+        System.out.println("[RegisterController] Sign-up clicked. Username: " + username + ", Email: " + email);
 
+        // Validation
+        if (!validateInputs(username, email, password, confirmPassword)) {
+            return; // Validation failed, alert already shown
+        }
+
+        // Read Firebase Web API Key
         String apiKey = Config.get("firebase.webApiKey");
         if (apiKey == null || apiKey.isBlank()) {
-            showErrorAlert("Config Error", "Firebase Key Missing", "Please set firebase.webApiKey");
+            System.err.println("[RegisterController] Firebase webApiKey missing in configuration.");
+            showErrorAlert("Configuration Error", "Firebase API Key Missing", "Please configure firebase.webApiKey in config.properties");
             return;
         }
 
+        // Disable button to prevent double-click
         registerSignUpBtn.setDisable(true);
 
+        // Perform registration asynchronously
         CompletableFuture.supplyAsync(() -> {
             try {
                 return signUpWithEmailAndPassword(apiKey, email, password, username);
@@ -76,146 +109,156 @@ public class RegisterController extends Controller {
             }
         }).whenComplete((success, throwable) -> {
             Platform.runLater(() -> {
-                registerSignUpBtn.setDisable(false);
+                registerSignUpBtn.setDisable(false); // Re-enable button
 
                 if (throwable != null) {
-                    showErrorAlert("Sign-up error", "Unexpected error", throwable.getMessage());
+                    throwable.printStackTrace();
+                    Throwable cause = throwable.getCause() != null ? throwable.getCause() : throwable;
+                    showErrorAlert("Sign-up error", "Network or unexpected error", cause.getMessage());
                     return;
                 }
 
-                if (success) {
+                if (Boolean.TRUE.equals(success)) {
+                    // Show success message
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Registration Successful");
                     alert.setHeaderText("Welcome to TrabaHanap!");
-                    alert.setContentText("Account created successfully.");
+                    alert.setContentText("Your account has been created successfully. You are now logged in.");
                     alert.showAndWait();
 
+                    // Navigate to Home (user is auto-logged in)
                     try {
                         navigate("/fxml/Home.fxml");
                     } catch (IOException e) {
+                        e.printStackTrace();
                         showErrorAlert("Navigation error", "Could not open Home", e.getMessage());
                     }
                 } else {
-                    showErrorAlert("Registration Failed", "Could not create account", "Try again.");
+                    // Registration failed
+                    showErrorAlert("Registration Failed", "Could not create account", "Please check your details and try again.");
                 }
             });
         });
     }
 
+    /**
+     * Validates user inputs with UI feedback.
+     *
+     * @return true if all inputs are valid
+     */
     private boolean validateInputs(String username, String email, String password, String confirmPassword) {
-        if (username.isBlank()) {
-            showWarningAlert("Username Required", "Enter a username.");
+        // Username validation
+        if (username == null || username.isBlank()) {
+            showWarningAlert("Validation Error", "Username Required", "Please enter a username.");
             return false;
         }
 
-        if (email.isBlank() || !EMAIL_PATTERN.matcher(email).matches()) {
-            showWarningAlert("Invalid Email", "Enter a valid email.");
+        // Email validation
+        if (email == null || email.isBlank()) {
+            showWarningAlert("Validation Error", "Email Required", "Please enter your email address.");
+            return false;
+        }
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
+            showWarningAlert("Validation Error", "Invalid Email Format", "Please enter a valid email address (e.g., user@example.com).");
             return false;
         }
 
-        if (password.isBlank() || password.length() < MIN_PASSWORD_LENGTH) {
-            showWarningAlert("Weak Password", "Minimum " + MIN_PASSWORD_LENGTH + " characters.");
+        // Password validation
+        if (password == null || password.isBlank()) {
+            showWarningAlert("Validation Error", "Password Required", "Please enter a password.");
+            return false;
+        }
+        if (password.length() < MIN_PASSWORD_LENGTH) {
+            showWarningAlert("Validation Error", "Password Too Short", "Password must be at least " + MIN_PASSWORD_LENGTH + " characters long.");
             return false;
         }
 
+        // Confirm password validation
+        if (confirmPassword == null || confirmPassword.isBlank()) {
+            showWarningAlert("Validation Error", "Confirm Password Required", "Please confirm your password.");
+            return false;
+        }
         if (!password.equals(confirmPassword)) {
-            showWarningAlert("Passwords Mismatch", "Passwords must match.");
+            showWarningAlert("Validation Error", "Passwords Do Not Match", "Password and Confirm Password must be identical.");
             return false;
-        }
-
-        return true;
-    }
-
-    private boolean signUpWithEmailAndPassword(String apiKey, String email, String password, String displayName) throws IOException, InterruptedException {
-        String url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + apiKey;
-
-        JsonObject payload = new JsonObject();
-        payload.addProperty("email", email);
-        payload.addProperty("password", password);
-        payload.addProperty("returnSecureToken", true);
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Content-Type", "application/json; charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(payload)))
-                .build();
-
-        HttpResponse<String> response = HttpClient.newHttpClient()
-                .send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-
-        if (response.statusCode() != 200) {
-            System.err.println("SignUp Error: " + response.body());
-            return false;
-        }
-
-        JsonObject json = gson.fromJson(response.body(), JsonObject.class);
-        String idToken = json.get("idToken").getAsString();
-        String localId = json.get("localId").getAsString();
-
-        SessionManager.get().setSession(idToken, localId, email, Instant.now().plusSeconds(3600));
-        SessionManager.get().setDisplayName(displayName);
-
-        // Firestore-only: write user profile to Firestore users/{uid}.
-        // If this write fails, propagate as IOException so caller can handle cleanup (delete account) if desired.
-        try {
-            com.devera.trabahanap.service.FirestoreService fs = new com.devera.trabahanap.service.FirestoreService();
-            fs.writeUserProfile(idToken, localId, displayName, email)
-              .exceptionally(th -> {
-                  // wrap to surface as checked exception below
-                  throw new RuntimeException("Failed to write user profile to Firestore: " + th.getMessage(), th);
-              }).join();
-        } catch (RuntimeException rte) {
-            Throwable cause = rte.getCause() != null ? rte.getCause() : rte;
-            if (cause instanceof IOException) throw (IOException) cause;
-            if (cause instanceof InterruptedException) throw (InterruptedException) cause;
-            throw new IOException("Failed to write user profile to Firestore: " + rte.getMessage(), rte);
-        }
-
-        updateDisplayNameAsync(apiKey, idToken, displayName);
-
-        // --------------------------
-        // New: write user profile to Firestore users/{uid}
-        // --------------------------
-        try {
-            // FirestoreService invoked asynchronously but we will wait short time to ensure write attempted.
-            com.devera.trabahanap.service.FirestoreService fs = new com.devera.trabahanap.service.FirestoreService();
-            fs.writeUserProfile(idToken, localId, displayName, email)
-                    .exceptionally(th -> {
-                        // Log the error but do not fail the whole signup flow if Firestore write fails.
-                        System.err.println("[RegisterController] Firestore user write failed: " + th.getMessage());
-                        return null;
-                    });
-        } catch (Exception e) {
-            // non-fatal; continue
-            System.err.println("[RegisterController] Failed to initialize FirestoreService: " + e.getMessage());
         }
 
         return true;
     }
 
     /**
-     * Firestore-only: write user profile into Firestore users/{uid}.
-     * <p>
-     * Kept for compatibility with callers — always returns true on success.
+     * Performs Firebase Auth REST signUp request.
+     *
+     * On success stores idToken, localId, and email in SessionManager and returns true.
+     *
+     * @param apiKey      Firebase Web API Key
+     * @param email       user email
+     * @param password    user password
+     * @param displayName user display name
+     * @return true when registration succeeded
      */
-    private boolean checkUsernameUniqueAndWriteToDatabase(String idToken, String uid, String displayName, String email) throws IOException, InterruptedException {
-        // Realtime DB removed — write user record directly to Firestore.
-        try {
-            com.devera.trabahanap.service.FirestoreService fs = new com.devera.trabahanap.service.FirestoreService();
-            fs.writeUserProfile(idToken, uid, displayName, email)
-                    .exceptionally(th -> {
-                        // convert to checked exception for caller
-                        throw new RuntimeException("Failed to write user profile to Firestore: " + th.getMessage(), th);
-                    }).join();
-            return true;
-        } catch (RuntimeException rte) {
-            Throwable cause = rte.getCause() != null ? rte.getCause() : rte;
-            if (cause instanceof IOException) throw (IOException) cause;
-            if (cause instanceof InterruptedException) throw (InterruptedException) cause;
-            throw new IOException("Failed to write user profile to Firestore: " + rte.getMessage(), rte);
+    private boolean signUpWithEmailAndPassword(String apiKey, String email, String password, String displayName) throws IOException, InterruptedException {
+        String url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + apiKey;
+
+        JsonObject payload = new JsonObject();
+        payload.addProperty("email", email);
+        payload.addProperty("password", password);
+        payload.addProperty("displayName", displayName);
+        payload.addProperty("returnSecureToken", true);
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json; charset=UTF-8")
+                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(payload), StandardCharsets.UTF_8))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+
+        int status = response.statusCode();
+        String body = response.body();
+        if (status == 200) {
+            try {
+                JsonObject json = gson.fromJson(body, JsonObject.class);
+                String idToken = json.has("idToken") ? json.get("idToken").getAsString() : null;
+                String refreshToken = json.has("refreshToken") ? json.get("refreshToken").getAsString() : null;
+                String localId = json.has("localId") ? json.get("localId").getAsString() : null;
+                String emailResp = json.has("email") ? json.get("email").getAsString() : email;
+
+                // Store session (auto-login)
+                // SessionManager.setSession(idToken, localId, email, expiresAt)
+                SessionManager.get().setSession(idToken, localId, emailResp, Instant.now().plusSeconds(3600)); // approximate expiry
+
+                System.out.println("[RegisterController] Registration succeeded. localId=" + localId + ", refreshToken=" + (refreshToken != null ? "<present>" : "<null>"));
+                // TODO: persist refreshToken securely for token refresh
+                return true;
+            } catch (JsonParseException ex) {
+                System.err.println("[RegisterController] Failed to parse success response: " + ex.getMessage());
+                return false;
+            }
+        } else {
+            // Try to parse error details
+            try {
+                JsonObject err = gson.fromJson(body, JsonObject.class);
+                if (err != null && err.has("error")) {
+                    JsonObject e = err.getAsJsonObject("error");
+                    String message = e.has("message") ? e.get("message").getAsString() : e.toString();
+                    System.err.println("[RegisterController] Sign-up error: " + message);
+                    // show friendly message to user
+                    showErrorAlert("Registration Error", "Could not create account", message);
+                } else {
+                    System.err.println("[RegisterController] Sign-up failed. HTTP " + status + ". Body: " + body);
+                    showErrorAlert("Registration Error", "Could not create account", "HTTP " + status);
+                }
+            } catch (JsonParseException ex) {
+                System.err.println("[RegisterController] Sign-up failed. HTTP " + status + ". Body: " + body);
+                showErrorAlert("Registration Error", "Could not create account", "HTTP " + status);
+            }
+            return false;
         }
     }
 
+    // Helper methods for showing alerts
     private void showErrorAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -224,62 +267,15 @@ public class RegisterController extends Controller {
         alert.showAndWait();
     }
 
-    private void showWarningAlert(String header, String content) {
+    private void showWarningAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
+        alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
     }
 
-    private String safeGet(TextField field) {
-        return field.getText() == null ? "" : field.getText();
-    }
-
-    /**
-     * Deletes the currently authenticated user using Firebase Identity Toolkit accounts:delete.
-     * Requires a valid idToken for that user.
-     */
-    private void deleteAccount(String apiKey, String idToken) throws IOException, InterruptedException {
-        if (apiKey == null || apiKey.isBlank()) return;
-
-        String url = "https://identitytoolkit.googleapis.com/v1/accounts:delete?key=" + apiKey;
-        JsonObject payload = new JsonObject();
-        payload.addProperty("idToken", idToken);
-
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Content-Type", "application/json; charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(payload)))
-                .build();
-
-        HttpClient.newHttpClient().send(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-    }
-
-    /**
-     * Updates the Firebase Authentication user's displayName asynchronously.
-     * Non-critical: failures are ignored.
-     */
-    private void updateDisplayNameAsync(String apiKey, String idToken, String displayName) {
-        CompletableFuture.runAsync(() -> {
-            try {
-                String url = "https://identitytoolkit.googleapis.com/v1/accounts:update?key=" + apiKey;
-
-                JsonObject payload = new JsonObject();
-                payload.addProperty("idToken", idToken);
-                payload.addProperty("displayName", displayName);
-                payload.addProperty("returnSecureToken", true);
-
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(url))
-                        .header("Content-Type", "application/json; charset=UTF-8")
-                        .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(payload)))
-                        .build();
-
-                HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-
-            } catch (Exception ignored) {
-            }
-        });
+    private String safeGet(TextField f) {
+        return f == null ? "" : f.getText();
     }
 }

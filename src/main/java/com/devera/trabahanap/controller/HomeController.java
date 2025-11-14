@@ -152,7 +152,7 @@ public class HomeController extends Controller {
      * Public navigation helper that other controllers can call.
      * Opens JobDetails and passes the Job to the details controller.
      */
-    private void openJobDetails(Job job) {
+    public void openJobDetails(Job job) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/JobDetails.fxml"));
             Parent detailsRoot = loader.load();

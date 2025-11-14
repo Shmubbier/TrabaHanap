@@ -2,11 +2,11 @@
 #postButton {
     -fx-background-color: linear-gradient(to bottom right, #0092b7, #009966);
     -fx-text-fill: white;
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
     -fx-font-family: "Microsoft New Tai Lue";
     -fx-background-radius: 15;
     -fx-cursor: hand;
-    -fx-padding: 8 8;
+    -fx-padding: 8 20;
 }
 
 #postButton:hover {
@@ -20,10 +20,10 @@
     -fx-border-radius: 15;
     -fx-background-radius: 15;
     -fx-text-fill: black;
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
     -fx-font-family: "Microsoft New Tai Lue";
     -fx-cursor: hand;
-    -fx-padding: 8 8;
+    -fx-padding: 8 20;
 }
 
 #cancelButton:hover {
