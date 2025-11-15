@@ -93,8 +93,6 @@
                     </HBox>
                 </graphic>
             </Button>
-
-            <Button id="sideSettingsBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" styleClass="sidebar-button" />
         </VBox>
 
 
