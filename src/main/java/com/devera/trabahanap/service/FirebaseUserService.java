@@ -59,4 +59,48 @@ public class FirebaseUserService {
             }
         });
     }
+
+    /**
+     * Sends a Firebase Password Reset Email using:
+     * https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={API_KEY}
+     */
+    public CompletableFuture<Boolean> sendPasswordResetEmail(String apiKey, String email) {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        try {
+            String url = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + apiKey;
+
+            JsonObject body = new JsonObject();
+            body.addProperty("requestType", "PASSWORD_RESET");
+            body.addProperty("email", email);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                    .build();
+
+            client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                    .whenComplete((response, err) -> {
+                        if (err != null) {
+                            future.completeExceptionally(err);
+                            return;
+                        }
+
+                        if (response.statusCode() == 200) {
+                            future.complete(true);
+                        } else {
+                            future.completeExceptionally(
+                                    new RuntimeException("Firebase error: " + response.body())
+                            );
+                        }
+                    });
+
+        } catch (Exception e) {
+            future.completeExceptionally(e);
+        }
+
+        return future;
+    }
+
 }

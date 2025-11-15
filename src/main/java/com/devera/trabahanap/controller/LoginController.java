@@ -9,6 +9,7 @@ import com.google.gson.JsonParseException;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URI;
@@ -29,6 +30,31 @@ public class LoginController extends Controller {
     private PasswordField passwordField;
 
     private static final Gson gson = new Gson();
+
+    @FXML
+    private Text forgotPasswordText;
+
+    @FXML
+    public void initialize() {
+        // other initialize code...
+
+        forgotPasswordText.setOnMouseClicked(event -> {
+            try {
+                navigate("/fxml/ForgotPassword_Page.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+                javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
+                        javafx.scene.control.Alert.AlertType.ERROR
+                );
+                alert.setTitle("Navigation error");
+                alert.setHeaderText("Could not open Forgot Password");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
+        });
+    }
+
+
 
     @FXML
     private void onLoginClicked() {

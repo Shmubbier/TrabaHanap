@@ -55,7 +55,7 @@
                             <CheckBox styleClass="custom-checkbox" text="Remember me" />
                             <Region HBox.hgrow="ALWAYS" />
                             <TextFlow>
-                                <Text style="-fx-fill: #2992b8; -fx-underline: false; -fx-cursor: hand;" text="Forgot password?" />
+                                <Text fx:id="forgotPasswordText" style="-fx-fill: #2992b8; -fx-underline: false; -fx-cursor: hand;" text="Forgot password?" />
                             </TextFlow>
                             <padding>
                                 <Insets bottom="15.0" top="15.0" />
